@@ -6,7 +6,7 @@
 /*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 21:58:01 by tmorikaw          #+#    #+#             */
-/*   Updated: 2022/11/22 18:35:41 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/05/14 07:44:32 by tmorikaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,8 @@ char	*ft_strtrim(char const *s1, char const *set)
 
 /* int main()
 {
-	char const	s1[] = "xxxxtakeshixxx";
-	char const	set[] = "x";
+	char const	s1[] = "\"ok ko\"";
+	char const	set[] = "\"";
 	printf(" %s\n", ft_strtrim(s1, set));
-} */
+}
+ */

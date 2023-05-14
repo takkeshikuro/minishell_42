@@ -6,53 +6,29 @@
 /*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 03:45:35 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/05/14 06:03:27 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/05/14 08:35:51 by tmorikaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
+void	free_tab(char **tab)
+{
+	int		i;
+
+	i = 0;
+	while (tab[i])
+	{
+		free(tab[i]);
+		i++;
+	}
+	free(tab);
+}
+
 int	error(char *s)
 {
 	printf("error : %s\n", s);
 	return (1);
-}
-
-/* int	check_quote_is_closed(const char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == '"')
-		{
-			i++;
-			while (str[i])
-			{
-				if (str[i] == '"')
-					return (0);
-				if (str[i + 1] == '\0')
-					return (1);
-				i++;
-			}
-		}
-		i++;
-	}
-} */
-
-void	builtin_echo(t_main *data)
-{
-	int i = 1;
-	int	ac;
-
-	ac = ft_nbstr(data->input_line, 32);
-	while (i < ac)
-	{
-		printf("%s", data->tab_input_blank[i]);
-		i++;
-	}
-	printf("\n");
 }
 
 void	parsing(t_main *data)
@@ -66,11 +42,11 @@ void	parsing(t_main *data)
 		if (!ft_strncmp(data->input_line, "echo", 4))
 		{
 			builtin_echo(data);
-			return ;
+			break ;
 		}
 		i++;
 	}
-
+	free_tab(data->tab_input_blank);
 
 }
 
@@ -93,8 +69,6 @@ int	main(int ac, char **av, char **env)
 		ft_strlcpy(data.input_line, input, ft_strlen(input));
 		if (input[0] != '\0')
 			add_history(input);
-		//printf("%s", data.input_line);
-		
 		parsing(&data);
 		if ((ft_strlen(input) == 4) && !ft_strncmp(input, "exit", 4))
 			work = 0;
