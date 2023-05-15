@@ -6,7 +6,7 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 03:45:35 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/05/14 22:46:30 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/05/15 22:53:59 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,12 @@ int	error(char *s)
 	return (1);
 }
 
-void	parsing(t_main *data)
+/*void	parsing(t_main *data)
 {
 	int i;
 
 	i = 0;
-	data->tab_input_blank = ft_split(data->input_line, 32);
+	data->tab_input_blank = ft_split(data->input_line, ' ');
 	while (data->input_line[i])
 	{
 		if (!ft_strncmp(data->input_line, "echo", 4))
@@ -48,6 +48,22 @@ void	parsing(t_main *data)
 	}
 	free_tab(data->tab_input_blank);
 
+}*/
+
+void    parsing(t_main *data, char **env)
+{
+	int	i;
+
+	i = 0;
+	data->pipe_count = 0;
+	while (data->input_line[i])
+	{
+		if (data->input_line[i] == '|' && data->input_line[i + 1] != '|' && data->input_line[i - 1] != '|')
+			data->pipe_count++;
+		i++;
+	} 
+	data->tab_input_blank = ft_split(data->input_line, '|');
+    pipe_manage(data, env);
 }
 
 int	main(int ac, char **av, char **env)
@@ -69,17 +85,17 @@ int	main(int ac, char **av, char **env)
 		ft_strlcpy(data.input_line, input, ft_strlen(input));
 		if (input[0] != '\0')
 			add_history(input);
-		parsing(&data);
+		parsing(&data, env);
 		if (ft_strnstr(input, "exit", 4) != 0)
 			work = 0;
 		free(input);
 		free(data.input_line);
 	}
-	rl_clear_history();
+	clear_history();
 	return (0);
 }
 
 //in the while :(idk if important)
 		// Check for EOF.
-       // if (!data.full_line)
-       //     break;
+	   // if (!data.full_line)
+	   //     break;

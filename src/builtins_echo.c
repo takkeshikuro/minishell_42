@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_echo.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 04:19:48 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/05/14 08:35:16 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/05/15 22:40:54 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,11 @@ void	builtin_echo(t_main *data)
 
 	i = 1;
 	ac = ft_nbstr(data->input_line, 32);
+	if (ac == 1)
+	{
+		printf("\n");
+		return ;
+	}
 	if (data->tab_input_blank[1][0] == 34)
 		quote_stuff(data, 34);
 	else if (data->tab_input_blank[1][0] == 39)
@@ -97,5 +102,5 @@ void	builtin_echo(t_main *data)
 			i++;
 		}
 	}
-	printf("\n");
+	//printf("\n");
 }
