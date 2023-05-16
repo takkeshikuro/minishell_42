@@ -10,6 +10,9 @@ echo -n hello world
 echo -nnnnnnnn
 echo -nnnnnnnn a
 echo -nnnnnnnn hello world
+====================================== OK
+
+
 echo -nnnnnnnn -nnnnnnnn
 echo -nnnnnnnn -nnnnnnnn a
 echo -nnnnnnnn -nnnnnnnn hello world

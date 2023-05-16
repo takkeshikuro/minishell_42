@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   minishell (2).h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 05:04:38 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/05/15 22:56:00 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/05/16 21:08:07 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@
 # include <sys/uio.h>
 # include <fcntl.h>
 # include <sys/wait.h>
+# include <signal.h>
+ 
 typedef struct s_pipex
 {
 	pid_t   pid;
@@ -48,6 +50,7 @@ typedef struct s_main
 
 int	error(char *s);
 int	ft_nbstr(char const *str, char sep);
+void	void_error(char *s);
 
 
 void	cpy_into_sep(char *src, char *dest, char sep);
@@ -56,6 +59,9 @@ void    quote_stuff(t_main *data, int sep);
 void	builtin_echo(t_main *data);
 void	pipe_manage(t_main *data, char **env);
 void	free_tab(char **tab);
+void	wait_childs(t_main *data);
+void    parent_free(t_pipex *pipex);
+
 
 
 #endif

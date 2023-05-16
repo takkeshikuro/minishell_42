@@ -6,7 +6,7 @@
 /*   By: marecarrayan <marecarrayan@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 15:28:27 by marecarraya       #+#    #+#             */
-/*   Updated: 2023/05/15 22:46:24 by marecarraya      ###   ########.fr       */
+/*   Updated: 2023/05/16 15:14:02 by marecarraya      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,45 +66,66 @@ char	*find_path(char **envp)
 	return (" ");
 }
 
+void    close_pipe(t_main *data)
+{
+	int	i;
+
+	i = 0;
+	while (i < data->pipe_count * 2)
+	{
+		close(data->pipex->pipe_fd[i]);
+		i++;
+	}
+}
+
 void	duplicate2(int input, int output)
 {
 	dup2(input, 0);
-	close (input);
 	dup2(output, 1);
-	close(output);
 }
 
 void	child_process(t_main *data, char **envp, int pos)
 {
 	char	**string_command;
-	int		fd;
-	string_command = ft_split(data->input_line, '|');
-	
-	data->pipex->pid = fork();
-	if (!(data->pipex->pid))
+	pid_t	pid;
+	int		status;
+
+	status = 0;	
+	pid = fork();
+	if (pid == 0)
 	{
+		string_command = ft_split(data->input_line, '|');
 		if (pos == 0 && data->pipe_count)
-		{
 			dup2(data->pipex->pipe_fd[1], 1);
-			close(data->pipex->pipe_fd[1]);
-		}
 		else if (pos == data->pipe_count && data->pipe_count)
-		{
 			dup2(data->pipex->pipe_fd[2 * pos - 2], 0);
-			close(data->pipex->pipe_fd[2 * pos - 2]);
-		}
 		else if (data->pipe_count && pos != 0 && data->pipe_count != pos)
 			duplicate2(data->pipex->pipe_fd[2 * pos - 2], data->pipex->pipe_fd[2 * pos + 1]);
+		close_pipe(data);
 		data->pipex->cmd_args = ft_split(string_command[pos], ' ');
+		free_tab(string_command);
 		data->pipex->cmd = get_command(data->pipex->cmd_paths, data->pipex->cmd_args[0]);
 		if (!data->pipex->cmd)
 		{
 			printf("invalid input : %s\n", data->pipex->cmd_args[0]);
 			free_tab(data->pipex->cmd_args);
+			parent_free(data->pipex);
 			free(data->pipex->cmd);
 			exit(1);
 		}
 		execve(data->pipex->cmd, data->pipex->cmd_args, envp);
+		exit (1);
+	}
+}
+void	wait_childs(t_main *data)
+{
+	int	i;
+
+	i = 0;
+	while (i <= data->pipe_count)
+	{
+		waitpid(-1, NULL, 0);
+		i++;
 	}
 }
 
@@ -143,6 +164,7 @@ void    parent_free(t_pipex *pipex)
 void	pipe_manage(t_main *data, char **env)
 {
 	int	pos;
+	int	pid;
 	t_pipex	*test;
 	
 	data->pipex = test;
@@ -153,6 +175,8 @@ void	pipe_manage(t_main *data, char **env)
 		child_process(data, env, pos);
 		pos++;
 	}
-	parent_free(data->pipex);
+	close_pipe(data);
 	waitpid(-1, NULL, 0);
+	parent_free(data->pipex);
+	return ;
 }

@@ -1,6 +1,7 @@
 NAME    = minishell
 CC 		= gcc
 CFLAGS 	=  -I /inc/minishell.h
+# -Wall -Werror -Wextra
 
 LIBFT  	= ./inc/libft/
 LIBFLAGS = -lreadline

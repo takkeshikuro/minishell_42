@@ -6,7 +6,7 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 04:19:48 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/05/15 22:40:54 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/05/16 17:06:08 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,34 +73,101 @@ void	quote_stuff(t_main *data, int sep)
 		printf("%s", into_quote);
 	}
 	else
-		error("quote");
+		return (void_error("quote"));
 	free(into_quote);
 	return ;
 }
 
-void	builtin_echo(t_main *data)
+void	option_is_here(t_main *data, int ac, int id_arg)
 {
 	int i;
-	int ac;
-
-	i = 1;
-	ac = ft_nbstr(data->input_line, 32);
-	if (ac == 1)
+	if (data->tab_input_blank[id_arg][0] == 34)
+		quote_stuff(data, 34);
+	else if (data->tab_input_blank[id_arg][0] == 39)
+		quote_stuff(data, 39);
+	else 
 	{
-		printf("\n");
-		return ;
+		i = id_arg;
+		while (id_arg < ac)
+		{
+			if (id_arg > i)
+				printf(" ");
+			printf("%s", data->tab_input_blank[id_arg]);
+			id_arg++;
+		}
 	}
+}
+
+void	no_option_here(t_main *data, int ac)
+{
+	int	i;
+
 	if (data->tab_input_blank[1][0] == 34)
 		quote_stuff(data, 34);
 	else if (data->tab_input_blank[1][0] == 39)
 		quote_stuff(data, 39);
 	else
 	{
+		i = 1;
 		while (i < ac)
 		{
+			if (i > 1)
+				printf(" ");
 			printf("%s", data->tab_input_blank[i]);
 			i++;
 		}
 	}
-	//printf("\n");
+}
+
+
+int check_option(t_main *data, int nb_s)
+{
+	int i;
+
+	if (data->tab_input_blank[nb_s][0] == '-')
+	{
+		i = 1;
+		while (data->tab_input_blank[nb_s][i])
+		{
+			if (data->tab_input_blank[nb_s][i] != 'n')
+				return (0);
+			if (data->tab_input_blank[nb_s][i + 1] == '\0')
+				return (1);
+			i++;
+		}	
+	}
+	else
+		return (0);
+}
+
+void	builtin_echo(t_main *data)
+{
+	int ac;
+	int i;
+
+	ac = ft_nbstr(data->input_line, 32);
+	if (ac == 1)
+	{
+		printf("\n");
+		return ;
+	}
+	if (check_option(data, 1))
+	{
+		if (ac == 2)
+			return ;
+		i = 2;
+		while (i <= ac)
+		{
+			if (!check_option(data, i))
+				break ;
+			i++;
+			if (i == ac)
+				return ;
+		}
+		option_is_here(data, ac, i);
+		return ;
+	}
+	else
+		no_option_here(data, ac);
+	printf("\n");
 }
