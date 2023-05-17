@@ -1,25 +1,45 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstnew.c                                        :+:      :+:    :+:   */
+/*   lexer_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/16 00:23:09 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/05/17 05:28:28 by tmorikaw         ###   ########.fr       */
+/*   Created: 2023/05/17 05:13:10 by tmorikaw          #+#    #+#             */
+/*   Updated: 2023/05/17 06:09:23 by tmorikaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../inc/minishell.h"
 
-t_list	*ft_lstnew(void *content)
+t_lexer	*ft_lexernew(char *str, int token)
 {
-	t_list	*new;
+	t_lexer		*new;
+	static int	i = 0;
 
-	new = malloc(sizeof(t_list));
+	new = (t_lexer *)malloc(sizeof(t_lexer));
 	if (!new)
-		return (NULL);
-	new->content = content;
+		return (0);
+	new->str = str;
+	new->token = token;
+	new->i = i++;
 	new->next = NULL;
+	new->prev = NULL;
 	return (new);
+}
+
+void	ft_lexeradd_back(t_lexer **lst, t_lexer *new)
+{
+	t_lexer	*tmp;
+
+	tmp = *lst;
+	if (*lst == NULL)
+	{
+		*lst = new;
+		return ;
+	}
+	while (tmp->next != NULL)
+		tmp = tmp->next;
+	tmp->next = new;
+	new->prev = tmp;
 }

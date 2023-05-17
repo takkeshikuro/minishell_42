@@ -6,7 +6,7 @@
 /*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 21:56:35 by tmorikaw          #+#    #+#             */
-/*   Updated: 2022/11/23 09:59:14 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/05/17 05:10:21 by tmorikaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ char	*ft_substr(const char *s, unsigned int start, size_t len)
 
 /* int	main()
 {
-	char *str = "takeshikuro";
+	char *str = "echo1'okok'";
 	//int	start = 2;
 	//int	len = 3;
-	printf(" %s", ft_substr(str, 3, 2));
+	printf(" %s", ft_substr(str, 5, 5));
 } */

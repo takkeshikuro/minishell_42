@@ -11,8 +11,6 @@ echo -nnnnnnnn
 echo -nnnnnnnn a
 echo -nnnnnnnn hello world
 ====================================== OK
-
-
 echo -nnnnnnnn -nnnnnnnn
 echo -nnnnnnnn -nnnnnnnn a
 echo -nnnnnnnn -nnnnnnnn hello world
@@ -23,6 +21,8 @@ echo hello -n
 echo hello -nnnnnnn
 echo hello -nknknknknk
 echo hello -nnnnnnnnn -nnnnnnnnn
+====================================ok
+
 echo \-n hello
 echo "-n" hello
 echo '-n' hello

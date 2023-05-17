@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_echo.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
+/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 04:19:48 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/05/16 17:06:08 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/05/16 23:54:52 by tmorikaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,10 @@ void	quote_stuff(t_main *data, int sep)
 void	option_is_here(t_main *data, int ac, int id_arg)
 {
 	int i;
+
 	if (data->tab_input_blank[id_arg][0] == 34)
 		quote_stuff(data, 34);
+
 	else if (data->tab_input_blank[id_arg][0] == 39)
 		quote_stuff(data, 39);
 	else 
@@ -144,12 +146,22 @@ void	builtin_echo(t_main *data)
 {
 	int ac;
 	int i;
-
+	
+	i = 0;
 	ac = ft_nbstr(data->input_line, 32);
 	if (ac == 1)
 	{
 		printf("\n");
 		return ;
+	}
+	while (i <= ac)
+	{
+		if (data->tab_input_blank[i][0] == 34 && \
+			how_much_quote(data->tab_input_blank[i], 34))
+			ft_strtrim(data->tab_input_blank[i], "\"");
+		else if (data->tab_input_blank[i][0] == 39 && \
+			how_much_quote(data->tab_input_blank[i], 39))
+			ft_strtrim(data->tab_input_blank[i], "'");
 	}
 	if (check_option(data, 1))
 	{

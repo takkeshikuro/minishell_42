@@ -6,11 +6,19 @@
 /*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 05:38:24 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/05/14 05:44:19 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/05/17 05:16:03 by tmorikaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
+
+int	is_space(char c)
+{
+	if ((c > 8 && c < 14) || c == ' ')
+		return (1);
+	else
+		return (0);
+}
 
 int	ft_nbstr(char const *str, char sep)
 {
@@ -31,4 +39,29 @@ int	ft_nbstr(char const *str, char sep)
 			i++;
 	}
 	return (nbword);
+}
+
+void	free_tab(char **tab)
+{
+	int		i;
+
+	i = 0;
+	while (tab[i])
+	{
+		free(tab[i]);
+		i++;
+	}
+	free(tab);
+}
+
+int	error(char *s)
+{
+	printf("error : %s\n", s);
+	return (1);
+}
+
+void	void_error(char *s)
+{
+	printf("error : %s\n", s);
+	return ;
 }
