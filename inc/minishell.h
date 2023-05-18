@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 05:04:38 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/05/17 05:42:34 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/05/18 23:50:19 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ typedef struct s_main
 // main.c
 int				mini_loop(t_main *data, char **env);
 void				parsing(t_main *data, char **env);
+void			start_in_loop(t_main *data, char *input);
 
 //lexer.c
 int				go_lexer(t_main *data);

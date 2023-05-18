@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 03:45:35 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/05/17 06:23:31 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/05/18 23:44:06 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,18 @@ void    parsing(t_main *data, char **env)
 	pipe_manage(data, env);
 }
 
+void	start_in_loop(t_main *data, char *input)
+{
+	data->input_line = malloc(sizeof(char) * (ft_strlen(input) + 1));
+	if (!data->input_line)
+		error("malloc failed");
+	ft_strlcpy(data->input_line, input, ft_strlen(input));
+	if (!how_much_quote(input, 34) || !how_much_quote(input, 39))
+		error("quote ?");
+	if (!go_lexer(data))
+		error("lexer");
+}
+
 int	mini_loop(t_main *data, char **env)
 {
 	int		work;
@@ -59,17 +71,9 @@ int	mini_loop(t_main *data, char **env)
 	while (work)
 	{
 		input = readline("$>");
-		data->input_line = malloc(sizeof(char) * (ft_strlen(input) + 1));
-		if (!data->input_line)
-			return (error("malloc failed"));
-		ft_strlcpy(data->input_line, input, ft_strlen(input));
-		if (!how_much_quote(data->input_line, 34)
-			|| !how_much_quote(data->input_line, 39))
-			return (error("quote ?"));
-		if (!go_lexer(data))
-			return (error("lexer"));
-		if (input[0] != '\0' && !ft_strnstr(input, "exit", 4))
+		if (input[0] != '\0')
 		{
+			start_in_loop(data, input);
 			add_history(input);
 			parsing(data, env);
 			wait_childs(data);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 04:07:31 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/05/17 06:27:10 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/05/18 23:30:40 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,21 @@ t_tokens	is_token(int c)
 	return (0);
 }
 
+/*
+void	just_see(t_lexer **lexer_list)
+{
+	t_lexer *current = *lexer_list;
+
+    while (current != NULL) {
+		if (current->str)
+       		printf("(str) : %d |", current->i);
+        else 
+			printf("(token) : %d |", current->i);
+		current = current->next;
+    }
+	printf("\n");
+}*/
+
 int	go_lexer(t_main *data)
 {
 	int		i;
@@ -119,5 +134,6 @@ int	go_lexer(t_main *data)
 			return (0);
 		i += j;
 	}
+	//just_see(&data->lexer_list);
 	return (1);
 }

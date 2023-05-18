@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_1.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 05:38:24 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/05/17 05:16:03 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/05/18 23:36:46 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	free_tab(char **tab)
 int	error(char *s)
 {
 	printf("error : %s\n", s);
-	return (1);
+	exit(1);
 }
 
 void	void_error(char *s)
