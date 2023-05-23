@@ -6,29 +6,13 @@
 /*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 23:55:37 by keshikuro         #+#    #+#             */
-/*   Updated: 2023/05/23 06:08:24 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/05/23 09:58:43 by tmorikaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-int	count_pipe(char *s)
-{
-	int	i;
-	int	pipe;
-
-	pipe = 0;
-	i = 0;
-	while (s[i])
-	{
-		if (i == '|')
-			pipe += 1;
-		i++;
-	}
-	return (pipe);
-}
-
-void	no_pipe(t_main *data, int size)
+/* void	no_pipe(t_main *data, int size)
 {
 	t_lexer			*current;
 	command_parse	*parser;
@@ -51,7 +35,7 @@ void	no_pipe(t_main *data, int size)
 			current = current->next;
 	}
 }
-
+ */
 void	split_on_pipe(t_main *data)
 {
 	int			i_tab;
@@ -86,24 +70,39 @@ void	split_on_pipe(t_main *data)
 }
 
 // ft_lexerdelone(lexer_list, int i)
-//ft_cmd_parse_new(**str, num redirection, redirection)
-t_cmd_parse	cmd_parse_new(char **tab, )
+
+t_cmd_parse	*cmd_parse_new(char **tab)
 {
-	
+	t_cmd_parse	*new;
+
+	new = (t_cmd_parse *)malloc(sizeof(t_cmd_parse));
+	if (!new)
+		exit(1);
+	new->cmd_tab = tab;
+	new->next = NULL;
+	new->prev = NULL;
+	// case for redirection
+	// case for new->builtin
+	new->hd_file_name = NULL;
+	return (new);
 }
+
+void	ft_lexerdelone(t_lexer **lexer_list, int id)
+{}
 
 t_cmd_parse	*init_cmd(t_parser_data *p_data)
 {
-	char			**tab;
-	t_lexer			*current;
-	int				nb_word;
-	int				i;
+	char	**tab;
+	t_lexer	*current;
+	int		nb_word;
+	int		i;
 
 	i = 0;
+	//fucnton for redirection
 	nb_word = count_words(p_data->lexer_list);
 	tab = malloc(sizeof(char *) * nb_word);
 	if (!tab)
-		exit (1);
+		exit(1);
 	current = p_data->lexer_list;
 	while (nb_word > 0)
 	{
@@ -132,7 +131,7 @@ int	go_parser(t_main *data)
 		parser_data = init_p_data(data->lexer_list, data);
 		node = init_cmd(&parser_data);
 		if (!node)
-			exit (1);
+			exit(1);
 		if (!data->cmd_parse)
 			data->cmd_parse = node;
 		else

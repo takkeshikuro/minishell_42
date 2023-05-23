@@ -6,7 +6,7 @@
 /*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 05:04:38 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/05/23 06:12:19 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/05/23 06:39:23 by tmorikaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,8 @@ typedef struct s_main
 typedef struct s_parser_data
 {
 	t_lexer				*lexer_list;
-	t_lexer				*redirections;
-	int					num_redirections;
+	t_lexer				*redirection;
+	int					num_redirection;
 	struct s_main		*data;
 }						t_parser_data;
 
