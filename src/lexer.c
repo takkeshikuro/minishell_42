@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
+/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 04:07:31 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/05/18 23:30:40 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/05/23 04:29:32 by tmorikaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-int	add_to_list(char *str, t_tokens token, t_lexer **lexer_list)
+int	add_to_list(char *str, t_operateurs operateur, t_lexer **lexer_list)
 {
 	t_lexer	*node;
 
-	node = ft_lexernew(str, token);
+	node = ft_lexernew(str, operateur);
 	if (!node)
 		return (0);
 	ft_lexeradd_back(lexer_list, node);
@@ -28,7 +28,7 @@ int	add_word(char *str, int i, t_lexer **lexer_list)
 	int	j;
 
 	j = 0;
-	while (str[i + j] && !is_space(str[i + j]) && !is_token(str[i + j]))
+	while (str[i + j] && !is_space(str[i + j]) && !is_operateur(str[i + j]))
 	{
 		if (str[i + j] == 34)
 		{
@@ -52,36 +52,36 @@ int	add_word(char *str, int i, t_lexer **lexer_list)
 	return (j);
 }
 
-int	add_token(char *str, int i, t_lexer **lexer_list)
+int	add_operateur(char *str, int i, t_lexer **lexer_list)
 {
-	t_tokens	token;
+	t_operateurs	operateur;
 
-	token = is_token(str[i]);
-	if (token == RIGHT && is_token(str[i + 1]) == RIGHT)
+	operateur = is_operateur(str[i]);
+	if (operateur == RIGHT && is_operateur(str[i + 1]) == RIGHT)
 	{
 		if (!add_to_list(NULL, RIGHT_RIGHT, lexer_list))
 			return (-1);
 		return (2);
 	}
-	else if (token == LEFT && is_token(str[i + 1]) == LEFT)
+	else if (operateur == LEFT && is_operateur(str[i + 1]) == LEFT)
 	{
 		if (!add_to_list(NULL, LEFT_LEFT, lexer_list))
 			return (-1);
 		return (2);
 	}
-	else if (token)
+	else if (operateur)
 	{
-		if (!add_to_list(NULL, token, lexer_list))
+		if (!add_to_list(NULL, operateur, lexer_list))
 			return (-1);
 		return (1);
 	}
 	return (0);
 }
 
-t_tokens	is_token(int c)
+t_operateurs	is_operateur(int c)
 {
 	int				i;
-	static int		tab_tokens[3][2] = {
+	static int		tab_operateurs[3][2] = {
 	{'|', PIPE},
 	{'>', RIGHT},
 	{'<', LEFT},
@@ -90,8 +90,8 @@ t_tokens	is_token(int c)
 	i = 0;
 	while (i < 3)
 	{
-		if (tab_tokens[i][0] == c)
-			return (tab_tokens[i][1]);
+		if (tab_operateurs[i][0] == c)
+			return (tab_operateurs[i][1]);
 		i++;
 	}
 	return (0);
@@ -106,7 +106,7 @@ void	just_see(t_lexer **lexer_list)
 		if (current->str)
        		printf("(str) : %d |", current->i);
         else 
-			printf("(token) : %d |", current->i);
+			printf("(operateur) : %d |", current->i);
 		current = current->next;
     }
 	printf("\n");
@@ -124,8 +124,8 @@ int	go_lexer(t_main *data)
 		j = 0;
 		while (is_space(data->input_line[i]))
 			i++;
-		if (is_token(data->input_line[i]))
-			j = add_token(data->input_line, i, &data->lexer_list);
+		if (is_operateur(data->input_line[i]))
+			j = add_operateur(data->input_line, i, &data->lexer_list);
 		else
 		{
 			j = add_word(data->input_line, i, &data->lexer_list);

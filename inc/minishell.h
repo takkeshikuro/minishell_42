@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
+/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 05:04:38 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/05/18 23:50:19 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/05/23 06:12:19 by tmorikaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,97 +27,120 @@
 
 typedef struct s_pipex
 {
-	pid_t			pid;
-	int				infile;
-	int				outfile;
-	int				*pipe_fd;
-	char			*paths;
-	char			**cmd_paths;
-	char			**cmd_args;
-	char			*cmd;
-	char			*argv[];
-}					t_pipex;
+	pid_t				pid;
+	int					infile;
+	int					outfile;
+	int					*pipe_fd;
+	char				*paths;
+	char				**cmd_paths;
+	char				**cmd_args;
+	char				*cmd;
+	char				*argv[];
+}						t_pipex;
 
-typedef enum s_tokens
+typedef enum s_operateurs
 {
 	PIPE = 1,
 	RIGHT,
 	RIGHT_RIGHT,
 	LEFT,
 	LEFT_LEFT,
-}					t_tokens;
+}						t_operateurs;
 
 typedef struct s_lexer
 {
-	char			*str;
-	t_tokens		token;
-	int				i;
-	struct s_lexer	*next;
-	struct s_lexer	*prev;
-}					t_lexer;
-
-/* typedef struct s_parser_tools
-{
-	t_lexer			*lexer_list;
-	t_lexer			*redirections;
-	int				num_redirections;
-	struct s_main	*data;
-}	t_parser_tools; */
+	char				*str;
+	t_operateurs		operateur;
+	int					i;
+	struct s_lexer		*next;
+	struct s_lexer		*prev;
+}						t_lexer;
 
 typedef struct s_main
 {
-	int				ok;
-	int				pipe_count;
-	char			*input_line;
-	char			**tab_input_blank;
-	t_pipex			*pipex;
-	char			*test;
-	t_lexer			*lexer_list;
-}					t_main;
+	int					ok;
+	int					pipe_count;
+	char				*input_line;
+	struct s_cmd_parse	*cmd_parse;
+	char				**tab_input_blank;
+	t_pipex				*pipex;
+	char				*test;
+	t_lexer				*lexer_list;
+}						t_main;
+
+typedef struct s_parser_data
+{
+	t_lexer				*lexer_list;
+	t_lexer				*redirections;
+	int					num_redirections;
+	struct s_main		*data;
+}						t_parser_data;
+
+typedef struct s_cmd_parse
+{
+	char				**cmd_tab;
+	int					(*builtin)(t_main *, struct s_cmd_parse *);
+	int					num_redirections;
+	char				*hd_file_name;
+	t_lexer				*redirections;
+	struct s_cmd_parse	*next;
+	struct s_cmd_parse	*prev;
+}						t_cmd_parse;
 
 // main.c
-int				mini_loop(t_main *data, char **env);
-void				parsing(t_main *data, char **env);
-void			start_in_loop(t_main *data, char *input);
+int						mini_loop(t_main *data, char **env);
+void					parsing(t_main *data, char **env);
+void					start_in_loop(t_main *data, char *input);
 
 //lexer.c
-int				go_lexer(t_main *data);
-t_tokens			is_token(int c);
-int					add_token(char *str, int i, t_lexer **lexer_list);
-int					add_word(char *str, int i, t_lexer **lexer_list);
-int					add_to_list(char *str, t_tokens token,
-						t_lexer **lexer_list);
+int						go_lexer(t_main *data);
+t_operateurs			is_operateur(int c);
+int						add_operateur(char *str, int i, t_lexer **lexer_list);
+int						add_word(char *str, int i, t_lexer **lexer_list);
+int						add_to_list(char *str, t_operateurs operateur,
+							t_lexer **lexer_list);
 
 // lexer_utils.c
-t_lexer				*ft_lexernew(char *str, int token);
-void				ft_lexeradd_back(t_lexer **lst, t_lexer *new);
+t_lexer					*ft_lexernew(char *str, int operateur);
+void					ft_lexeradd_back(t_lexer **lst, t_lexer *new);
+//delone
+
+// parser.c
+int						go_parser(t_main *data);
+t_cmd_parse				*init_cmd(t_parser_data *p_data);
+
+// parser_utils.c
+int						count_pipe(char *s);
+int						count_words(t_lexer *lexer_list);
+void					small_check(t_main *data);
+t_parser_data			init_p_data(t_lexer *lexer_list, t_main *data);
 
 // utils.c
-void				free_tab(char **tab);
-int					error(char *s);
-int					ft_nbstr(char const *str, char sep);
-void				void_error(char *s);
-int					is_space(char c);
+void					free_tab(char **tab);
+int						error(char *s);
+int						ft_nbstr(char const *str, char sep);
+void					void_error(char *s);
+int						is_space(char c);
 
 // pipe_manage.c
-int					contains_char(char *str, char c);
-char				*get_command(char **paths, char *cmd);
-char				*find_path(char **envp);
-void				close_pipe(t_main *data);
-void				duplicate2(int input, int output);
-void				child_process(t_main *data, char **envp, int pos);
-void				wait_childs(t_main *data);
-void				pipe_init(t_main *data, char **env);
-void				parent_free(t_pipex *pipex);
-void				pipe_manage(t_main *data, char **env);
+int						contains_char(char *str, char c);
+char					*get_command(char **paths, char *cmd);
+char					*find_path(char **envp);
+void					close_pipe(t_main *data);
+void					duplicate2(int input, int output);
+void					child_process(t_main *data, char **envp, int pos);
+void					wait_childs(t_main *data);
+void					pipe_init(t_main *data, char **env);
+void					parent_free(t_pipex *pipex);
+void					pipe_manage(t_main *data, char **env);
 
 //builtins echo.c
-int					how_much_quote(const char *str, int sep);
-void				cpy_into_sep(char *src, char *dest, char sep);
-void				quote_stuff(t_main *data, int sep);
-void				option_is_here(t_main *data, int ac, int id_arg);
-void				no_option_here(t_main *data, int ac);
-int					check_option(t_main *data, int nb_s);
-void				builtin_echo(t_main *data);
+int						how_much_quote(const char *str, int sep);
+void					cpy_into_sep(char *src, char *dest, char sep);
+void					quote_stuff(t_main *data, int sep);
+void					option_is_here(t_main *data, int ac, int id_arg);
+void					no_option_here(t_main *data, int ac);
+int						check_option(t_main *data, int nb_s);
+void					builtin_echo(t_main *data);
 
 #endif

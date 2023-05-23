@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_1.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
+/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 05:38:24 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/05/18 23:36:46 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/05/23 06:04:55 by tmorikaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,29 +39,4 @@ int	ft_nbstr(char const *str, char sep)
 			i++;
 	}
 	return (nbword);
-}
-
-void	free_tab(char **tab)
-{
-	int		i;
-
-	i = 0;
-	while (tab[i])
-	{
-		free(tab[i]);
-		i++;
-	}
-	free(tab);
-}
-
-int	error(char *s)
-{
-	printf("error : %s\n", s);
-	exit(1);
-}
-
-void	void_error(char *s)
-{
-	printf("error : %s\n", s);
-	return ;
 }

@@ -6,13 +6,13 @@
 /*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 05:13:10 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/05/17 06:09:23 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/05/23 06:09:16 by tmorikaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-t_lexer	*ft_lexernew(char *str, int token)
+t_lexer	*ft_lexernew(char *str, int operateur)
 {
 	t_lexer		*new;
 	static int	i = 0;
@@ -21,7 +21,7 @@ t_lexer	*ft_lexernew(char *str, int token)
 	if (!new)
 		return (0);
 	new->str = str;
-	new->token = token;
+	new->operateur = operateur;
 	new->i = i++;
 	new->next = NULL;
 	new->prev = NULL;
@@ -42,4 +42,9 @@ void	ft_lexeradd_back(t_lexer **lst, t_lexer *new)
 		tmp = tmp->next;
 	tmp->next = new;
 	new->prev = tmp;
+}
+
+void	ft_lexerdelone(t_lexer	**lst, int id)
+{
+	
 }
