@@ -1,31 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   builtin_pwd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/23 06:02:15 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/05/25 05:12:35 by tmorikaw         ###   ########.fr       */
+/*   Created: 2023/05/25 07:40:54 by tmorikaw          #+#    #+#             */
+/*   Updated: 2023/05/25 08:12:48 by tmorikaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-int	error(char *s)
+int	built_pwd(t_main *data, t_cmd_parse *cmd_parse)
 {
-	printf("error : %s\n", s);
-	return (1);
-}
+	char	s[256];
 
-void	void_error(char *s)
-{
-	printf("error : %s\n", s);
-	return ;
-}
-
-void	exit_bash_error(char *s)
-{
-	printf("bash : %s", s);
-	exit (1);
+	(void)data;
+	(void)cmd_parse;
+	//	if (chdir("/tmp") != 0)
+	//		perror("chdir() error()");
+	if (getcwd(s, sizeof(s)) == NULL)
+		error("getcwd() failed");
+	else
+		printf("%s\n", s);
+	return (0);
 }

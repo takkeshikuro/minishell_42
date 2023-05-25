@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
+/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 03:45:35 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/05/18 23:44:06 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/05/25 08:12:39 by tmorikaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,9 @@ void	start_in_loop(t_main *data, char *input)
 		error("malloc failed");
 	ft_strlcpy(data->input_line, input, ft_strlen(input));
 	if (!how_much_quote(input, 34) || !how_much_quote(input, 39))
-		error("quote ?");
+		exit_bash_error("quote error");
 	if (!go_lexer(data))
-		error("lexer");
+		exit_bash_error("lexing failed.");
 }
 
 int	mini_loop(t_main *data, char **env)
@@ -68,6 +68,7 @@ int	mini_loop(t_main *data, char **env)
 	char	*input;
 
 	work = 1;
+	data->env_ok = env;
 	while (work)
 	{
 		input = readline("$>");

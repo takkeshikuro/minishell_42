@@ -6,72 +6,31 @@
 /*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 23:55:37 by keshikuro         #+#    #+#             */
-/*   Updated: 2023/05/23 09:58:43 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/05/25 08:08:27 by tmorikaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-/* void	no_pipe(t_main *data, int size)
+/* void	redirection(t_lexer **lexer_lst)
 {
-	t_lexer			*current;
-	command_parse	*parser;
+	t_lexer	*tmp;
 
-	parser->cmd_tab = malloc(sizeof(char *));
-	if (!parser->cmd_tab)
-		exit(1);
-	current = data->lexer_list;
-	while (current->next != NULL)
+	tmp = *lexer_lst;
+	while (tmp)
 	{
-		if (current->str)
+		if (tmp->operateur >= 2 && tmp->operateur <= 5)
 		{
-			//if (!ft_strncmp(data->tab_input_blank[0], ))
-			// case of builtin
-			//if (redirecction)
-			// case of redirection
-			else ft_strjoin(parser->cmd_tab[0], current->str);
+			adddd o
+			ft_lexerdelone(lexer_lst, tmp->i);
 		}
-		else
-			current = current->next;
+		if (tmp->next == NULL)
+			break ;
+		tmp = tmp->next;
 	}
-}
- */
-void	split_on_pipe(t_main *data)
-{
-	int			i_tab;
-	int			nb_pipe;
-	t_cmd_parse	*parser;
-	t_lexer		*current;
+} */
 
-	i_tab = 0;
-	nb_pipe = count_pipe(data->input_line);
-	parser->cmd_tab = malloc(sizeof(char *) * nb_pipe + 1);
-	if (!parser->cmd_tab)
-		exit(1);
-	current = data->lexer_list;
-	while (parser->cmd_tab[i_tab])
-	{
-		while (current->next != NULL)
-		{
-			if (current->str)
-			{
-				ft_strjoin(parser->cmd_tab[i_tab], current->str);
-				if (current->next->str)
-					ft_strjoin(parser->cmd_tab[i_tab], " ");
-				else
-					break ;
-			}
-			else if (current->operateur && current->operateur != PIPE)
-				//redirection
-				current = current->next;
-		}
-		i_tab++;
-	}
-}
-
-// ft_lexerdelone(lexer_list, int i)
-
-t_cmd_parse	*cmd_parse_new(char **tab)
+t_cmd_parse	*cmd_parse_new(char **tab, int num_redir, t_lexer *redirection)
 {
 	t_cmd_parse	*new;
 
@@ -81,14 +40,12 @@ t_cmd_parse	*cmd_parse_new(char **tab)
 	new->cmd_tab = tab;
 	new->next = NULL;
 	new->prev = NULL;
-	// case for redirection
-	// case for new->builtin
+	new->builtin = NULL;
+	new->redirections = redirection;
+	new->num_redirections = num_redir;
 	new->hd_file_name = NULL;
 	return (new);
 }
-
-void	ft_lexerdelone(t_lexer **lexer_list, int id)
-{}
 
 t_cmd_parse	*init_cmd(t_parser_data *p_data)
 {
@@ -98,7 +55,7 @@ t_cmd_parse	*init_cmd(t_parser_data *p_data)
 	int		i;
 
 	i = 0;
-	//fucnton for redirection
+	//fucnton for rm redirection of lexer list
 	nb_word = count_words(p_data->lexer_list);
 	tab = malloc(sizeof(char *) * nb_word);
 	if (!tab)
@@ -114,7 +71,8 @@ t_cmd_parse	*init_cmd(t_parser_data *p_data)
 		}
 		nb_word--;
 	}
-	return (cmd_parse_new(tab, ));
+	return (cmd_parse_new(tab,
+			p_data->num_redirection, p_data->redirection));
 }
 
 int	go_parser(t_main *data)
@@ -135,8 +93,8 @@ int	go_parser(t_main *data)
 		if (!data->cmd_parse)
 			data->cmd_parse = node;
 		else
-			cmd_parseadd_back();
+			cmd_parseadd_back(&data->cmd_parse, node);
 		data->lexer_list = parser_data.lexer_list;
 	}
 }
-/////// IN PROGRESS
+/////// IN PROGRESS ////////

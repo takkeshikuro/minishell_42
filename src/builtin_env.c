@@ -1,31 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   builtin_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/23 06:02:15 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/05/25 05:12:35 by tmorikaw         ###   ########.fr       */
+/*   Created: 2023/05/25 08:01:06 by tmorikaw          #+#    #+#             */
+/*   Updated: 2023/05/25 08:12:43 by tmorikaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-int	error(char *s)
+int	built_env(t_main *data, t_cmd_parse *cmd_parse)
 {
-	printf("error : %s\n", s);
-	return (1);
-}
+	int	i;
 
-void	void_error(char *s)
-{
-	printf("error : %s\n", s);
-	return ;
-}
-
-void	exit_bash_error(char *s)
-{
-	printf("bash : %s", s);
-	exit (1);
+	i = 0;
+	(void)cmd_parse;
+	while (data->env_ok[i])
+	{
+		printf("%s\n", data->env_ok[i]);
+		i++;
+	}
+	return (0);
 }

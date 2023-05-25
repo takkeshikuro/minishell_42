@@ -6,7 +6,7 @@
 /*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 05:13:10 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/05/23 06:38:39 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/05/25 03:03:45 by tmorikaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,4 @@ void	ft_lexeradd_back(t_lexer **lst, t_lexer *new)
 		tmp = tmp->next;
 	tmp->next = new;
 	new->prev = tmp;
-}
-
-void	ft_lexerdelone(t_lexer	**lst, int id)
-{
-	
 }

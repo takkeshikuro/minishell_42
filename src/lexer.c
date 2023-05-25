@@ -6,7 +6,7 @@
 /*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 04:07:31 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/05/23 04:29:32 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/05/25 03:31:17 by tmorikaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,21 +97,6 @@ t_operateurs	is_operateur(int c)
 	return (0);
 }
 
-/*
-void	just_see(t_lexer **lexer_list)
-{
-	t_lexer *current = *lexer_list;
-
-    while (current != NULL) {
-		if (current->str)
-       		printf("(str) : %d |", current->i);
-        else 
-			printf("(operateur) : %d |", current->i);
-		current = current->next;
-    }
-	printf("\n");
-}*/
-
 int	go_lexer(t_main *data)
 {
 	int		i;
@@ -134,6 +119,5 @@ int	go_lexer(t_main *data)
 			return (0);
 		i += j;
 	}
-	//just_see(&data->lexer_list);
 	return (1);
 }

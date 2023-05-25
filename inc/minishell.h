@@ -6,7 +6,7 @@
 /*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 05:04:38 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/05/23 06:39:23 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/05/25 08:13:07 by tmorikaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ typedef struct s_main
 	int					pipe_count;
 	char				*input_line;
 	struct s_cmd_parse	*cmd_parse;
+	char				**env_ok;
+
 	char				**tab_input_blank;
 	t_pipex				*pipex;
 	char				*test;
@@ -103,17 +105,24 @@ int						add_to_list(char *str, t_operateurs operateur,
 // lexer_utils.c
 t_lexer					*ft_lexernew(char *str, int operateur);
 void					ft_lexeradd_back(t_lexer **lst, t_lexer *new);
-//delone
+
+// lexer_clear.c
+void					lexer_del_first(t_lexer **lst);
+t_lexer					*lexerclear_one(t_lexer **lst);
+void					ft_lexerdelone(t_lexer **lexer_list, int id);
 
 // parser.c
 int						go_parser(t_main *data);
 t_cmd_parse				*init_cmd(t_parser_data *p_data);
+t_cmd_parse				*cmd_parse_new(char **tab, int num_redir,
+							t_lexer *redirection);
 
 // parser_utils.c
 int						count_pipe(char *s);
 int						count_words(t_lexer *lexer_list);
 void					small_check(t_main *data);
 t_parser_data			init_p_data(t_lexer *lexer_list, t_main *data);
+void					cmd_parseadd_back(t_cmd_parse **lst, t_cmd_parse *new);
 
 // utils.c
 void					free_tab(char **tab);
@@ -121,6 +130,7 @@ int						error(char *s);
 int						ft_nbstr(char const *str, char sep);
 void					void_error(char *s);
 int						is_space(char c);
+void					exit_bash_error(char *s);
 
 // pipe_manage.c
 int						contains_char(char *str, char c);
@@ -142,5 +152,8 @@ void					option_is_here(t_main *data, int ac, int id_arg);
 void					no_option_here(t_main *data, int ac);
 int						check_option(t_main *data, int nb_s);
 void					builtin_echo(t_main *data);
+
+int						built_env(t_main *data, t_cmd_parse *cmd_parse);
+int						built_pwd(t_main *data, t_cmd_parse *cmd_parse);
 
 #endif

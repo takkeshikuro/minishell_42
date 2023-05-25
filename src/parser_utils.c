@@ -6,19 +6,35 @@
 /*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 00:51:08 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/05/23 06:07:33 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/05/25 05:14:26 by tmorikaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
+
+void	cmd_parseadd_back(t_cmd_parse **lst, t_cmd_parse *new)
+{
+	t_cmd_parse	*tmp;
+
+	tmp = *lst;
+	if (*lst == NULL)
+	{
+		*lst = new;
+		return ;
+	}
+	while (tmp->next != NULL)
+		tmp = tmp->next;
+	tmp->next = new;
+	new->prev = tmp;
+}
 
 t_parser_data	init_p_data(t_lexer *lexer_list, t_main *data)
 {
 	t_parser_data	parser_data;
 
 	parser_data.lexer_list = lexer_list;
-	parser_data.redirections = NULL;
-	parser_data.num_redirections = 0;
+	parser_data.redirection = NULL;
+	parser_data.num_redirection = 0;
 	parser_data.data = data;
 	return (parser_data);
 }
@@ -29,13 +45,13 @@ void	small_check(t_main *data)
 
 	current = data->lexer_list;
 	if (current->operateur == PIPE)
-		exit(1); // error parsing
+		exit_bash_error("syntax error near unexpected token `|'");
 	while (current)
 	{
 		if (current->next == NULL)
 		{
 			if (current->operateur)
-				exit(1); // error parsing
+				exit_bash_error("syntax error near unexpected token `newline'");
 		}
 		current = current->next;
 	}
