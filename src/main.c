@@ -6,7 +6,7 @@
 /*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 03:45:35 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/05/25 08:12:39 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/05/25 08:49:04 by tmorikaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ int	mini_loop(t_main *data, char **env)
 	char	*input;
 
 	work = 1;
-	data->env_ok = env;
 	while (work)
 	{
 		input = readline("$>");
