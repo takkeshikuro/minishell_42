@@ -1,2 +1,2 @@
 # minishell_ok
-ok many
+ok many;
