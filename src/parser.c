@@ -3,32 +3,45 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 23:55:37 by keshikuro         #+#    #+#             */
-/*   Updated: 2023/05/25 08:08:27 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/05/28 17:04:41 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-/* void	redirection(t_lexer **lexer_lst)
+void	add_redirection(t_lexer *tmp, t_parser_data *p_data)
+{
+	t_lexer *new;
+
+	new = ft_lexernew(tmp->str, tmp->operateur);
+	if (!new)
+		exit (1);
+	ft_lexeradd_back(&p_data->redirection, new);
+	
+}
+
+void	redirection(t_parser_data *p_data)
 {
 	t_lexer	*tmp;
 
-	tmp = *lexer_lst;
+	tmp = p_data->lexer_list;
 	while (tmp)
 	{
-		if (tmp->operateur >= 2 && tmp->operateur <= 5)
+		if (tmp->operateur)
 		{
-			adddd o
-			ft_lexerdelone(lexer_lst, tmp->i);
+			if (tmp->operateur == PIPE)
+				return ;
 		}
-		if (tmp->next == NULL)
-			break ;
+		else if (tmp->operateur >= 2 && tmp->operateur <= 5)
+			add_redirection(tmp, p_data);
 		tmp = tmp->next;
+		if (!tmp)
+			return ;
 	}
-} */
+}
 
 t_cmd_parse	*cmd_parse_new(char **tab, int num_redir, t_lexer *redirection)
 {
@@ -55,7 +68,9 @@ t_cmd_parse	*init_cmd(t_parser_data *p_data)
 	int		i;
 
 	i = 0;
+	
 	//fucnton for rm redirection of lexer list
+	redirection(p_data);
 	nb_word = count_words(p_data->lexer_list);
 	tab = malloc(sizeof(char *) * nb_word);
 	if (!tab)
@@ -97,4 +112,4 @@ int	go_parser(t_main *data)
 		data->lexer_list = parser_data.lexer_list;
 	}
 }
-/////// IN PROGRESS ////////
+/////// IN PROGRESS ///////
