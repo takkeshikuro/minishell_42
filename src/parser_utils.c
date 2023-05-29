@@ -6,7 +6,7 @@
 /*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 00:51:08 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/05/25 05:14:26 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/05/29 04:39:52 by tmorikaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,20 +59,18 @@ void	small_check(t_main *data)
 
 int	count_words(t_lexer *lexer_list)
 {
-	t_lexer	*current;
-	int		nb;
+	t_lexer	*tmp;
+	int		i;
 
-	current = lexer_list;
-	nb = 0;
-	while (current)
+	i = 0;
+	tmp = lexer_list;
+	while (tmp && tmp->operateur != PIPE)
 	{
-		if (current->str)
-			nb += 1;
-		if (current->next->operateur == PIPE)
-			break ;
-		current = current->next;
+		if (tmp->i >= 0)
+			i++;
+		tmp = tmp->next;
 	}
-	return (nb);
+	return (i);
 }
 
 int	count_pipe(char *s)

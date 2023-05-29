@@ -6,7 +6,7 @@
 /*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 04:07:31 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/05/25 03:31:17 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/05/29 07:02:40 by tmorikaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,10 @@ int	add_to_list(char *str, t_operateurs operateur, t_lexer **lexer_list)
 	node = ft_lexernew(str, operateur);
 	if (!node)
 		return (0);
-	ft_lexeradd_back(lexer_list, node);
+	if (!lexer_list)
+		*lexer_list = node;
+	else
+		ft_lexeradd_back(lexer_list, node);
 	return (1);
 }
 
@@ -95,6 +98,30 @@ t_operateurs	is_operateur(int c)
 		i++;
 	}
 	return (0);
+}
+
+void	pr(t_lexer *lexer_list)
+{
+	t_lexer * tmp;
+	int i = 0;
+
+	printf("\n[CHECK LEXER] ");
+	if (!lexer_list)
+	{
+		printf("lexer_list is clean\n");
+		return ;
+	}
+	tmp = lexer_list;
+	while (tmp)
+	{
+		printf("[node %d: ", i);
+		if (tmp->str)
+			printf("%s]", tmp->str);
+		else
+			printf("%d]", tmp->i);
+		i++;
+		tmp = tmp->next;
+	}
 }
 
 int	go_lexer(t_main *data)

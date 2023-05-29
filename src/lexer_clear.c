@@ -6,7 +6,7 @@
 /*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 03:29:44 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/05/25 03:30:18 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/05/29 05:46:43 by tmorikaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,12 @@ void	ft_lexerdelone(t_lexer **lexer_list, int id)
 
 	start = *lexer_list;
 	tmp = start;
-	if (tmp->i == id)
+	if ((*lexer_list)->i == id)
 	{
-		lexer_del_first(&tmp);
+		lexer_del_first(lexer_list);
 		return ;
 	}
-	while (tmp->i != id)
+	while (tmp && tmp->i != id)
 	{
 		prev = tmp;
 		tmp = tmp->next;
@@ -57,8 +57,8 @@ void	ft_lexerdelone(t_lexer **lexer_list, int id)
 		prev->next = tmp->next;
 	else
 		prev->next = NULL;
-//	if (prev->next)
-//		prev->next->prev = prev;
+	if (prev->next)
+		prev->next->prev = prev;
 	lexerclear_one(&tmp);
 	*lexer_list = start;
 }

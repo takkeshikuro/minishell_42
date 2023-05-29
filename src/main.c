@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
+/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 03:45:35 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/05/27 18:24:41 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/05/29 08:09:27 by tmorikaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,25 @@ void    parsing(t_main *data, char **env)
 	pipe_manage(data, env);
 }
 
+void prrr(t_cmd_parse *cmd_parse)
+{
+	t_cmd_parse *tmp;
+	int i;
+
+	tmp = cmd_parse;
+	printf("tableau envoye a exec :\n");
+	while (tmp)
+	{
+		i = 0;
+		while (tmp->cmd_tab[i])
+		{
+			printf("[%s]\n", tmp->cmd_tab[i]);
+			i++;
+		}
+		tmp = tmp->next;
+	}
+}
+
 void	start_in_loop(t_main *data, char *input)
 {
 	data->input_line = malloc(sizeof(char) * (ft_strlen(input) + 1));
@@ -60,6 +79,10 @@ void	start_in_loop(t_main *data, char *input)
 		exit_bash_error("quote error");
 	if (!go_lexer(data))
 		exit_bash_error("lexing failed.");
+	pr(data->lexer_list); // check lexer list before parsing
+	go_parser(data);
+	ft_putendl_fd("fin parsing", 1);
+	pr(data->lexer_list); // check lexer list after parsing
 }
 
 int	mini_loop(t_main *data, char **env)
@@ -77,14 +100,12 @@ int	mini_loop(t_main *data, char **env)
 			add_history(input);
 			parsing(data, env);
 			wait_childs(data);
+			//prrr(data->cmd_parse); check cmd parse list tab
+			free(input);
+			free(data->input_line);
 		}
 		if (ft_strnstr(input, "exit", 4) != 0)
 			work = 0;
-		if (input[0] != '\0')
-		{
-			free(input);
-			free(data->input_line);
-		}	
 	}
 	if (data->tab_input_blank)
 		free_tab(data->tab_input_blank);

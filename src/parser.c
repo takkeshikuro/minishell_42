@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
+/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 23:55:37 by keshikuro         #+#    #+#             */
-/*   Updated: 2023/05/28 17:04:41 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/05/29 08:11:04 by tmorikaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,13 +64,13 @@ t_cmd_parse	*init_cmd(t_parser_data *p_data)
 {
 	char	**tab;
 	t_lexer	*current;
+	t_cmd_parse	*new_node;
 	int		nb_word;
 	int		i;
 
 	i = 0;
-	
 	//fucnton for rm redirection of lexer list
-	redirection(p_data);
+	//redirection(p_data);
 	nb_word = count_words(p_data->lexer_list);
 	tab = malloc(sizeof(char *) * nb_word);
 	if (!tab)
@@ -80,14 +80,16 @@ t_cmd_parse	*init_cmd(t_parser_data *p_data)
 	{
 		if (current->str)
 		{
-			tab[i++] = ft_strdup(current->str);
+			tab[i] = ft_strdup(current->str);
 			ft_lexerdelone(&p_data->lexer_list, current->i);
 			current = p_data->lexer_list;
+			i++;
 		}
 		nb_word--;
 	}
-	return (cmd_parse_new(tab,
-			p_data->num_redirection, p_data->redirection));
+	new_node = cmd_parse_new(tab,
+			p_data->num_redirection, p_data->redirection);
+	return (new_node);
 }
 
 int	go_parser(t_main *data)
@@ -110,6 +112,12 @@ int	go_parser(t_main *data)
 		else
 			cmd_parseadd_back(&data->cmd_parse, node);
 		data->lexer_list = parser_data.lexer_list;
+		if (data->lexer_list && data->lexer_list->operateur == PIPE)
+			ft_lexerdelone(&data->lexer_list, data->lexer_list->i);
 	}
 }
 /////// IN PROGRESS ///////
+// probleme a fix : pour une lexer list de 1 seul noeud,
+// munmap_chunk() : invalid pointer pour le premier input apres execution de ./minishell
+// redirection a faire
+// fonction pour reset le id de lexer list

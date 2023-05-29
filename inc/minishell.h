@@ -6,7 +6,7 @@
 /*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 05:04:38 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/05/25 08:13:07 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/05/29 08:06:08 by tmorikaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <sys/uio.h>
 # include <sys/wait.h>
 # include <unistd.h>
+
 
 typedef struct s_pipex
 {
@@ -59,24 +60,16 @@ typedef struct s_lexer
 typedef struct s_main
 {
 	int					ok;
-	int					pipe_count;
 	char				*input_line;
+	int					pipe_count;
+	t_lexer				*lexer_list;
 	struct s_cmd_parse	*cmd_parse;
+	
 	char				**env_ok;
-
 	char				**tab_input_blank;
 	t_pipex				*pipex;
 	char				*test;
-	t_lexer				*lexer_list;
 }						t_main;
-
-typedef struct s_parser_data
-{
-	t_lexer				*lexer_list;
-	t_lexer				*redirection;
-	int					num_redirection;
-	struct s_main		*data;
-}						t_parser_data;
 
 typedef struct s_cmd_parse
 {
@@ -88,6 +81,14 @@ typedef struct s_cmd_parse
 	struct s_cmd_parse	*next;
 	struct s_cmd_parse	*prev;
 }						t_cmd_parse;
+
+typedef struct s_parser_data
+{
+	t_lexer				*lexer_list;
+	t_lexer				*redirection;
+	int					num_redirection;
+	struct s_main		*data;
+}						t_parser_data;
 
 // main.c
 int						mini_loop(t_main *data, char **env);
@@ -155,5 +156,8 @@ void					builtin_echo(t_main *data);
 
 int						built_env(t_main *data, t_cmd_parse *cmd_parse);
 int						built_pwd(t_main *data, t_cmd_parse *cmd_parse);
+
+// echeck list
+void	pr(t_lexer *lexer_list);
 
 #endif
