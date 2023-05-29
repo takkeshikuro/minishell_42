@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 23:55:37 by keshikuro         #+#    #+#             */
-/*   Updated: 2023/05/29 08:11:04 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/05/30 01:26:34 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,33 +14,50 @@
 
 void	add_redirection(t_lexer *tmp, t_parser_data *p_data)
 {
+	char	*str_file;
 	t_lexer *new;
-
-	new = ft_lexernew(tmp->str, tmp->operateur);
+	int	id;
+	int id_next;
+	
+	ft_putendl_fd("[check redir] adding redir", 1);
+	str_file = ft_strdup(tmp->next->str);
+	id = tmp->i;
+	id_next = tmp->next->i;
+	new = ft_lexernew(str_file, tmp->operateur);
 	if (!new)
 		exit (1);
-	ft_lexeradd_back(&p_data->redirection, new);
-	
+	if (!p_data->redirection)
+		p_data->redirection = new;
+	else
+		ft_lexeradd_back(&p_data->redirection, new);
+	ft_lexerdelone(&p_data->lexer_list, id);
+	ft_lexerdelone(&p_data->lexer_list, id_next);
+	p_data->num_redirection++;
 }
 
 void	redirection(t_parser_data *p_data)
 {
 	t_lexer	*tmp;
-
+	
 	tmp = p_data->lexer_list;
-	while (tmp)
-	{
-		if (tmp->operateur)
-		{
-			if (tmp->operateur == PIPE)
-				return ;
-		}
-		else if (tmp->operateur >= 2 && tmp->operateur <= 5)
-			add_redirection(tmp, p_data);
+	while (tmp && !tmp->operateur)
 		tmp = tmp->next;
-		if (!tmp)
+	if (!tmp)
+	{
+		ft_putendl_fd("[check redir]no operateur found", 1);
+		return ;
+	}
+	ft_putendl_fd("[check redir]operateur found", 1);
+	if (tmp->operateur)
+	{
+		if (tmp->operateur == PIPE)
+			return ;
+		else
+			add_redirection(tmp, p_data);
+		if (!tmp->next)
 			return ;
 	}
+	redirection(p_data);	
 }
 
 t_cmd_parse	*cmd_parse_new(char **tab, int num_redir, t_lexer *redirection)
@@ -54,8 +71,8 @@ t_cmd_parse	*cmd_parse_new(char **tab, int num_redir, t_lexer *redirection)
 	new->next = NULL;
 	new->prev = NULL;
 	new->builtin = NULL;
-	new->redirections = redirection;
-	new->num_redirections = num_redir;
+	new->redirection = redirection;
+	new->num_redirection = num_redir;
 	new->hd_file_name = NULL;
 	return (new);
 }
@@ -69,8 +86,8 @@ t_cmd_parse	*init_cmd(t_parser_data *p_data)
 	int		i;
 
 	i = 0;
-	//fucnton for rm redirection of lexer list
-	//redirection(p_data);
+	redirection(p_data);
+	ft_putendl_fd("redir ok", 1);
 	nb_word = count_words(p_data->lexer_list);
 	tab = malloc(sizeof(char *) * nb_word);
 	if (!tab)
@@ -119,5 +136,5 @@ int	go_parser(t_main *data)
 /////// IN PROGRESS ///////
 // probleme a fix : pour une lexer list de 1 seul noeud,
 // munmap_chunk() : invalid pointer pour le premier input apres execution de ./minishell
-// redirection a faire
+
 // fonction pour reset le id de lexer list

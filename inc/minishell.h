@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 05:04:38 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/05/29 08:06:08 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/05/30 00:38:33 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,9 @@ typedef struct s_cmd_parse
 {
 	char				**cmd_tab;
 	int					(*builtin)(t_main *, struct s_cmd_parse *);
-	int					num_redirections;
+	int					num_redirection;
 	char				*hd_file_name;
-	t_lexer				*redirections;
+	t_lexer				*redirection;
 	struct s_cmd_parse	*next;
 	struct s_cmd_parse	*prev;
 }						t_cmd_parse;
