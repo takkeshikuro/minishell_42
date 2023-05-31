@@ -6,7 +6,7 @@
 /*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 00:51:08 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/05/29 04:39:52 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/05/31 07:45:34 by tmorikaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ t_parser_data	init_p_data(t_lexer *lexer_list, t_main *data)
 
 	parser_data.lexer_list = lexer_list;
 	parser_data.redirection = NULL;
-	parser_data.num_redirection = 0;
+	parser_data.num_redir = 0;
 	parser_data.data = data;
 	return (parser_data);
 }

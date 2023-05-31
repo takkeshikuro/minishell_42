@@ -6,7 +6,7 @@
 /*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 03:45:35 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/05/29 08:09:27 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/05/31 07:44:37 by tmorikaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,10 +79,14 @@ void	start_in_loop(t_main *data, char *input)
 		exit_bash_error("quote error");
 	if (!go_lexer(data))
 		exit_bash_error("lexing failed.");
+	ft_putendl_fd("[main check] fin lexing", 1);
 	pr(data->lexer_list); // check lexer list before parsing
 	go_parser(data);
-	ft_putendl_fd("fin parsing", 1);
+	ft_putendl_fd("[main check] fin parsing", 1);
 	pr(data->lexer_list); // check lexer list after parsing
+	//if (!quote_manage(data) || quote_manage(data) == 2)
+	//	expanding(data);
+	
 }
 
 int	mini_loop(t_main *data, char **env)

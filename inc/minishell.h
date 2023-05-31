@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
+/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 05:04:38 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/05/30 00:38:33 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/05/31 05:26:22 by tmorikaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ typedef struct s_parser_data
 {
 	t_lexer				*lexer_list;
 	t_lexer				*redirection;
-	int					num_redirection;
+	int					num_redir;
 	struct s_main		*data;
 }						t_parser_data;
 
@@ -124,6 +124,20 @@ int						count_words(t_lexer *lexer_list);
 void					small_check(t_main *data);
 t_parser_data			init_p_data(t_lexer *lexer_list, t_main *data);
 void					cmd_parseadd_back(t_cmd_parse **lst, t_cmd_parse *new);
+
+// expander.c
+void					expanding(t_main *data);
+void					expand_dollard(t_main *data, t_cmd_parse *cmd_node);
+char					*go_find(char **env, char *s);
+void					rm_dollard(t_main *data, t_cmd_parse *cmd_node);
+
+// expander_utils.c
+int						check_env_variable(t_main *data, char *s);
+int						check_env_bis(char **env, char *str_dol);
+char					*good_variable(char *s);
+void					copy_past(t_cmd_parse *cmd_node, int i, int j, \
+						char *str_replace);
+
 
 // utils.c
 void					free_tab(char **tab);
