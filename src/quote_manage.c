@@ -6,7 +6,7 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 06:31:03 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/06/02 18:34:53 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/06/02 18:50:18 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,6 @@ int	quote_manage(t_main *data)
 					return (rm_quote(cmd_node, i, 39));		// simple quote
 				else if (cmd_node->cmd_tab[i][j] == 34)
 					return (rm_quote(cmd_node, i, 34)); // double quote
-				fprintf(stderr, "ca passeavc i=%d te j=%d et %s|", i, j, cmd_node->cmd_tab[i]);
 				j++;
 			}
 			i++;
@@ -116,4 +115,3 @@ int	quote_manage(t_main *data)
 	}
 	return (0);
 }
-//in progress

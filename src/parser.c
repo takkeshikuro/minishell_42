@@ -6,7 +6,7 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 23:55:37 by keshikuro         #+#    #+#             */
-/*   Updated: 2023/06/02 18:35:34 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/06/02 18:48:45 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,9 +84,7 @@ t_cmd_parse	*init_cmd(t_parser_data *p_data)
 
 	i = 0;
 	redirection(p_data);
-//	ft_putendl_fd("[check parsing] redir ok", 1);
 	nb_word = count_words(p_data->lexer_list);
-	//fprintf(stderr, "%d, nb\n", nb_word);
 	tab = (char **)malloc(sizeof(char *) * nb_word);
 	if (!tab)
 		exit(1);
@@ -121,7 +119,6 @@ int	go_parser(t_main *data)
 	{
 		parser_data = init_p_data(data->lexer_list, data);
 		node = init_cmd(&parser_data);
-		//ok++;
 		if (!node)
 			exit(1);
 		if (!data->cmd_parse)
@@ -132,7 +129,6 @@ int	go_parser(t_main *data)
 		if (data->lexer_list && data->lexer_list->operateur == PIPE)
 			ft_lexerdelone(&data->lexer_list, data->lexer_list->i);
 	}
-	//fprintf(stderr, "%d\n", ok);
 	return (1);
 }
 /////// IN PROGRESS ///////

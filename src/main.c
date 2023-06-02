@@ -6,7 +6,7 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 03:45:35 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/06/02 18:32:14 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/06/02 18:57:36 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,22 +82,24 @@ void prrr(t_cmd_parse *cmd_parse, int ok)			//for parser
 	int i;
 
 	tmp = cmd_parse;
-	fprintf(stderr, "[CHECK AFTER PARSING]tab");
+	fprintf(stderr, "[FINAL LIST]");
 	if (ok == 1)
-		fprintf(stderr, " before expander\n");
+		fprintf(stderr, " before expander :");
 	else
-		fprintf(stderr, " final tab\n");
+		fprintf(stderr, " after expander :");
 	while (tmp)
 	{
 		i = 0;
-		fprintf(stderr, "new node :\n");
+		fprintf(stderr, " | new node->cmd_tab = ");
 		while (tmp->cmd_tab[i])
 		{
-			fprintf(stderr, "[%s]\n", tmp->cmd_tab[i]);
+			fprintf(stderr, "[%s]", tmp->cmd_tab[i]);
 			i++;
 		}
 		tmp = tmp->next;
 	}
+	fprintf(stderr, "\n");
+
 }
 
 void	start_in_loop(t_main *data, char *input)
@@ -113,16 +115,14 @@ void	start_in_loop(t_main *data, char *input)
 	pr(data->lexer_list);                    // check lexer list before parsing
 	if (!go_parser(data))
 		exit_bash_error("parsing failed.");
-//	prrr(data->cmd_parse, 1);				// check final list 
+	prrr(data->cmd_parse, 1);				// check final list 
 	pr(data->lexer_list);                  // check lexer list after parsing
 	if (!quote_manage(data))
 	{
-		fprintf(stderr, "[MAIN] fin va dans expander\n");
+		fprintf(stderr, "[MAIN] va dans expander\n");
 	//	expanding(data);
-		fprintf(stderr, "fin expander\n");
+		fprintf(stderr, "[MAIN] fin expander\n");
 	}
-	fprintf(stderr, "[MAIN] fin quote check\n");
-		//fprintf(stderr, "okay--------");
 	prrr(data->cmd_parse, 0);
 }
 
