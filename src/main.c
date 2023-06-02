@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 03:45:35 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/05/31 07:44:37 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/06/02 18:32:14 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,19 +50,50 @@ void    parsing(t_main *data, char **env)
 	pipe_manage(data, env);
 }
 
-void prrr(t_cmd_parse *cmd_parse)
+
+void	pr(t_lexer *lexer_list)			// for lexer
+{
+	t_lexer * tmp;
+	int i = 0;
+
+	fprintf(stderr, "[CHECK LEXER] ");
+	if (!lexer_list)
+	{
+		fprintf(stderr, "lexer_list is clean\n");
+		return ;
+	}
+	tmp = lexer_list;
+	while (tmp)
+	{
+		fprintf(stderr, "[node %d: ", i);
+		if (tmp->str)
+			fprintf(stderr, "%s]", tmp->str);
+		else
+			fprintf(stderr, "%d]", tmp->i);
+		i++;
+		tmp = tmp->next;
+	}
+	fprintf(stderr, "\n");
+}
+
+void prrr(t_cmd_parse *cmd_parse, int ok)			//for parser
 {
 	t_cmd_parse *tmp;
 	int i;
 
 	tmp = cmd_parse;
-	printf("tableau envoye a exec :\n");
+	fprintf(stderr, "[CHECK AFTER PARSING]tab");
+	if (ok == 1)
+		fprintf(stderr, " before expander\n");
+	else
+		fprintf(stderr, " final tab\n");
 	while (tmp)
 	{
 		i = 0;
+		fprintf(stderr, "new node :\n");
 		while (tmp->cmd_tab[i])
 		{
-			printf("[%s]\n", tmp->cmd_tab[i]);
+			fprintf(stderr, "[%s]\n", tmp->cmd_tab[i]);
 			i++;
 		}
 		tmp = tmp->next;
@@ -79,14 +110,20 @@ void	start_in_loop(t_main *data, char *input)
 		exit_bash_error("quote error");
 	if (!go_lexer(data))
 		exit_bash_error("lexing failed.");
-	ft_putendl_fd("[main check] fin lexing", 1);
-	pr(data->lexer_list); // check lexer list before parsing
-	go_parser(data);
-	ft_putendl_fd("[main check] fin parsing", 1);
-	pr(data->lexer_list); // check lexer list after parsing
-	//if (!quote_manage(data) || quote_manage(data) == 2)
+	pr(data->lexer_list);                    // check lexer list before parsing
+	if (!go_parser(data))
+		exit_bash_error("parsing failed.");
+//	prrr(data->cmd_parse, 1);				// check final list 
+	pr(data->lexer_list);                  // check lexer list after parsing
+	if (!quote_manage(data))
+	{
+		fprintf(stderr, "[MAIN] fin va dans expander\n");
 	//	expanding(data);
-	
+		fprintf(stderr, "fin expander\n");
+	}
+	fprintf(stderr, "[MAIN] fin quote check\n");
+		//fprintf(stderr, "okay--------");
+	prrr(data->cmd_parse, 0);
 }
 
 int	mini_loop(t_main *data, char **env)

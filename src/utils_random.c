@@ -1,16 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_1.c                                          :+:      :+:    :+:   */
+/*   utils_random.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 05:38:24 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/05/23 06:04:55 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/06/02 14:24:37 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
+
+int	how_much_quote(const char *str, int sep)
+{
+	int	i;
+	int	nb_quote;
+
+	i = 0;
+	nb_quote = 0;
+	while (str[i])
+	{
+		if (str[i] == sep)
+			nb_quote += 1;
+		i++;
+	}
+	if (nb_quote % 2 == 0)
+		return (1);
+	else
+		return (0);
+}
 
 int	is_space(char c)
 {

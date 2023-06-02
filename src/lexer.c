@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 04:07:31 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/05/29 07:02:40 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/06/02 16:07:31 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,30 +100,6 @@ t_operateurs	is_operateur(int c)
 	return (0);
 }
 
-void	pr(t_lexer *lexer_list)
-{
-	t_lexer * tmp;
-	int i = 0;
-
-	printf("\n[CHECK LEXER] ");
-	if (!lexer_list)
-	{
-		printf("lexer_list is clean\n");
-		return ;
-	}
-	tmp = lexer_list;
-	while (tmp)
-	{
-		printf("[node %d: ", i);
-		if (tmp->str)
-			printf("%s]", tmp->str);
-		else
-			printf("%d]", tmp->i);
-		i++;
-		tmp = tmp->next;
-	}
-}
-
 int	go_lexer(t_main *data)
 {
 	int		i;
@@ -144,7 +120,10 @@ int	go_lexer(t_main *data)
 		}
 		if (j < 0)
 			return (0);
-		i += j;
+		i += (j + 1);
+		if (i >= ft_strlen(data->input_line))
+			break ;
 	}
+	rm_space(data->lexer_list);
 	return (1);
 }

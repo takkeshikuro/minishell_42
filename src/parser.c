@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 23:55:37 by keshikuro         #+#    #+#             */
-/*   Updated: 2023/05/31 07:48:24 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/06/02 18:35:34 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,7 @@ void	redirection(t_parser_data *p_data)
 	while (tmp && !tmp->operateur)
 		tmp = tmp->next;
 	if (!tmp)
-	{
-		ft_putendl_fd("[check redir]no operateur found", 1);
 		return ;
-	}
 	ft_putendl_fd("[check redir] operateur found", 1);
 	if (tmp->operateur)
 	{
@@ -87,9 +84,10 @@ t_cmd_parse	*init_cmd(t_parser_data *p_data)
 
 	i = 0;
 	redirection(p_data);
-	ft_putendl_fd("[check parsing] redir ok", 1);
+//	ft_putendl_fd("[check parsing] redir ok", 1);
 	nb_word = count_words(p_data->lexer_list);
-	tab = malloc(sizeof(char *) * nb_word);
+	//fprintf(stderr, "%d, nb\n", nb_word);
+	tab = (char **)malloc(sizeof(char *) * nb_word);
 	if (!tab)
 		exit(1);
 	current = p_data->lexer_list;
@@ -104,6 +102,7 @@ t_cmd_parse	*init_cmd(t_parser_data *p_data)
 		}
 		nb_word--;
 	}
+	tab[i] = 0;
 	new_node = cmd_parse_new(tab, p_data->num_redir, p_data->redirection);
 	return (new_node);
 }
@@ -113,7 +112,8 @@ int	go_parser(t_main *data)
 	t_cmd_parse		*node;
 	t_parser_data	parser_data;
 	int				nb_pipe;
-
+	int ok = 0;
+	
 	data->cmd_parse = NULL;
 	nb_pipe = count_pipe(data->input_line);
 	small_check(data);
@@ -121,6 +121,7 @@ int	go_parser(t_main *data)
 	{
 		parser_data = init_p_data(data->lexer_list, data);
 		node = init_cmd(&parser_data);
+		//ok++;
 		if (!node)
 			exit(1);
 		if (!data->cmd_parse)
@@ -131,6 +132,8 @@ int	go_parser(t_main *data)
 		if (data->lexer_list && data->lexer_list->operateur == PIPE)
 			ft_lexerdelone(&data->lexer_list, data->lexer_list->i);
 	}
+	//fprintf(stderr, "%d\n", ok);
+	return (1);
 }
 /////// IN PROGRESS ///////
 // probleme a fix : pour une lexer list de 1 seul noeud,

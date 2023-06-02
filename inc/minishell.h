@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 05:04:38 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/05/31 05:26:22 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/06/02 15:54:05 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ int						add_to_list(char *str, t_operateurs operateur,
 // lexer_utils.c
 t_lexer					*ft_lexernew(char *str, int operateur);
 void					ft_lexeradd_back(t_lexer **lst, t_lexer *new);
+void	rm_space(t_lexer *lst);
 
 // lexer_clear.c
 void					lexer_del_first(t_lexer **lst);
@@ -170,6 +171,12 @@ void					builtin_echo(t_main *data);
 
 int						built_env(t_main *data, t_cmd_parse *cmd_parse);
 int						built_pwd(t_main *data, t_cmd_parse *cmd_parse);
+
+int	quote_manage(t_main *data);
+int	rm_quote(t_cmd_parse *node, int i_tab, int quote);
+char	*ft_strim(char const *s1, int quote);
+int	check_set(char c, int quote);
+
 
 // echeck list
 void	pr(t_lexer *lexer_list);
