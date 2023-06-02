@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expander.c                                         :+:      :+:    :+:   */
+/*   expander_dol.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 00:37:57 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/05/31 05:21:59 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/06/02 23:54:47 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,10 +87,15 @@ void	expand_dollard(t_main *data, t_cmd_parse *cmd_node)
 	}
 }
 
+/// a voir pour opti, la c complique frr, pb apres expand_dollard()
 void	expanding_bis(t_main *data, t_cmd_parse *cmd_node, int i)
 {
+	
 	if (check_env_variable(data, cmd_node->cmd_tab[i]))
+	{
+		fprintf(stderr, "go into expand dollard\n");
 		expand_dollard(data, cmd_node);
+	}
 	else
 		rm_dollard(data, cmd_node);
 }

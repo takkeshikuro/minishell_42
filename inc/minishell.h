@@ -6,7 +6,7 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 05:04:38 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/06/02 15:54:05 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/06/02 23:08:47 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ typedef struct s_main
 	struct s_cmd_parse	*cmd_parse;
 	
 	char				**env_ok;
+	char				**env_bis;
 	char				**tab_input_blank;
 	t_pipex				*pipex;
 	char				*test;
@@ -126,6 +127,14 @@ void					small_check(t_main *data);
 t_parser_data			init_p_data(t_lexer *lexer_list, t_main *data);
 void					cmd_parseadd_back(t_cmd_parse **lst, t_cmd_parse *new);
 
+// quote_manage.c
+int						quote_manage(t_main *data);
+int						rm_quote(t_cmd_parse *node, int i_tab, int quote);
+
+// quote_mana_utils.c
+char					*ft_strim(char const *s1, int quote);
+int						check_set(char c, int quote);
+
 // expander.c
 void					expanding(t_main *data);
 void					expand_dollard(t_main *data, t_cmd_parse *cmd_node);
@@ -172,10 +181,6 @@ void					builtin_echo(t_main *data);
 int						built_env(t_main *data, t_cmd_parse *cmd_parse);
 int						built_pwd(t_main *data, t_cmd_parse *cmd_parse);
 
-int	quote_manage(t_main *data);
-int	rm_quote(t_cmd_parse *node, int i_tab, int quote);
-char	*ft_strim(char const *s1, int quote);
-int	check_set(char c, int quote);
 
 
 // echeck list

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expander_utils.c                                   :+:      :+:    :+:   */
+/*   expander_dol_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 04:44:26 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/05/31 05:12:39 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/06/02 23:51:14 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ int	check_env_variable(t_main *data, char *s)
 		i++;
 	if (s[i + 1] == '\0')
 		return (1);
+	i++;
 	start_dol = i;
 	while (s[i])
 	{
@@ -88,7 +89,7 @@ int	check_env_variable(t_main *data, char *s)
 		size++;
 	}
 	str_dol = ft_substr(s, start_dol, size);
-	if (check_env_bis(data->env_ok, str_dol))
+	if (check_env_bis(data->env_bis, str_dol))
 	{
 		free(str_dol);
 		return (1);

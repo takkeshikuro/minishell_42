@@ -6,7 +6,7 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 03:45:35 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/06/02 19:00:06 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/06/02 23:47:32 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ void	start_in_loop(t_main *data, char *input)
 	if (!quote_manage(data))
 	{
 		fprintf(stderr, "[MAIN] va dans expander\n");
-	//	expanding(data);
+		expanding(data);
 		fprintf(stderr, "[MAIN] fin expander\n");
 	}
 	prrr(data->cmd_parse, 0);
@@ -151,6 +151,24 @@ int	mini_loop(t_main *data, char **env)
 		free_tab(data->tab_input_blank);
 	clear_history();
 }
+void	get_env(t_main *data, char **env)
+{
+	int	i;
+
+	i = 0;
+	while (env[i])
+		i++;
+	data->env_bis = malloc(sizeof(char *) * i);
+	if (!data->env_bis)
+		exit (1);
+	i = 0;
+	while (env[i])
+	{
+		data->env_bis[i] = ft_strdup(env[i]);
+		i++;
+	}
+	data->env_bis[i] = 0;
+}
 
 int	main(int ac, char **av, char **env)
 {
@@ -161,6 +179,7 @@ int	main(int ac, char **av, char **env)
 		return (error("run ./minishell without arg"));
 	if (!env[0])
 		return (error("env"));
+	get_env(&data, env);
 	mini_loop(&data, env);
 	return (0);
 }
