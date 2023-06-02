@@ -6,7 +6,7 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 03:45:35 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/06/02 18:57:36 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/06/02 19:00:06 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,6 @@ void prrr(t_cmd_parse *cmd_parse, int ok)			//for parser
 		tmp = tmp->next;
 	}
 	fprintf(stderr, "\n");
-
 }
 
 void	start_in_loop(t_main *data, char *input)
