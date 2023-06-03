@@ -6,7 +6,7 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 05:04:38 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/06/02 23:08:47 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/06/03 12:10:57 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,7 @@ int						check_set(char c, int quote);
 
 // expander.c
 void					expanding(t_main *data);
-void					expand_dollard(t_main *data, t_cmd_parse *cmd_node);
+void	expand_dollard(t_main *data, t_cmd_parse *cmd_node, int nb_env);
 char					*go_find(char **env, char *s);
 void					rm_dollard(t_main *data, t_cmd_parse *cmd_node);
 
