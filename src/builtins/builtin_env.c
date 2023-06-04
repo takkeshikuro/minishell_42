@@ -1,26 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_stuff.c                                       :+:      :+:    :+:   */
+/*   builtin_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/23 06:03:08 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/05/23 06:03:21 by tmorikaw         ###   ########.fr       */
+/*   Created: 2023/05/25 08:01:06 by tmorikaw          #+#    #+#             */
+/*   Updated: 2023/06/04 16:03:57 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
-void	free_tab(char **tab)
+int	built_env(t_main *data, t_cmd_parse *cmd_parse)
 {
-	int		i;
+	int	i;
 
 	i = 0;
-	while (tab[i])
+	(void)cmd_parse;
+	while (data->env_ok[i])
 	{
-		free(tab[i]);
+		printf("%s\n", data->env_ok[i]);
 		i++;
 	}
-	free(tab);
+	return (0);
 }

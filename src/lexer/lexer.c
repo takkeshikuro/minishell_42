@@ -6,11 +6,11 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 04:07:31 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/06/04 02:14:46 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/06/04 16:04:45 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 int	add_to_list(char *str, t_operateurs operateur, t_lexer **lexer_list)
 {

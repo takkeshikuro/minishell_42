@@ -1,31 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   free_stuff.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/23 06:02:15 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/05/25 05:12:35 by tmorikaw         ###   ########.fr       */
+/*   Created: 2023/05/23 06:03:08 by tmorikaw          #+#    #+#             */
+/*   Updated: 2023/06/04 16:04:19 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
-int	error(char *s)
+void	free_tab(char **tab)
 {
-	printf("error : %s\n", s);
-	return (1);
-}
+	int		i;
 
-void	void_error(char *s)
-{
-	printf("error : %s\n", s);
-	return ;
-}
-
-void	exit_bash_error(char *s)
-{
-	printf("bash : %s", s);
-	exit (1);
+	i = 0;
+	while (tab[i])
+	{
+		free(tab[i]);
+		i++;
+	}
+	free(tab);
 }

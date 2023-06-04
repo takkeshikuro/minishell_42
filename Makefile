@@ -5,9 +5,9 @@ CFLAGS 	=   -I /inc/minishell.h
 
 LIBFT  	= ./inc/libft/
 LIBFLAGS = -lreadline
-SRCS 	= $(wildcard ./src/*.c ./inc/minishell.h) 
+SRCS 	= $(wildcard ./src/*/*.c ./inc/minishell.h) 
 OBJS 	= $(SRCS:.c=.o)
-OBJS_T	= $(wildcard ./src/*.o)
+OBJS_T	= $(wildcard ./src/*/*.o)
 
 SUBM_STATE := $(shell find inc/libft -type f)
 

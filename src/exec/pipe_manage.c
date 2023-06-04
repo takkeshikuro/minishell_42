@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_manage.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marecarrayan <marecarrayan@student.42.f    +#+  +:+       +#+        */
+/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 15:28:27 by marecarraya       #+#    #+#             */
-/*   Updated: 2023/05/16 15:14:02 by marecarraya      ###   ########.fr       */
+/*   Updated: 2023/06/04 16:04:25 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 int	contains_char(char *str, char c)
 {

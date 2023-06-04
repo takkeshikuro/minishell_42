@@ -6,11 +6,11 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 23:55:37 by keshikuro         #+#    #+#             */
-/*   Updated: 2023/06/04 02:17:27 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/06/04 16:04:54 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 void	add_redirection(t_lexer *tmp, t_parser_data *p_data)
 {

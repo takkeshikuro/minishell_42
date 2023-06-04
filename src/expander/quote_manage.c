@@ -6,11 +6,11 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 06:31:03 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/06/04 02:21:41 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/06/04 16:04:35 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 int	rm_quote(t_cmd_parse *node, int i_tab, int quote)
 {

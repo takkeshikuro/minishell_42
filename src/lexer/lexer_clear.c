@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_clear.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 03:29:44 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/05/29 05:46:43 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/06/04 16:04:38 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 void	lexer_del_first(t_lexer **lst)
 {

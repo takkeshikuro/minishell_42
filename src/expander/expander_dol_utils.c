@@ -6,11 +6,11 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 04:44:26 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/06/04 03:33:44 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/06/04 16:04:28 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 char	*check_char_after(t_cmd_parse *node, int i)
 {

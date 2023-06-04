@@ -6,11 +6,11 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 22:30:04 by keshikuro         #+#    #+#             */
-/*   Updated: 2023/06/02 22:30:22 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/06/04 16:04:33 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 int	check_set(char c, int quote)
 {

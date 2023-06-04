@@ -6,11 +6,11 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 00:37:57 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/06/04 03:34:55 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/06/04 16:04:30 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 void	rm_dollard(t_cmd_parse *cmd_node)
 {

@@ -6,11 +6,11 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 00:51:08 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/06/02 18:05:07 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/06/04 16:04:49 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 void	cmd_parseadd_back(t_cmd_parse **lst, t_cmd_parse *new)
 {
