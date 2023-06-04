@@ -6,7 +6,7 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 03:45:35 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/06/02 23:47:32 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/06/04 02:20:58 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ void	start_in_loop(t_main *data, char *input)
 	prrr(data->cmd_parse, 0);
 }
 
-int	mini_loop(t_main *data, char **env)
+void	mini_loop(t_main *data, char **env)
 {
 	int		work;
 	char	*input;
@@ -140,7 +140,6 @@ int	mini_loop(t_main *data, char **env)
 			add_history(input);
 			parsing(data, env);
 			wait_childs(data);
-			//prrr(data->cmd_parse); check cmd parse list tab
 			free(input);
 			free(data->input_line);
 		}

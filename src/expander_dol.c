@@ -6,13 +6,13 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 00:37:57 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/06/03 12:32:09 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/06/04 03:34:55 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-void	rm_dollard(t_main *data, t_cmd_parse *cmd_node)
+void	rm_dollard(t_cmd_parse *cmd_node)
 {
 	int	i;
 	int	j;
@@ -26,7 +26,7 @@ void	rm_dollard(t_main *data, t_cmd_parse *cmd_node)
 			if (cmd_node->cmd_tab[i][j] == '$' && j == 0)
 				cmd_node->cmd_tab[i][j] = '\0';
 			else if (cmd_node->cmd_tab[i][j] == '$' && j > 0)
-				cmd_node->cmd_tab[i] = ft_substr(cmd_node->cmd_tab[i], 0, j);
+				cmd_node->cmd_tab[i] = ft_substr(cmd_node->cmd_tab[i], 0, (j - 1));
 			j++;
 		}
 		i++;
@@ -81,7 +81,6 @@ void	expand_dollard(t_main *data, t_cmd_parse *cmd_node, int nb_env)
 	}
 }
 
-/// a voir pour opti, la c complique frr, pb apres expand_dollard()
 void	expanding_bis(t_main *data, t_cmd_parse *cmd_node, int i)
 {
 	int nb_env;
@@ -90,7 +89,7 @@ void	expanding_bis(t_main *data, t_cmd_parse *cmd_node, int i)
 	if (nb_env >= 0)
 		expand_dollard(data, cmd_node, nb_env);
 	else
-		rm_dollard(data, cmd_node);
+		rm_dollard(cmd_node);
 }
 
 void	expanding(t_main *data)

@@ -6,7 +6,7 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 04:07:31 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/06/02 16:07:31 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/06/04 02:14:46 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ t_operateurs	is_operateur(int c)
 
 int	go_lexer(t_main *data)
 {
-	int		i;
+	long unsigned int		i;
 	int		j;
 
 	i = 0;

@@ -6,7 +6,7 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 23:55:37 by keshikuro         #+#    #+#             */
-/*   Updated: 2023/06/02 18:48:45 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/06/04 02:17:27 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ t_cmd_parse	*init_cmd(t_parser_data *p_data)
 	i = 0;
 	redirection(p_data);
 	nb_word = count_words(p_data->lexer_list);
-	tab = (char **)malloc(sizeof(char *) * nb_word);
+	tab = (char **)malloc(sizeof(char *) * (nb_word + 1));
 	if (!tab)
 		exit(1);
 	current = p_data->lexer_list;
@@ -109,11 +109,10 @@ int	go_parser(t_main *data)
 {
 	t_cmd_parse		*node;
 	t_parser_data	parser_data;
-	int				nb_pipe;
-	int ok = 0;
+	//int				nb_pipe;
 	
+	//nb_pipe = count_pipe(data->input_line);
 	data->cmd_parse = NULL;
-	nb_pipe = count_pipe(data->input_line);
 	small_check(data);
 	while (data->lexer_list)
 	{
@@ -131,8 +130,3 @@ int	go_parser(t_main *data)
 	}
 	return (1);
 }
-/////// IN PROGRESS ///////
-// probleme a fix : pour une lexer list de 1 seul noeud,
-// munmap_chunk() : invalid pointer pour le premier input apres execution de ./minishell
-
-// fonction pour reset le id de lexer list

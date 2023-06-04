@@ -6,7 +6,7 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 06:31:03 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/06/02 22:30:30 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/06/04 02:21:41 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,14 @@ int	rm_quote(t_cmd_parse *node, int i_tab, int quote)
 			i++;
 			j++;
 		}
-		new[i] == '\0';
+		new[i] = '\0';
 		node->cmd_tab[i_tab] = ft_strdup(new);
 	}
 	
 	if (quote == 39)
-		return (0);
-	else
 		return (1);
+	else
+		return (0);
 }
 
 int	quote_manage(t_main *data)

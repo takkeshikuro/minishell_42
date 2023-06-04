@@ -48,10 +48,8 @@ void	ft_lexeradd_back(t_lexer **lst, t_lexer *new)
 void	rm_space(t_lexer *lst)
 {
 	t_lexer	*tmp;
-	int	i;
-	
+
 	tmp = lst;
-	i = 0;
 	while (tmp)
 	{
 		if (tmp->str)
