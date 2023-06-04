@@ -6,7 +6,7 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 05:04:38 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/06/04 02:16:08 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/06/04 16:37:44 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,57 +91,54 @@ typedef struct s_parser_data
 	struct s_main		*data;
 }						t_parser_data;
 
-// main.c
+// main.c & utils
 void					mini_loop(t_main *data, char **env);
 void					parsing(t_main *data, char **env);
 void					start_in_loop(t_main *data, char *input);
+void					pr(t_lexer *lexer_list);			// for lexer
+void					prrr(t_cmd_parse *cmd_parse, int ok);		//for parser
+void					get_env(t_main *data, char **env);
 
-//lexer.c
+
+//lexer.c  && utils && clear
 int						go_lexer(t_main *data);
 t_operateurs			is_operateur(int c);
 int						add_operateur(char *str, int i, t_lexer **lexer_list);
 int						add_word(char *str, int i, t_lexer **lexer_list);
 int						add_to_list(char *str, t_operateurs operateur,
 							t_lexer **lexer_list);
-
-// lexer_utils.c
 t_lexer					*ft_lexernew(char *str, int operateur);
 void					ft_lexeradd_back(t_lexer **lst, t_lexer *new);
-void	rm_space(t_lexer *lst);
-
-// lexer_clear.c
+void					rm_space(t_lexer *lst);
 void					lexer_del_first(t_lexer **lst);
 t_lexer					*lexerclear_one(t_lexer **lst);
 void					ft_lexerdelone(t_lexer **lexer_list, int id);
 
-// parser.c
+
+// parser.c  && utils && redir
 int						go_parser(t_main *data);
 t_cmd_parse				*init_cmd(t_parser_data *p_data);
 t_cmd_parse				*cmd_parse_new(char **tab, int num_redir,
 							t_lexer *redirection);
-
-// parser_utils.c
 int						count_pipe(char *s);
 int						count_words(t_lexer *lexer_list);
 void					small_check(t_main *data);
 t_parser_data			init_p_data(t_lexer *lexer_list, t_main *data);
 void					cmd_parseadd_back(t_cmd_parse **lst, t_cmd_parse *new);
+void					redirection(t_parser_data *p_data);
+void					add_redirection(t_lexer *tmp, t_parser_data *p_data);
 
-// quote_manage.c
+// quote_manage.c  && utils
 int						quote_manage(t_main *data);
 int						rm_quote(t_cmd_parse *node, int i_tab, int quote);
-
-// quote_mana_utils.c
 char					*ft_strim(char const *s1, int quote);
 int						check_set(char c, int quote);
 
-// expander.c
+// expander.c  && utils
 void					expanding(t_main *data);
 void	expand_dollard(t_main *data, t_cmd_parse *cmd_node, int nb_env);
 char					*go_find(char **env, char *s);
 void					rm_dollard(t_cmd_parse *cmd_node);
-
-// expander_utils.c
 int						check_env_variable(t_main *data, char *s);
 int						check_env_bis(char **env, char *str_dol);
 char					*good_variable(char *s);
@@ -169,6 +166,12 @@ void					pipe_init(t_main *data, char **env);
 void					parent_free(t_pipex *pipex);
 void					pipe_manage(t_main *data, char **env);
 
+
+//  builtins.c
+int						built_env(t_main *data, t_cmd_parse *cmd_parse);
+int						built_pwd(t_main *data, t_cmd_parse *cmd_parse);
+
+
 //builtins echo.c
 int						how_much_quote(const char *str, int sep);
 void					cpy_into_sep(char *src, char *dest, char sep);
@@ -177,13 +180,5 @@ void					option_is_here(t_main *data, int ac, int id_arg);
 void					no_option_here(t_main *data, int ac);
 int						check_option(t_main *data, int nb_s);
 void					builtin_echo(t_main *data);
-
-int						built_env(t_main *data, t_cmd_parse *cmd_parse);
-int						built_pwd(t_main *data, t_cmd_parse *cmd_parse);
-
-
-
-// echeck list
-void	pr(t_lexer *lexer_list);
 
 #endif
