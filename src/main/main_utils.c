@@ -6,13 +6,13 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 16:29:32 by keshikuro         #+#    #+#             */
-/*   Updated: 2023/06/04 16:30:37 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/06/05 23:33:22 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	pr(t_lexer *lexer_list)			// for lexer
+void	pr(t_lexer *lexer_list)			// show lexer list
 {
 	t_lexer * tmp;
 	int i = 0;
@@ -37,8 +37,32 @@ void	pr(t_lexer *lexer_list)			// for lexer
 	fprintf(stderr, "\n");
 }
 
+void	pr_redir(t_lexer *lexer_list) // show redirection list
+{
+	t_lexer * tmp;
+	int i = 0;
 
-void prrr(t_cmd_parse *cmd_parse, int ok)			//for parser
+	fprintf(stderr, "[CHECK REDIR]");
+	if (!lexer_list)
+	{
+		fprintf(stderr, "no redir list\n");
+		return ;
+	}
+	tmp = lexer_list;
+	while (tmp)
+	{
+		fprintf(stderr, " | node %d: ", i);
+		if (tmp->str)
+			fprintf(stderr, "file=[%s] ", tmp->str);
+		if (tmp->operateur)
+			fprintf(stderr, "redir=[%d] ", tmp->operateur);
+		tmp = tmp->next;
+		i++;
+	}
+	fprintf(stderr, "\n");
+}
+
+void prrr(t_cmd_parse *cmd_parse, int ok)  // show final list
 {
 	t_cmd_parse *tmp;
 	int i;

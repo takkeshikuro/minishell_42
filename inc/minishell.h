@@ -6,7 +6,7 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 05:04:38 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/06/04 16:37:44 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/06/06 01:46:09 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ void					start_in_loop(t_main *data, char *input);
 void					pr(t_lexer *lexer_list);			// for lexer
 void					prrr(t_cmd_parse *cmd_parse, int ok);		//for parser
 void					get_env(t_main *data, char **env);
+void	pr_redir(t_lexer *lexer_list);
 
 
 //lexer.c  && utils && clear
@@ -170,15 +171,13 @@ void					pipe_manage(t_main *data, char **env);
 //  builtins.c
 int						built_env(t_main *data, t_cmd_parse *cmd_parse);
 int						built_pwd(t_main *data, t_cmd_parse *cmd_parse);
+int						built_echo(t_main *data, t_cmd_parse *cmd_parse);
 
 
 //builtins echo.c
+
 int						how_much_quote(const char *str, int sep);
-void					cpy_into_sep(char *src, char *dest, char sep);
 void					quote_stuff(t_main *data, int sep);
-void					option_is_here(t_main *data, int ac, int id_arg);
-void					no_option_here(t_main *data, int ac);
-int						check_option(t_main *data, int nb_s);
-void					builtin_echo(t_main *data);
+
 
 #endif

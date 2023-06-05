@@ -6,7 +6,7 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 16:33:16 by keshikuro         #+#    #+#             */
-/*   Updated: 2023/06/04 18:10:52 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/06/04 18:18:54 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	add_redirection(t_lexer *tmp, t_parser_data *p_data)
 	ft_lexerdelone(&p_data->lexer_list, id);
 	ft_lexerdelone(&p_data->lexer_list, id_next);
 	p_data->num_redir++;
-}echo 
+}
 
 void	redirection(t_parser_data *p_data)
 {

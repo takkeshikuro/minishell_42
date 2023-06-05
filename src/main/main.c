@@ -6,7 +6,7 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 03:45:35 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/06/04 16:30:21 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/06/06 01:47:07 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,11 +67,15 @@ void	start_in_loop(t_main *data, char *input)
 	pr(data->lexer_list);                  // check lexer list after parsing
 	if (!quote_manage(data))
 	{
-		fprintf(stderr, "[MAIN] va dans expander\n");
 		expanding(data);
 		fprintf(stderr, "[MAIN] fin expander\n");
 	}
 	prrr(data->cmd_parse, 0);
+	pr_redir(data->cmd_parse->redirection);
+
+	//if (!ft_strncmp(data->cmd_parse->cmd_tab[0], "echo", 4))
+	//	built_echo(data, data->cmd_parse);
+	//	POUR TEST ECHO
 }
 
 void	mini_loop(t_main *data, char **env)
