@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
+/*   By: marecarrayan <marecarrayan@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 05:04:38 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/06/06 01:46:09 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/06/06 16:31:23 by marecarraya      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,9 @@ typedef struct s_main
 	char				**env_bis;
 	char				**tab_input_blank;
 	t_pipex				*pipex;
+    int                 *pipe_fd;
+    char                *path;
+    char                **cmd_paths;
 	char				*test;
 }						t_main;
 
@@ -156,16 +159,8 @@ int						is_space(char c);
 void					exit_bash_error(char *s);
 
 // pipe_manage.c
-int						contains_char(char *str, char c);
-char					*get_command(char **paths, char *cmd);
-char					*find_path(char **envp);
-void					close_pipe(t_main *data);
-void					duplicate2(int input, int output);
-void					child_process(t_main *data, char **envp, int pos);
-void					wait_childs(t_main *data);
-void					pipe_init(t_main *data, char **env);
-void					parent_free(t_pipex *pipex);
-void					pipe_manage(t_main *data, char **env);
+void	execute_cmd(t_main *data);
+void	wait_childs(int count);
 
 
 //  builtins.c

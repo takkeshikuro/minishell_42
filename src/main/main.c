@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
+/*   By: marecarrayan <marecarrayan@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 03:45:35 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/06/06 01:47:07 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/06/06 16:41:21 by marecarraya      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ void    parsing(t_main *data, char **env)
 		i++;
 	}
 	data->tab_input_blank = ft_split(data->input_line, '|');
-	pipe_manage(data, env);
 }
 
 void	start_in_loop(t_main *data, char *input)
@@ -92,12 +91,14 @@ void	mini_loop(t_main *data, char **env)
 			start_in_loop(data, input);
 			add_history(input);
 			parsing(data, env);
-			wait_childs(data);
+            if (ft_strnstr(input, "exit", 4) != 0)
+			    work = 0;
+         	execute_cmd(data);
+            //wait_childs(data->pipe_count);
 			free(input);
 			free(data->input_line);
 		}
-		if (ft_strnstr(input, "exit", 4) != 0)
-			work = 0;
+
 	}
 	if (data->tab_input_blank)
 		free_tab(data->tab_input_blank);

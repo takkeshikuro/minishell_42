@@ -1,11 +1,10 @@
 NAME    = minishell
 CC 		= gcc
-CFLAGS 	=   -I /inc/minishell.h
-# -Wall -Werror -Wextra
+CFLAGS 	= -I /inc/minishell.h
 
 LIBFT  	= ./inc/libft/
 LIBFLAGS = -lreadline
-SRCS 	= $(wildcard ./src/*/*.c ./inc/minishell.h) 
+SRCS 	= $(wildcard ./src/*/*.c) 
 OBJS 	= $(SRCS:.c=.o)
 OBJS_T	= $(wildcard ./src/*/*.o)
 
@@ -44,7 +43,8 @@ clean:
 	@echo "$(B_RED)Done."
 
 fclean: clean
-	@rm -f $(NAME) 
+	@rm -f $(NAME)
+	@$(MAKE) -C $(LIBFT) fclean
 	@echo "$(GREEN)♻️ ${B_GREEN} .....cleaning the rest.....  $(GREEN)♻️ "
 	@echo "$(B_RED)Done."
 	@echo "$(GREEN)♻️ ${B_GREEN} !TOUT PROPRE! $(GREEN)♻️ "

@@ -3,54 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_manage.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
+/*   By: marecarrayan <marecarrayan@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/14 15:28:27 by marecarraya       #+#    #+#             */
-/*   Updated: 2023/06/04 16:04:25 by keshikuro        ###   ########.fr       */
+/*   Created: 2023/06/06 15:26:12 by marecarraya       #+#    #+#             */
+/*   Updated: 2023/06/06 16:46:38 by marecarraya      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-int	contains_char(char *str, char c)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == c)
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
-char	*get_command(char **paths, char *cmd)
-{
-	char	*command;
-	char	*tmp;
-
-	if (!paths || !cmd)
-		return (NULL);
-	if (contains_char(cmd, '/'))
-	{
-		if (access(cmd, X_OK) == 0)
-			return (cmd);
-		return (NULL);
-	}
-	while (*paths)
-	{
-		tmp = ft_strjoin(*paths, "/");
-		command = ft_strjoin(tmp, cmd);
-		free(tmp);
-		if (access(command, X_OK) == 0)
-			return (command);
-		free(command);
-		paths++;
-	}
-	return (NULL);
-}
 
 char	*find_path(char **envp)
 {
@@ -66,16 +26,94 @@ char	*find_path(char **envp)
 	return (" ");
 }
 
-void    close_pipe(t_main *data)
+int	lstsize(t_cmd_parse *lst)
+{
+	int	size;
+	t_cmd_parse	*lsts;
+
+	lsts = lst;
+	size = 0;
+	while (lsts != NULL)
+	{
+		lsts = lsts->next;
+		size++;
+	}
+	return (size);
+}
+
+void	pipe_init(t_main *data, int count)
 {
 	int	i;
 
 	i = 0;
-	while (i < data->pipe_count * 2)
+	if (count)
 	{
-		close(data->pipex->pipe_fd[i]);
+		data->pipe_fd = malloc(sizeof(int) * count * 2);
+	    if (!data->pipe_fd)
+	    	return ;
+    	while (i < count)
+    	{
+    		if (pipe(data->pipe_fd + 2 * i) == -1)
+    			exit (1);
+    		i++;
+	    }
+	}
+	data->path = find_path(data->env_bis);
+	data->cmd_paths = ft_split(data->path, ':');
+}
+
+void    close_pipe(t_main *data, int count)
+{
+	int	i;
+
+	i = 0;
+	while (i < count)
+	{
+		close(data->pipe_fd[i]);
 		i++;
 	}
+}
+/*
+void	pipe_redirect(t_main *data, int count, int pos)
+{	
+	if (pos == 0 && count)
+		dup2(data->pipe_fd[1], 1);
+	else if (pos == count && count)
+	{
+	//	write(2, "\nok\n", 3);
+		dup2(data->pipe_fd[2 * pos - 2], 0);
+	}else if (count && pos && pos != count)
+	{
+		dup2(data->pipe_fd[2 * pos - 2], 0);
+		dup2(data->pipe_fd[2 * pos + 1], 1);
+	}
+	close_pipe(data, count);
+}*/
+char	*get_command(char **paths, char *cmd)
+{
+	char	*command;
+	char	*tmp;
+
+	if (!paths || !cmd)
+		return (NULL);
+	/*
+	if (contains_char(cmd, '/'))
+	{
+		if (access(cmd, X_OK) == 0)
+			return (cmd);
+		return (NULL);
+	}*/
+	while (*paths)
+	{
+		tmp = ft_strjoin(*paths, "/");
+		command = ft_strjoin(tmp, cmd);
+		free(tmp);
+		if (access(command, X_OK) == 0)
+			return (command);
+		free(command);
+		paths++;
+	}
+	return (NULL);
 }
 
 void	duplicate2(int input, int output)
@@ -84,99 +122,58 @@ void	duplicate2(int input, int output)
 	dup2(output, 1);
 }
 
-void	child_process(t_main *data, char **envp, int pos)
+void	child_process(t_main *data, int pos, int count, t_cmd_parse *node)
 {
-	char	**string_command;
-	pid_t	pid;
-	int		status;
-
-	status = 0;	
+	int		pid;
+	char	*cmd;
 	pid = fork();
 	if (pid == 0)
 	{
-		string_command = ft_split(data->input_line, '|');
-		if (pos == 0 && data->pipe_count)
-			dup2(data->pipex->pipe_fd[1], 1);
-		else if (pos == data->pipe_count && data->pipe_count)
-			dup2(data->pipex->pipe_fd[2 * pos - 2], 0);
+		//pipe_redirect(data, count, pos);
+		if (pos == 0 && count)
+			dup2(data->pipe_fd[1], 1);
+		else if (pos == count && count)
+			dup2(data->pipe_fd[2 * pos - 2], 0);
 		else if (data->pipe_count && pos != 0 && data->pipe_count != pos)
-			duplicate2(data->pipex->pipe_fd[2 * pos - 2], data->pipex->pipe_fd[2 * pos + 1]);
-		close_pipe(data);
-		data->pipex->cmd_args = ft_split(string_command[pos], ' ');
-		free_tab(string_command);
-		data->pipex->cmd = get_command(data->pipex->cmd_paths, data->pipex->cmd_args[0]);
-		if (!data->pipex->cmd)
-		{
-			printf("invalid input : %s\n", data->pipex->cmd_args[0]);
-			free_tab(data->pipex->cmd_args);
-			parent_free(data->pipex);
-			free(data->pipex->cmd);
-			exit(1);
-		}
-		execve(data->pipex->cmd, data->pipex->cmd_args, envp);
-		exit (1);
+			duplicate2(data->pipe_fd[2 * pos - 2], data->pipe_fd[2 * pos + 1]);
+		close_pipe(data, count);
+		cmd = get_command(data->cmd_paths, node->cmd_tab[0]);
+		//printf("\n%s\n", cmd);
+		execve(cmd, node->cmd_tab, data->env_bis);
+		exit(1);
 	}
 }
-void	wait_childs(t_main *data)
+
+void	wait_childs(int count)
 {
 	int	i;
 
 	i = 0;
-	while (i <= data->pipe_count)
+	while (i <= count)
 	{
 		waitpid(-1, NULL, 0);
 		i++;
 	}
 }
 
-void	pipe_init(t_main *data, char **env)
+void	execute_cmd(t_main *data)
 {
-	int	i;
+	int			count;
+	int			pos;
+	int			pid;
+	t_cmd_parse	*node;
 
-	i = 0;
-	data->pipex->pipe_fd = malloc(sizeof(int) * data->pipe_count * 2);
-	if (!data->pipex->pid)
-		return ;
-	while (i < data->pipe_count)
-	{
-		if (pipe(data->pipex->pipe_fd + 2 * i) == -1)
-			exit (1);
-		i++;
-	}
-	data->pipex->paths = find_path(env);
-	data->pipex->cmd_paths = ft_split(data->pipex->paths, ':');
-}
-
-void    parent_free(t_pipex *pipex)
-{
-	int i;
-
-	i = 0;
-	while (pipex->cmd_paths[i])
-	{
-		free(pipex->cmd_paths[i]);
-		i++;
-	}
-	free(pipex->cmd_paths);
-	free(pipex->pipe_fd);
-}
-
-void	pipe_manage(t_main *data, char **env)
-{
-	int	pos;
-	int	pid;
-	t_pipex	*test;
-	
-	data->pipex = test;
+	node = data->cmd_parse;
+	count = lstsize(data->cmd_parse) - 1;
+	data->pipe_count = count;
 	pos = 0;
-	pipe_init(data, env);
-	while (pos <= data->pipe_count)
+	pipe_init(data, count);
+	while (pos <= count)
 	{
-		child_process(data, env, pos);
+		child_process(data, pos, count, node);
+		node = node->next;
 		pos++;
 	}
-	close_pipe(data);
+	close_pipe(data, count);
 	waitpid(-1, NULL, 0);
-	parent_free(data->pipex);
-	return ;
 }
