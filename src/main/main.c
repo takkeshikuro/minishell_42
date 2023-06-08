@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marecarrayan <marecarrayan@student.42.f    +#+  +:+       +#+        */
+/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 03:45:35 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/06/06 16:41:21 by marecarraya      ###   ########.fr       */
+/*   Updated: 2023/06/08 20:00:43 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,21 +59,13 @@ void	start_in_loop(t_main *data, char *input)
 		exit_bash_error("quote error");
 	if (!go_lexer(data))
 		exit_bash_error("lexing failed.");
-	pr(data->lexer_list);                    // check lexer list before parsing
 	if (!go_parser(data))
 		exit_bash_error("parsing failed.");
-	prrr(data->cmd_parse, 1);				// check final list 
-	pr(data->lexer_list);                  // check lexer list after parsing
 	if (!quote_manage(data))
-	{
 		expanding(data);
-		fprintf(stderr, "[MAIN] fin expander\n");
-	}
-	prrr(data->cmd_parse, 0);
-	pr_redir(data->cmd_parse->redirection);
 
-	//if (!ft_strncmp(data->cmd_parse->cmd_tab[0], "echo", 4))
-	//	built_echo(data, data->cmd_parse);
+//	if (!ft_strncmp(data->cmd_parse->cmd_tab[0], "cd", 2))
+//		built_cd(data, data->cmd_parse);
 	//	POUR TEST ECHO
 }
 
@@ -90,10 +82,10 @@ void	mini_loop(t_main *data, char **env)
 		{
 			start_in_loop(data, input);
 			add_history(input);
-			parsing(data, env);
+			parsing(data, env);							// a decommenter
             if (ft_strnstr(input, "exit", 4) != 0)
 			    work = 0;
-         	execute_cmd(data);
+         	execute_cmd(data);							// a decommenter
             //wait_childs(data->pipe_count);
 			free(input);
 			free(data->input_line);

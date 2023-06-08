@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marecarrayan <marecarrayan@student.42.f    +#+  +:+       +#+        */
+/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 05:04:38 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/06/06 16:31:23 by marecarraya      ###   ########.fr       */
+/*   Updated: 2023/06/08 19:45:54 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ typedef struct s_main
 	t_lexer				*lexer_list;
 	struct s_cmd_parse	*cmd_parse;
 	
-	char				**env_ok;
+	//char				**env_ok;
 	char				**env_bis;
 	char				**tab_input_blank;
 	t_pipex				*pipex;
@@ -167,6 +167,7 @@ void	wait_childs(int count);
 int						built_env(t_main *data, t_cmd_parse *cmd_parse);
 int						built_pwd(t_main *data, t_cmd_parse *cmd_parse);
 int						built_echo(t_main *data, t_cmd_parse *cmd_parse);
+int	built_cd(t_main *data, t_cmd_parse *cmd_parse);
 
 
 //builtins echo.c

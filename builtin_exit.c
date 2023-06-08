@@ -1,27 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_env.c                                      :+:      :+:    :+:   */
+/*   builtin_exit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/25 08:01:06 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/06/08 19:47:21 by keshikuro        ###   ########.fr       */
+/*   Created: 2023/06/08 13:05:40 by keshikuro         #+#    #+#             */
+/*   Updated: 2023/06/08 17:01:24 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	built_env(t_main *data, t_cmd_parse *cmd_parse)
+int	built_exit(t_main *data, t_cmd_parse *cmd_parse)
 {
-	int	i;
-
-	i = 0;
-	(void)cmd_parse;
-	while (data->env_bis[i])
-	{
-		printf("%s\n", data->env_bis[i]);
-		i++;
-	}
-	return (0);
+    exit (1);// lol
 }
