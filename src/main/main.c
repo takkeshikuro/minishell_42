@@ -6,7 +6,7 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 03:45:35 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/06/08 20:00:43 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/06/09 15:11:55 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,13 @@ void	start_in_loop(t_main *data, char *input)
 		exit_bash_error("parsing failed.");
 	if (!quote_manage(data))
 		expanding(data);
-
-//	if (!ft_strncmp(data->cmd_parse->cmd_tab[0], "cd", 2))
-//		built_cd(data, data->cmd_parse);
+//	if (!ft_strncmp(data->cmd_parse->cmd_tab[0], "env", 3))
+//	{
+//		built_env(data, data->cmd_parse);
+//		fprintf(stderr, "finnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn\n");
+//	}
+//	else if (!ft_strncmp(data->cmd_parse->cmd_tab[0], "unset", 5))
+//		built_unset(data, data->cmd_parse);
 	//	POUR TEST ECHO
 }
 

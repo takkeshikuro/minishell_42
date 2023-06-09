@@ -6,7 +6,7 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 05:04:38 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/06/08 19:45:54 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/06/09 14:49:30 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,6 +168,7 @@ int						built_env(t_main *data, t_cmd_parse *cmd_parse);
 int						built_pwd(t_main *data, t_cmd_parse *cmd_parse);
 int						built_echo(t_main *data, t_cmd_parse *cmd_parse);
 int	built_cd(t_main *data, t_cmd_parse *cmd_parse);
+int	built_unset(t_main *data, t_cmd_parse *cmd_parse);
 
 
 //builtins echo.c
