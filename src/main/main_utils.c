@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
+/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 16:29:32 by keshikuro         #+#    #+#             */
-/*   Updated: 2023/06/05 23:33:22 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/06/13 08:57:59 by tmorikaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void	get_env(t_main *data, char **env)
 	i = 0;
 	while (env[i])
 		i++;
-	data->env_bis = malloc(sizeof(char *) * i);
+	data->env_bis = (char **)malloc(sizeof(char *) * (i + 1));
 	if (!data->env_bis)
 		exit (1);
 	i = 0;

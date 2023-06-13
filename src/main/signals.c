@@ -1,26 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_stuff.c                                       :+:      :+:    :+:   */
+/*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/23 06:03:08 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/06/13 08:39:50 by tmorikaw         ###   ########.fr       */
+/*   Created: 2023/06/13 08:28:59 by tmorikaw          #+#    #+#             */
+/*   Updated: 2023/06/13 08:47:11 by tmorikaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	free_tab(char **tab)
+void	EOT_handler(t_main *data)
 {
-	int		i;
+	printf("Quit minishell by crtl-D\n");
+	free_tab(data->env_bis);
+	data->env_bis = NULL;
+	exit(0);
+}
 
-	i = 0;
-	while (tab[i])
+void	sig_handler(int sig)
+{
+	if (sig == SIGINT)
 	{
-		free(tab[i]);
-		i++;
+		printf("\n");
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
 	}
-	free(tab);
+}
+
+void	init_signals(void)
+{
+	signal(SIGINT, sig_handler);
+	signal(SIGQUIT, SIG_IGN);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_exit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
+/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 13:05:40 by keshikuro         #+#    #+#             */
-/*   Updated: 2023/06/08 17:01:24 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/06/13 08:35:52 by tmorikaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,7 @@
 
 int	built_exit(t_main *data, t_cmd_parse *cmd_parse)
 {
-    exit (1);// lol
+	printf("quit minishell\n");
+	free_kill(data);
+	exit(0);
 }

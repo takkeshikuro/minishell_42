@@ -6,7 +6,7 @@
 /*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 03:45:35 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/06/13 00:35:12 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/06/13 08:44:11 by tmorikaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,35 @@
 	free_tab(data->tab_input_blank);
 } */
 
-
-void    parsing(t_main *data, char **env)
+void	free_kill(t_main *data)
 {
-	int i;
+	free_tab(data->env_bis);
+	if (data->cmd_parse->cmd_tab)
+		free_tab(data->cmd_parse->cmd_tab);
+	if (data->input_line[0])
+		free(data->input_line);
+}
+
+void	init_stuff(t_main *data)
+{
+	data->lexer_list = NULL;
+	data->cmd_parse = NULL;
+	init_signals();
+}
+
+void	reset_stuff(t_main *data)
+{
+	if (data->cmd_parse->cmd_tab[0])
+		free_tab(data->cmd_parse->cmd_tab);
+	if (data->input_line)
+		free(data->input_line);
+	init_stuff(data);
+}
+
+
+void	parsing(t_main *data, char **env)
+{
+	int	i;
 
 	i = 0;
 	data->pipe_count = 0;
@@ -63,14 +88,11 @@ void	start_in_loop(t_main *data, char *input)
 		exit_bash_error("parsing failed.");
 	if (!quote_manage(data))
 		expanding(data);
-//	if (!ft_strncmp(data->cmd_parse->cmd_tab[0], "env", 3))
-//	{
-//		built_env(data, data->cmd_parse);
-//		fprintf(stderr, "finnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn\n");
-//	}
-//	else if (!ft_strncmp(data->cmd_parse->cmd_tab[0], "unset", 5))
-//		built_unset(data, data->cmd_parse);
-	prrr(data->cmd_parse, 1);
+ 	if (!ft_strncmp(data->cmd_parse->cmd_tab[0], "exit", 4))
+		built_exit(data, data->cmd_parse);
+	//	else if (!ft_strncmp(data->cmd_parse->cmd_tab[0], "unset", 5))
+	//		built_unset(data, data->cmd_parse);
+	//	prrr(data->cmd_parse, 1);
 	//	POUR TEST ECHO
 }
 
@@ -83,19 +105,18 @@ void	mini_loop(t_main *data, char **env)
 	while (work)
 	{
 		input = readline("$>");
+		if (!input)
+			EOT_handler(data);
 		if (input[0] != '\0')
 		{
 			start_in_loop(data, input);
 			add_history(input);
-			parsing(data, env);							// a decommenter
-            if (ft_strnstr(input, "exit", 4) != 0)
-			    work = 0;
-         	execute_cmd(data);							// a decommenter
-            //wait_childs(data->pipe_count);
+			//parsing(data, env);
+			execute_cmd(data);
+			//wait_childs(data->pipe_count);
 			free(input);
-			free(data->input_line);
+			reset_stuff(data);
 		}
-
 	}
 	if (data->tab_input_blank)
 		free_tab(data->tab_input_blank);
@@ -112,6 +133,7 @@ int	main(int ac, char **av, char **env)
 	if (!env[0])
 		return (error("env"));
 	get_env(&data, env);
+	init_stuff(&data);
 	mini_loop(&data, env);
 	return (0);
 }

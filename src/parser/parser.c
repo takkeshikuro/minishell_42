@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
+/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 23:55:37 by keshikuro         #+#    #+#             */
-/*   Updated: 2023/06/04 16:33:47 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/06/13 03:19:32 by tmorikaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,7 @@ int	go_parser(t_main *data)
 {
 	t_cmd_parse		*node;
 	t_parser_data	parser_data;
-	//int				nb_pipe;
-	
-	//nb_pipe = count_pipe(data->input_line);
-	data->cmd_parse = NULL;
+
 	small_check(data);
 	while (data->lexer_list)
 	{

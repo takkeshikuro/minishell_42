@@ -6,7 +6,7 @@
 /*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 05:04:38 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/06/13 03:00:11 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/06/13 08:37:05 by tmorikaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ void	pr(t_lexer *lexer_list);              // for lexer
 void	prrr(t_cmd_parse *cmd_parse, int ok); //for parser
 void					get_env(t_main *data, char **env);
 void					pr_redir(t_lexer *lexer_list);
+void	reset_stuff(t_main *data);
 
 //lexer.c  && utils && clear
 int						go_lexer(t_main *data);
@@ -147,6 +148,7 @@ char					*good_variable(char *s);
 void					copy_past(t_cmd_parse *cmd_node, int i, int j,
 							char *str_replace);
 char					*copy_without_dol(t_cmd_parse *node, int i, char *s);
+char	*keep_good_str(char **env, int nb_env);
 
 // utils.c
 void					free_tab(char **tab);
@@ -166,10 +168,21 @@ int						built_pwd(t_main *data, t_cmd_parse *cmd_parse);
 int						built_echo(t_main *data, t_cmd_parse *cmd_parse);
 int						built_cd(t_main *data, t_cmd_parse *cmd_parse);
 int						built_unset(t_main *data, t_cmd_parse *cmd_parse);
+int	built_exit(t_main *data, t_cmd_parse *cmd_parse);
+
+
+// signal.c
+void    EOT_handler(t_main *data);
+void	sig_handler(int sig);
+void	init_signals(void);
 
 //builtins echo.c
 
 int						how_much_quote(const char *str, int sep);
 void					quote_stuff(t_main *data, int sep);
+
+
+
+void	free_kill(t_main *data);
 
 #endif
