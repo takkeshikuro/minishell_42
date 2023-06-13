@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_unset.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
+/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 13:05:46 by keshikuro         #+#    #+#             */
-/*   Updated: 2023/06/09 15:10:22 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/06/13 01:10:37 by tmorikaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,15 @@
 
 void	copy_good_tab(t_main *data, char **tab)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	//free_tab(data->env_bis);
 	while (tab[i])
 		i++;
-	
 	data->env_bis = malloc(sizeof(char *) * i);
 	if (!data->env_bis)
-		exit (1);
+		exit(1);
 	i = 0;
 	while (tab[i])
 	{
@@ -34,11 +33,11 @@ void	copy_good_tab(t_main *data, char **tab)
 	free_tab(tab);
 }
 
-char **good_tab_creation(t_main *data, char *s, int len)
+char	**good_tab_creation(t_main *data, char *s, int len)
 {
-	char **tab;
-	int i;
-	int j;
+	char	**tab;
+	int		i;
+	int		j;
 
 	i = 0;
 	j = 0;
@@ -46,7 +45,7 @@ char **good_tab_creation(t_main *data, char *s, int len)
 		i++;
 	tab = malloc(sizeof(char *) * i);
 	if (!tab)
-		exit (0);
+		exit(0);
 	i = 0;
 	while (data->env_bis[i])
 	{
@@ -65,9 +64,9 @@ char **good_tab_creation(t_main *data, char *s, int len)
 
 int	built_unset(t_main *data, t_cmd_parse *cmd_parse)
 {
-    int i;
+	int i;
 	int j;
-    int	len;
+	int len;
 	char **tmp_tab;
 
 	i = 1;
@@ -75,7 +74,6 @@ int	built_unset(t_main *data, t_cmd_parse *cmd_parse)
 	{
 		len = ft_strlen(cmd_parse->cmd_tab[i]);
 		j = 0;
-		
 		while (data->env_bis[j])
 		{
 			if (!ft_strncmp(data->env_bis[j], cmd_parse->cmd_tab[i], len))

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
+/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 05:04:38 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/06/09 14:49:30 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/06/13 03:00:11 by tmorikaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@
 # include <sys/uio.h>
 # include <sys/wait.h>
 # include <unistd.h>
-
 
 typedef struct s_pipex
 {
@@ -64,14 +63,14 @@ typedef struct s_main
 	int					pipe_count;
 	t_lexer				*lexer_list;
 	struct s_cmd_parse	*cmd_parse;
-	
+
 	//char				**env_ok;
 	char				**env_bis;
 	char				**tab_input_blank;
 	t_pipex				*pipex;
-    int                 *pipe_fd;
-    char                *path;
-    char                **cmd_paths;
+	int					*pipe_fd;
+	char				*path;
+	char				**cmd_paths;
 	char				*test;
 }						t_main;
 
@@ -98,11 +97,10 @@ typedef struct s_parser_data
 void					mini_loop(t_main *data, char **env);
 void					parsing(t_main *data, char **env);
 void					start_in_loop(t_main *data, char *input);
-void					pr(t_lexer *lexer_list);			// for lexer
-void					prrr(t_cmd_parse *cmd_parse, int ok);		//for parser
+void	pr(t_lexer *lexer_list);              // for lexer
+void	prrr(t_cmd_parse *cmd_parse, int ok); //for parser
 void					get_env(t_main *data, char **env);
-void	pr_redir(t_lexer *lexer_list);
-
+void					pr_redir(t_lexer *lexer_list);
 
 //lexer.c  && utils && clear
 int						go_lexer(t_main *data);
@@ -117,7 +115,6 @@ void					rm_space(t_lexer *lst);
 void					lexer_del_first(t_lexer **lst);
 t_lexer					*lexerclear_one(t_lexer **lst);
 void					ft_lexerdelone(t_lexer **lexer_list, int id);
-
 
 // parser.c  && utils && redir
 int						go_parser(t_main *data);
@@ -140,15 +137,16 @@ int						check_set(char c, int quote);
 
 // expander.c  && utils
 void					expanding(t_main *data);
-void	expand_dollard(t_main *data, t_cmd_parse *cmd_node, int nb_env);
+void					expand_dollard(t_main *data, t_cmd_parse *cmd_node,
+							int nb_env);
 char					*go_find(char **env, char *s);
-void					rm_dollard(t_cmd_parse *cmd_node);
+void					rm_dollard(t_cmd_parse *cmd_node, int i, int j);
 int						check_env_variable(t_main *data, char *s);
 int						check_env_bis(char **env, char *str_dol);
 char					*good_variable(char *s);
-void					copy_past(t_cmd_parse *cmd_node, int i, int j, \
-						char *str_replace);
-
+void					copy_past(t_cmd_parse *cmd_node, int i, int j,
+							char *str_replace);
+char					*copy_without_dol(t_cmd_parse *node, int i, char *s);
 
 // utils.c
 void					free_tab(char **tab);
@@ -159,22 +157,19 @@ int						is_space(char c);
 void					exit_bash_error(char *s);
 
 // pipe_manage.c
-void	execute_cmd(t_main *data);
-void	wait_childs(int count);
-
+void					execute_cmd(t_main *data);
+void					wait_childs(int count);
 
 //  builtins.c
 int						built_env(t_main *data, t_cmd_parse *cmd_parse);
 int						built_pwd(t_main *data, t_cmd_parse *cmd_parse);
 int						built_echo(t_main *data, t_cmd_parse *cmd_parse);
-int	built_cd(t_main *data, t_cmd_parse *cmd_parse);
-int	built_unset(t_main *data, t_cmd_parse *cmd_parse);
-
+int						built_cd(t_main *data, t_cmd_parse *cmd_parse);
+int						built_unset(t_main *data, t_cmd_parse *cmd_parse);
 
 //builtins echo.c
 
 int						how_much_quote(const char *str, int sep);
 void					quote_stuff(t_main *data, int sep);
-
 
 #endif
