@@ -6,7 +6,7 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 04:07:31 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/06/15 00:14:17 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/06/15 00:36:07 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	add_word(char *str, int i, t_lexer **lexer_list)
 		else
 			j++;
 	}
-	if (!add_to_list(ft_substr(str, i, j), 0, lexer_list))
+	if (!add_to_list(ft_substr(str, i, (j - 1)), 0, lexer_list))
 		return (-1);
 	return (j);
 }
@@ -111,6 +111,8 @@ int	go_lexer(t_main *data)
 		j = 0;
 		while (is_space(data->input_line[i]))
 			i++;
+		if (data->input_line[i] == '\0')
+			break ;
 		if (is_operateur(data->input_line[i]))
 			j = add_operateur(data->input_line, i, &data->lexer_list);
 		else
