@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 03:45:35 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/06/13 08:44:11 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/06/15 00:16:08 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,31 +31,6 @@
 	}
 	free_tab(data->tab_input_blank);
 } */
-
-void	free_kill(t_main *data)
-{
-	free_tab(data->env_bis);
-	if (data->cmd_parse->cmd_tab)
-		free_tab(data->cmd_parse->cmd_tab);
-	if (data->input_line[0])
-		free(data->input_line);
-}
-
-void	init_stuff(t_main *data)
-{
-	data->lexer_list = NULL;
-	data->cmd_parse = NULL;
-	init_signals();
-}
-
-void	reset_stuff(t_main *data)
-{
-	if (data->cmd_parse->cmd_tab[0])
-		free_tab(data->cmd_parse->cmd_tab);
-	if (data->input_line)
-		free(data->input_line);
-	init_stuff(data);
-}
 
 
 void	parsing(t_main *data, char **env)
@@ -84,6 +59,7 @@ void	start_in_loop(t_main *data, char *input)
 		exit_bash_error("quote error");
 	if (!go_lexer(data))
 		exit_bash_error("lexing failed.");
+	//pr(data->lexer_list);
 	if (!go_parser(data))
 		exit_bash_error("parsing failed.");
 	if (!quote_manage(data))
@@ -92,7 +68,8 @@ void	start_in_loop(t_main *data, char *input)
 		built_exit(data, data->cmd_parse);
 	//	else if (!ft_strncmp(data->cmd_parse->cmd_tab[0], "unset", 5))
 	//		built_unset(data, data->cmd_parse);
-	//	prrr(data->cmd_parse, 1);
+	
+	//prrr(data->cmd_parse, 1);
 	//	POUR TEST ECHO
 }
 

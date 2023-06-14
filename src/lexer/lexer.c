@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 04:07:31 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/06/13 03:19:30 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/06/15 00:14:17 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ int	go_lexer(t_main *data)
 		}
 		if (j < 0)
 			return (0);
-		i += (j + 1);
+		i += j;
 		if (i >= ft_strlen(data->input_line))
 			break ;
 	}

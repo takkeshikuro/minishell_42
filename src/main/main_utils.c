@@ -3,14 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   main_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 16:29:32 by keshikuro         #+#    #+#             */
-/*   Updated: 2023/06/13 08:57:59 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/06/14 18:21:33 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+void	init_stuff(t_main *data)
+{
+	data->lexer_list = NULL;
+	data->cmd_parse = NULL;
+	init_signals();
+}
+
+void	reset_stuff(t_main *data)
+{
+	if (data->cmd_parse->cmd_tab[0])
+		free_tab(data->cmd_parse->cmd_tab);
+	if (data->input_line)
+		free(data->input_line);
+	init_stuff(data);
+}
 
 void	pr(t_lexer *lexer_list)			// show lexer list
 {
