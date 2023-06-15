@@ -6,7 +6,7 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 07:40:54 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/06/08 18:57:42 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/06/15 14:38:56 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,6 @@ int	built_pwd(t_main *data, t_cmd_parse *cmd_parse)
 		error("getcwd() failed");
 	else
 		printf("%s\n", s);
+	data->return_value = 0;
 	return (0);
 }

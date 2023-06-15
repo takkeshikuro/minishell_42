@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_exit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 13:05:40 by keshikuro         #+#    #+#             */
-/*   Updated: 2023/06/13 08:35:52 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/06/15 14:38:47 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,3 +18,6 @@ int	built_exit(t_main *data, t_cmd_parse *cmd_parse)
 	free_kill(data);
 	exit(0);
 }
+
+// add 	data->return_value = ;
+

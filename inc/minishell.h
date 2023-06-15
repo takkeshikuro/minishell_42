@@ -6,7 +6,7 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 05:04:38 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/06/14 18:21:50 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/06/15 20:17:51 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,10 @@ typedef struct s_main
 	int					pipe_count;
 	t_lexer				*lexer_list;
 	struct s_cmd_parse	*cmd_parse;
-
-	//char				**env_ok;
 	char				**env_bis;
+	int					return_value;
+	
+		
 	char				**tab_input_blank;
 	t_pipex				*pipex;
 	int					*pipe_fd;
@@ -138,17 +139,20 @@ int						check_set(char c, int quote);
 
 // expander.c  && utils
 void					expanding(t_main *data);
-void					expand_dollard(t_main *data, t_cmd_parse *cmd_node,
-							int nb_env);
+int					expand_dollard(t_main *data, t_cmd_parse *cmd_node,
+							int nb_env, int j);
 char					*go_find(char **env, char *s);
-void					rm_dollard(t_cmd_parse *cmd_node, int i, int j);
-int						check_env_variable(t_main *data, char *s);
+int					rm_dollard(t_cmd_parse *cmd_node, int i, int j);
+int						check_env_variable(t_main *data, char *s, int j);
 int						check_env_bis(char **env, char *str_dol);
 char					*good_variable(char *s);
-void					copy_past(t_cmd_parse *cmd_node, int i, int j,
-							char *str_replace);
-char					*copy_without_dol(t_cmd_parse *node, int i, char *s);
+void	copy_past(t_cmd_parse *cmd_node, int i, int j_dol, char *str_replace);
+							
+char					*copy_without_dol(t_cmd_parse *node, int i, int j, char *s);
 char	*keep_good_str(char **env, int nb_env);
+char	*check_char_after(t_cmd_parse *node, int i, int j);
+
+
 
 // utils.c
 void					free_tab(char **tab);

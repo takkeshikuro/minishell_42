@@ -6,7 +6,7 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 04:07:31 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/06/15 00:36:07 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/06/15 15:59:22 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int	add_word(char *str, int i, t_lexer **lexer_list)
 			j++;
 			while (str[i + j] != 34 && str[i + j])
 				j++;
+			j++;
 			break ;
 		}
 		else if (str[i + j] == 39)
@@ -45,10 +46,17 @@ int	add_word(char *str, int i, t_lexer **lexer_list)
 			j++;
 			while (str[i + j] != 39 && str[i + j])
 				j++;
+			j++;
 			break ;
 		}
 		else
 			j++;
+	}
+	if (j == 1)
+	{
+		if (!add_to_list(ft_substr(str, i, j), 0, lexer_list))
+			return (-1);
+		return (j);
 	}
 	if (!add_to_list(ft_substr(str, i, (j - 1)), 0, lexer_list))
 		return (-1);

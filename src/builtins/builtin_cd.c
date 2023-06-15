@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 13:05:38 by keshikuro         #+#    #+#             */
-/*   Updated: 2023/06/13 01:09:58 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/06/15 14:36:39 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,5 +91,6 @@ int	built_cd(t_main *data, t_cmd_parse *cmd_parse)
 				cmd_parse->cmd_tab[1]);
 	else
 		change_env(data);
+	data->return_value = 0;
 	return (0);
 }

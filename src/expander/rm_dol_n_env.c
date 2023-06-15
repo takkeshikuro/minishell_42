@@ -3,32 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   rm_dol_n_env.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 02:57:58 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/06/13 03:14:45 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/06/15 20:20:17 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-char	*copy_without_dol(t_cmd_parse *node, int i, char *s)
+char	*copy_without_dol(t_cmd_parse *node, int i, int j, char *s)
 {
-	int	j;
 	int	k;
 
 	k = 0;
-	j = 0;
-	while (node->cmd_tab[i][j] != '$')
+	while (k < j)
 	{
-		s[k] = node->cmd_tab[i][j];
-		j++;
+		s[k] = node->cmd_tab[i][k];
 		k++;
 	}
 	while (node->cmd_tab[i][j] && node->cmd_tab[i][j] != 32)
 		j++;
 	if (!node->cmd_tab[i][j])
+	{
+		s[k] = '\0';
 		return (s);
+	}
 	while (node->cmd_tab[i][j])
 	{
 		s[k] = node->cmd_tab[i][j];
@@ -53,28 +53,25 @@ int	check_env_bis(char **env, char *str_dol)
 	return (-1);
 }
 
-int	check_env_variable(t_main *data, char *s)
+int	check_env_variable(t_main *data, char *s, int j)
 {
 	char	*str_dol;
 	int		i;
-	int		start_dol;
 	int		size;
 	int		result;
 
-	i = 0;
 	size = 0;
-	while (s[i] && s[i] != '$')
-		i++;
-	if (s[i + 1] == '\0')
-		return (1);
-	i++;
-	start_dol = i;
+	if (s[j + 1] == '\0' || s[j + 1] == ' ')
+		return (-2);
+	if (s[j + 1] == '?')
+		return (-3);
+	i = j + 1;
 	while (s[i] && s[i] != 32)
 	{
 		i++;
 		size++;
 	}
-	str_dol = ft_substr(s, start_dol, (size - 1));
+	str_dol = ft_substr(s, j + 1, (size - 1));
 	result = check_env_bis(data->env_bis, str_dol);
 	free(str_dol);
 	return (result);

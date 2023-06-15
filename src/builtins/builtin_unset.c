@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_unset.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 13:05:46 by keshikuro         #+#    #+#             */
-/*   Updated: 2023/06/13 01:10:37 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/06/15 14:39:05 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,5 +86,6 @@ int	built_unset(t_main *data, t_cmd_parse *cmd_parse)
 		}
 		i++;
 	}
+	data->return_value = 0;	
 	return (0);
 }

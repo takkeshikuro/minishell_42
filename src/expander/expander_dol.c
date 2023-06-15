@@ -3,24 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   expander_dol.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 00:37:57 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/06/13 03:01:44 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/06/15 20:15:55 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	rm_dollard(t_cmd_parse *cmd_node, int i, int j)
+// RM A refaire
+
+int	rm_dollard(t_cmd_parse *cmd_node, int i, int j)
 {
 	int		size_dol;
 	char	*new;
 	int		diff;
+	int 	tmp_j;
 
 	size_dol = 0;
-	while (cmd_node->cmd_tab[i][j] != '$')
-		j++;
 	while (cmd_node->cmd_tab[i][j] && cmd_node->cmd_tab[i][j] != 32)
 	{
 		j++;
@@ -30,50 +31,58 @@ void	rm_dollard(t_cmd_parse *cmd_node, int i, int j)
 	if (!diff)
 	{
 		cmd_node->cmd_tab[i][0] = '\0';
-		return ;
+		return (0);
 	}
 	new = malloc(sizeof(char) * diff + 1);
 	if (!new)
 		exit(1);
-	new = copy_without_dol(cmd_node, i, new);
+	new = copy_without_dol(cmd_node, i, tmp_j, new);
 	cmd_node->cmd_tab[i] = ft_substr(new, 0, diff);
 	free(new);
+	return (0);
 }
 
-void	expand_dollard(t_main *data, t_cmd_parse *cmd_node, int nb_env)
+int		expand_dollard(t_main *data, t_cmd_parse *cmd_node, int nb_env, int j)
 {
 	int		i;
-	int		j;
 	char	*str_replace;
 
 	i = 0;
 	while (cmd_node->cmd_tab[i])
 	{
-		j = 0;
-		while (cmd_node->cmd_tab[i][j])
+		if (cmd_node->cmd_tab[i][j] == '$')
 		{
-			if (cmd_node->cmd_tab[i][j] == '$')
-			{
-				str_replace = keep_good_str(data->env_bis, nb_env);
-				copy_past(cmd_node, i, j, str_replace);
-			}
-			j++;
+			str_replace = keep_good_str(data->env_bis, nb_env);
+			copy_past(cmd_node, i, j, str_replace);
+			return (ft_strlen(str_replace));
 		}
 		i++;
 	}
 }
 
-void	expanding_bis(t_main *data, t_cmd_parse *cmd_node, int i)
+int	return_value(t_main *data, t_cmd_parse *node, int i, int j_dol)
+{
+	char *str_replace;
+	
+	str_replace = ft_itoa(data->return_value);
+	copy_past(node, i, j_dol, str_replace);
+	return (ft_strlen(str_replace));
+}
+
+int	expanding_bis(t_main *data, t_cmd_parse *cmd_node, int i, int j)
 {
 	int	nb_env;
-	int	j;
 
-	nb_env = check_env_variable(data, cmd_node->cmd_tab[i]);
-	j = 0;
+	nb_env = check_env_variable(data, cmd_node->cmd_tab[i], j);
+	fprintf(stderr, "value exp bis = %d\n", nb_env);
 	if (nb_env >= 0)
-		expand_dollard(data, cmd_node, nb_env);
-	else
-		rm_dollard(cmd_node, i, j);
+		return (expand_dollard(data, cmd_node, nb_env, j));
+	else if (nb_env == -1)
+		return (rm_dollard(cmd_node, i, j));
+	else if (nb_env == -2)
+		return (1);
+	else if (nb_env == -3)
+		return (return_value(data, cmd_node, i, j));
 }
 
 void	expanding(t_main *data)
@@ -81,6 +90,7 @@ void	expanding(t_main *data)
 	t_cmd_parse	*cmd_node;
 	int			i;
 	int			j;
+	int			len;
 
 	cmd_node = data->cmd_parse;
 	while (cmd_node)
@@ -92,8 +102,13 @@ void	expanding(t_main *data)
 			while (cmd_node->cmd_tab[i][j])
 			{
 				if (cmd_node->cmd_tab[i][j] == '$')
-					expanding_bis(data, cmd_node, i);
-				j++;
+				{
+					len = expanding_bis(data, cmd_node, i, j);
+					prrr(data->cmd_parse, 0);
+					j += len;
+				}
+				else
+					j++;
 			}
 			i++;
 		}

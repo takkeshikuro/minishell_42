@@ -6,7 +6,7 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 03:45:35 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/06/15 01:34:39 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/06/15 19:49:30 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,17 +59,18 @@ void	start_in_loop(t_main *data, char *input)
 		exit_bash_error("quote error");
 	if (!go_lexer(data))
 		exit_bash_error("lexing failed.");
-	//pr(data->lexer_list);
+	pr(data->lexer_list);
 	if (!go_parser(data))
 		exit_bash_error("parsing failed.");
+	//prrr(data->cmd_parse, 1);
 	if (!quote_manage(data))
 		expanding(data);
  	if (!ft_strncmp(data->cmd_parse->cmd_tab[0], "exit", 4))
 		built_exit(data, data->cmd_parse);
-	//	else if (!ft_strncmp(data->cmd_parse->cmd_tab[0], "unset", 5))
-	//		built_unset(data, data->cmd_parse);
+	//else if (!ft_strncmp(data->cmd_parse->cmd_tab[0], "echo", 4))
+	//		built_echo(data, data->cmd_parse);
 	
-	//prrr(data->cmd_parse, 1);
+	prrr(data->cmd_parse, 0);
 	//	POUR TEST ECHO
 }
 

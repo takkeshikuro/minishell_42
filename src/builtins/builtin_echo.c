@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_echo.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 15:15:22 by keshikuro         #+#    #+#             */
-/*   Updated: 2023/06/13 01:10:18 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/06/15 14:37:06 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,6 @@ int	built_echo(t_main *data, t_cmd_parse *cmd_parse)
 		return (0);
 	}
 	echo_print(cmd_parse->cmd_tab, 1);
+	data->return_value = 0;
 	return (0);
 }

@@ -3,34 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   expander_dol_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 04:44:26 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/06/13 03:01:27 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/06/15 20:09:01 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-char	*check_char_after(t_cmd_parse *node, int i)
+char	*check_char_after(t_cmd_parse *node, int i, int j_dol)
 {
-	int		j;
 	int		start;
 	char	*tmp_str;
 
-	j = 0;
-	while (node->cmd_tab[i][j] != '$')
-		j++;
-	while (node->cmd_tab[i][j] != ' ')
+	while (node->cmd_tab[i][j_dol] != ' ')
 	{
-		if (node->cmd_tab[i][j + 1] == '\0')
+		if (node->cmd_tab[i][j_dol + 1] == '\0')
 			return (NULL);
-		j++;
+		j_dol++;
 	}
-	start = j;
-	while (node->cmd_tab[i][j])
-		j++;
-	tmp_str = ft_substr(node->cmd_tab[i], start, (j - start));
+	start = j_dol;
+	while (node->cmd_tab[i][j_dol])
+		j_dol++;
+	tmp_str = ft_substr(node->cmd_tab[i], start, (j_dol - start));
 	return (tmp_str);
 }
 
@@ -50,7 +46,7 @@ int	copy_bis(char *s1, char *s2, int i, int ok)
 	return (i);
 }
 
-void	copy_past(t_cmd_parse *cmd_node, int i, int j, char *str_replace)
+void	copy_past(t_cmd_parse *cmd_node, int i, int j_dol, char *str_replace)
 {
 	int		k;
 	int		len;
@@ -58,20 +54,23 @@ void	copy_past(t_cmd_parse *cmd_node, int i, int j, char *str_replace)
 	char	*str_after;
 
 	k = 0;
-	str_after = check_char_after(cmd_node, i);
+	str_after = check_char_after(cmd_node, i, j_dol);
 	len = ft_strlen(str_replace);
 	if (str_after)
-		tmp_str = malloc(sizeof(char) * (j + len + ft_strlen(str_after)) + 1);
+		tmp_str = malloc(sizeof(char) * (j_dol + len + ft_strlen(str_after)) + 1);
 	else
-		tmp_str = malloc(sizeof(char) * (j + len) + 1);
+		tmp_str = malloc(sizeof(char) * (j_dol + len) + 1);
 	if (!tmp_str)
 		exit(1);
-	while (cmd_node->cmd_tab[i][k] != '$')
+	while (k < j_dol)
 	{
 		tmp_str[k] = cmd_node->cmd_tab[i][k];
 		k++;
 	}
-	k = copy_bis(tmp_str, str_replace, k, 0);
+	if (str_after)
+		k = copy_bis(tmp_str, str_replace, k, 0);
+	else
+		k = copy_bis(tmp_str, str_replace, k, 1);
 	if (str_after)
 		copy_bis(tmp_str, str_after, k, 1);
 	free(cmd_node->cmd_tab[i]);
