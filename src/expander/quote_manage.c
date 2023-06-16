@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quote_manage.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 06:31:03 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/06/13 00:43:04 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/06/16 16:37:05 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,30 +53,18 @@ int	rm_quote(t_cmd_parse *node, int i_tab, int quote)
 	return (0);
 }
 
-int	quote_manage(t_main *data)
+int	quote_manage(t_main *data, t_cmd_parse *node, int i)
 {
-	t_cmd_parse	*cmd_node;
-	int			i;
 	int			j;
 
-	cmd_node = data->cmd_parse;
-	while (cmd_node)
+	j = 0;
+	while (node->cmd_tab[i][j])
 	{
-		i = 0;
-		while (cmd_node->cmd_tab[i] != NULL)
-		{
-			j = 0;
-			while (cmd_node->cmd_tab[i][j])
-			{
-				if (cmd_node->cmd_tab[i][j] == 39)
-					return (rm_quote(cmd_node, i, 39)); // simple quote
-				else if (cmd_node->cmd_tab[i][j] == 34)
-					return (rm_quote(cmd_node, i, 34)); // double quote
-				j++;
-			}
-			i++;
-		}
-		cmd_node = cmd_node->next;
+		if (node->cmd_tab[i][j] == 39)
+			return (rm_quote(node, i, 39)); // simple quote
+		else if (node->cmd_tab[i][j] == 34)
+			return (rm_quote(node, i, 34)); // double quote
+		j++;
 	}
 	return (0);
 }

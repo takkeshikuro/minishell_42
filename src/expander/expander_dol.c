@@ -6,7 +6,7 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 00:37:57 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/06/15 20:15:55 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/06/16 17:32:55 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,21 +42,17 @@ int	rm_dollard(t_cmd_parse *cmd_node, int i, int j)
 	return (0);
 }
 
-int		expand_dollard(t_main *data, t_cmd_parse *cmd_node, int nb_env, int j)
+int		expand_dollard(t_main *data, t_cmd_parse *node, int i, int j)
 {
-	int		i;
+	int		nb_env;
 	char	*str_replace;
 
-	i = 0;
-	while (cmd_node->cmd_tab[i])
+	nb_env = check_env_variable(data, node->cmd_tab[i], j);
+	if (node->cmd_tab[i][j] == '$')
 	{
-		if (cmd_node->cmd_tab[i][j] == '$')
-		{
-			str_replace = keep_good_str(data->env_bis, nb_env);
-			copy_past(cmd_node, i, j, str_replace);
-			return (ft_strlen(str_replace));
-		}
-		i++;
+		str_replace = keep_good_str(data->env_bis, nb_env);
+		copy_past(node, i, j, str_replace);
+		return (ft_strlen(str_replace));
 	}
 }
 
@@ -69,49 +65,37 @@ int	return_value(t_main *data, t_cmd_parse *node, int i, int j_dol)
 	return (ft_strlen(str_replace));
 }
 
-int	expanding_bis(t_main *data, t_cmd_parse *cmd_node, int i, int j)
+int	expanding_bis(t_main *data, t_cmd_parse *node, int i, int j)
 {
 	int	nb_env;
 
-	nb_env = check_env_variable(data, cmd_node->cmd_tab[i], j);
-	fprintf(stderr, "value exp bis = %d\n", nb_env);
+	nb_env = check_env_variable(data, node->cmd_tab[i], j);
+//	fprintf(stderr, "value exp bis = %d\n", nb_env);
 	if (nb_env >= 0)
-		return (expand_dollard(data, cmd_node, nb_env, j));
+		return (expand_dollard(data, node, i, j));
 	else if (nb_env == -1)
-		return (rm_dollard(cmd_node, i, j));
+		return (rm_dollard(node, i, j));
 	else if (nb_env == -2)
 		return (1);
 	else if (nb_env == -3)
-		return (return_value(data, cmd_node, i, j));
+		return (return_value(data, node, i, j));
 }
 
-void	expanding(t_main *data)
+void	expanding(t_main *data, t_cmd_parse *node, int i)
 {
-	t_cmd_parse	*cmd_node;
-	int			i;
 	int			j;
 	int			len;
 
-	cmd_node = data->cmd_parse;
-	while (cmd_node)
+	j = 0;
+	while (node->cmd_tab[i][j])
 	{
-		i = 0;
-		while (cmd_node->cmd_tab[i])
+		if (node->cmd_tab[i][j] == '$')
 		{
-			j = 0;
-			while (cmd_node->cmd_tab[i][j])
-			{
-				if (cmd_node->cmd_tab[i][j] == '$')
-				{
-					len = expanding_bis(data, cmd_node, i, j);
-					prrr(data->cmd_parse, 0);
-					j += len;
-				}
-				else
-					j++;
-			}
-			i++;
+			len = expanding_bis(data, node, i, j);
+		//	prrr(data->cmd_parse, 0);
+			j += len;
 		}
-		cmd_node = cmd_node->next;
+		else
+			j++;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 03:45:35 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/06/15 19:49:30 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/06/16 17:52:13 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,29 @@ void	parsing(t_main *data, char **env)
 	data->tab_input_blank = ft_split(data->input_line, '|');
 }
 
+void	handle_quote_n_expand(t_main *data)
+{
+	t_cmd_parse *node;
+	int i;
+	
+	node = data->cmd_parse;
+	while (node)
+	{
+		i = 0;
+		while (node->cmd_tab[i])
+		{
+			if (!quote_manage(data, node, i))
+			{
+//				fprintf(stderr, "go expand for i=%d\n", i);
+				expanding(data, node, i);
+			}
+			i++;
+		}
+		node = node->next;
+	}
+}
+
+
 void	start_in_loop(t_main *data, char *input)
 {
 	data->input_line = malloc(sizeof(char) * (ft_strlen(input) + 1));
@@ -59,19 +82,19 @@ void	start_in_loop(t_main *data, char *input)
 		exit_bash_error("quote error");
 	if (!go_lexer(data))
 		exit_bash_error("lexing failed.");
-	pr(data->lexer_list);
+//	pr(data->lexer_list);
 	if (!go_parser(data))
 		exit_bash_error("parsing failed.");
-	//prrr(data->cmd_parse, 1);
-	if (!quote_manage(data))
-		expanding(data);
+//	prrr(data->cmd_parse, 1);
+	handle_quote_n_expand(data);
  	if (!ft_strncmp(data->cmd_parse->cmd_tab[0], "exit", 4))
 		built_exit(data, data->cmd_parse);
-	//else if (!ft_strncmp(data->cmd_parse->cmd_tab[0], "echo", 4))
-	//		built_echo(data, data->cmd_parse);
-	
-	prrr(data->cmd_parse, 0);
-	//	POUR TEST ECHO
+//	else if (!ft_strncmp(data->cmd_parse->cmd_tab[0], "echo", 4))
+//	{
+//		fprintf(stderr, "my built\n");
+//		built_echo(data, data->cmd_parse);
+//	}
+///	prrr(data->cmd_parse, 0);
 }
 
 void	mini_loop(t_main *data, char **env)

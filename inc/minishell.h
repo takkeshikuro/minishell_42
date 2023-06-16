@@ -6,7 +6,7 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 05:04:38 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/06/15 20:17:51 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/06/16 16:42:11 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,13 +132,13 @@ void					redirection(t_parser_data *p_data);
 void					add_redirection(t_lexer *tmp, t_parser_data *p_data);
 
 // quote_manage.c  && utils
-int						quote_manage(t_main *data);
+int	quote_manage(t_main *data, t_cmd_parse *node, int i);
 int						rm_quote(t_cmd_parse *node, int i_tab, int quote);
 char					*ft_strim(char const *s1, int quote);
 int						check_set(char c, int quote);
 
 // expander.c  && utils
-void					expanding(t_main *data);
+void	expanding(t_main *data, t_cmd_parse *node, int i);
 int					expand_dollard(t_main *data, t_cmd_parse *cmd_node,
 							int nb_env, int j);
 char					*go_find(char **env, char *s);
