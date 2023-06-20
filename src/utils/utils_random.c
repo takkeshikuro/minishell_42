@@ -3,16 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   utils_random.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
+/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 05:38:24 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/06/04 16:04:22 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/06/20 02:21:33 by tmorikaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	how_much_quote(const char *str, int sep)
+int	check_space(char *s)
+{
+	int	i;
+
+	i = 0;
+	while (s[i] == ' ')
+		i++;
+	if (s[i] == '\0')
+		return (0);
+	else
+		return (1);
+}
+
+int	pb_quote(const char *str, int sep)
 {
 	int	i;
 	int	nb_quote;
@@ -28,7 +41,10 @@ int	how_much_quote(const char *str, int sep)
 	if (nb_quote % 2 == 0)
 		return (1);
 	else
+	{
+		printf("minishell: need to close quote\n");
 		return (0);
+	}
 }
 
 int	is_space(char c)

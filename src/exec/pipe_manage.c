@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_manage.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmarecar <rmarecar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 15:26:12 by marecarraya       #+#    #+#             */
-/*   Updated: 2023/06/14 13:39:11 by rmarecar         ###   ########.fr       */
+/*   Updated: 2023/06/20 01:53:30 by tmorikaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ char	*get_command(char **paths, char *cmd)
 
 	if (!paths || !cmd)
 		return (NULL);
-	
+
 	if (contains_char(cmd, '/'))
 	{
 		if (access(cmd, X_OK) == 0)

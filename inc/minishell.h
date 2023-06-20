@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
+/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 05:04:38 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/06/16 16:42:11 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/06/20 02:27:48 by tmorikaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,10 @@
 # include <sys/uio.h>
 # include <sys/wait.h>
 # include <unistd.h>
+
+// a normer :
+// copy_past() in expander_dol_utils
+// add_word() in lexer
 
 typedef struct s_pipex
 {
@@ -65,8 +69,7 @@ typedef struct s_main
 	struct s_cmd_parse	*cmd_parse;
 	char				**env_bis;
 	int					return_value;
-	
-		
+
 	char				**tab_input_blank;
 	t_pipex				*pipex;
 	int					*pipe_fd;
@@ -96,13 +99,13 @@ typedef struct s_parser_data
 
 // main.c & utils
 void					mini_loop(t_main *data, char **env);
-void					parsing(t_main *data, char **env);
 void					start_in_loop(t_main *data, char *input);
-void	pr(t_lexer *lexer_list);              // for lexer
-void	prrr(t_cmd_parse *cmd_parse, int ok); //for parser
+void					handle_quote_n_expand(t_main *data);
+void					parsing(t_main *data, char **env);
+//utils
 void					get_env(t_main *data, char **env);
-void					pr_redir(t_lexer *lexer_list);
-void	reset_stuff(t_main *data);
+void					reset_stuff(t_main *data);
+void					init_stuff(t_main *data);
 
 //lexer.c  && utils && clear
 int						go_lexer(t_main *data);
@@ -132,35 +135,27 @@ void					redirection(t_parser_data *p_data);
 void					add_redirection(t_lexer *tmp, t_parser_data *p_data);
 
 // quote_manage.c  && utils
-int	quote_manage(t_main *data, t_cmd_parse *node, int i);
+int						quote_manage(t_main *data, t_cmd_parse *node, int i);
 int						rm_quote(t_cmd_parse *node, int i_tab, int quote);
 char					*ft_strim(char const *s1, int quote);
 int						check_set(char c, int quote);
 
 // expander.c  && utils
-void	expanding(t_main *data, t_cmd_parse *node, int i);
-int					expand_dollard(t_main *data, t_cmd_parse *cmd_node,
+void					expanding(t_main *data, t_cmd_parse *node, int i);
+int						expand_dollard(t_main *data, t_cmd_parse *cmd_node,
 							int nb_env, int j);
 char					*go_find(char **env, char *s);
-int					rm_dollard(t_cmd_parse *cmd_node, int i, int j);
+int						rm_dollard(t_cmd_parse *cmd_node, int i, int j);
 int						check_env_variable(t_main *data, char *s, int j);
 int						check_env_bis(char **env, char *str_dol);
 char					*good_variable(char *s);
-void	copy_past(t_cmd_parse *cmd_node, int i, int j_dol, char *str_replace);
-							
-char					*copy_without_dol(t_cmd_parse *node, int i, int j, char *s);
-char	*keep_good_str(char **env, int nb_env);
-char	*check_char_after(t_cmd_parse *node, int i, int j);
+void					copy_past(t_cmd_parse *cmd_node, int i, int j_dol,
+							char *str_replace);
 
-
-
-// utils.c
-void					free_tab(char **tab);
-int						error(char *s);
-int						ft_nbstr(char const *str, char sep);
-void					void_error(char *s);
-int						is_space(char c);
-void					exit_bash_error(char *s);
+char					*copy_without_dol(t_cmd_parse *node, int i, int j,
+							char *s);
+char					*keep_good_str(char **env, int nb_env);
+char					*check_char_after(t_cmd_parse *node, int i, int j);
 
 // pipe_manage.c
 void					execute_cmd(t_main *data);
@@ -172,21 +167,31 @@ int						built_pwd(t_main *data, t_cmd_parse *cmd_parse);
 int						built_echo(t_main *data, t_cmd_parse *cmd_parse);
 int						built_cd(t_main *data, t_cmd_parse *cmd_parse);
 int						built_unset(t_main *data, t_cmd_parse *cmd_parse);
-int	built_exit(t_main *data, t_cmd_parse *cmd_parse);
-
+int						built_exit(t_main *data, t_cmd_parse *cmd_parse);
 
 // signal.c
-void    EOT_handler(t_main *data);
-void	sig_handler(int sig);
-void	init_signals(void);
+void					EOT_handler(t_main *data);
+void					sig_handler(int sig);
+void					init_signals(void);
 
-//builtins echo.c
+//utils_random
+int						check_space(char *s);
+int						pb_quote(const char *str, int sep);
+int						is_space(char c);
+int						ft_nbstr(char const *str, char sep);
 
-int						how_much_quote(const char *str, int sep);
-void					quote_stuff(t_main *data, int sep);
+//free_stuff.c
+void					free_tab(char **tab);
+void					free_kill(t_main *data);
 
+//error.c
+int						error(char *s);
+void					void_error(char *s);
+void					exit_bash_error(char *s);
 
-void	init_stuff(t_main *data);
-void	free_kill(t_main *data);
+// a supp
+void					pr(t_lexer *lexer_list);              // for lexer
+void					prrr(t_cmd_parse *cmd_parse, int ok); //for parser
+void					pr_redir(t_lexer *lexer_list);
 
 #endif
