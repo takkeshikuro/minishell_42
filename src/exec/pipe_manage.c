@@ -6,7 +6,7 @@
 /*   By: rmarecar <rmarecar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 15:26:12 by marecarraya       #+#    #+#             */
-/*   Updated: 2023/06/14 13:39:11 by rmarecar         ###   ########.fr       */
+/*   Updated: 2023/06/22 19:26:46 by rmarecar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,8 @@ void	pipe_work(t_main *data, int in, int out, t_cmd_parse *node)
 		}
 		if (out != 1)
 		{
+/* 			if (node->redirection->operateur == RIGHT)
+				out = open(node->redirection->str, O_CREAT | O_RDWR | O_TRUNC, 0644); */
 			dup2(out, 1);
 			close(out);
 		}
@@ -142,21 +144,17 @@ void	pipe_work(t_main *data, int in, int out, t_cmd_parse *node)
 		exit(1);
 	}
 }
-
-void	execute_cmd(t_main *data)
+void	exec(t_main *data, t_cmd_parse *node)
 {
-	int			pid;
-	t_cmd_parse	*node;
-	int			in;
-	int			fd[2];
-	int			i;
-	char		*cmd;
-
-	node = data->cmd_parse;
-	data->pipe_count = lstsize(data->cmd_parse) - 1;
+	int		i;
+	int		in;
+	int		pid;
+	int		fd[2];
+	char	*cmd;
+	int		out;
+	
 	i = 0;
 	in = 0;
-	pipe_init(data);
 	while (i < data->pipe_count)
 	{
 		pipe(fd);
@@ -171,18 +169,33 @@ void	execute_cmd(t_main *data)
 	{
 		if (in)
 			dup2(in, 0);
-
+/* 		if (node->redirection->operateur == RIGHT)
+		{
+			out = open(node->redirection->str, O_CREAT | O_RDWR | O_TRUNC, 0644);
+			dup2(out, 1);
+		} */
 		cmd = get_command(data->cmd_paths, node->cmd_tab[0]);
 		if (cmd == NULL)
 		{
 			write(2, node->cmd_tab[0], ft_strlen(node->cmd_tab[0]));
 			write(2, ": command not found\n", 20);
 			exit(1);
-		}
+		}		
 		execve(cmd, node->cmd_tab, data->env_bis);
 		exit (1);
 	}
+}
+void	execute_cmd(t_main *data)
+{
+	t_cmd_parse	*node;
+	int			i;
+
+	node = data->cmd_parse;
+	data->pipe_count = lstsize(data->cmd_parse) - 1;
 	i = 0;
+	
+	pipe_init(data);
+	exec(data, node);
 	while (i <= data->pipe_count)
 	{
 		waitpid(-1, NULL, 0);
