@@ -5,14 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/31 00:37:57 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/06/16 17:32:55 by keshikuro        ###   ########.fr       */
+/*   Created: 2023/06/22 23:48:00 by keshikuro         #+#    #+#             */
+/*   Updated: 2023/06/22 23:59:33 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-// RM A refaire
 
 int	rm_dollard(t_cmd_parse *cmd_node, int i, int j)
 {
@@ -22,6 +20,7 @@ int	rm_dollard(t_cmd_parse *cmd_node, int i, int j)
 	int 	tmp_j;
 
 	size_dol = 0;
+	tmp_j = j;
 	while (cmd_node->cmd_tab[i][j] && cmd_node->cmd_tab[i][j] != 32)
 	{
 		j++;
@@ -92,7 +91,6 @@ void	expanding(t_main *data, t_cmd_parse *node, int i)
 		if (node->cmd_tab[i][j] == '$')
 		{
 			len = expanding_bis(data, node, i, j);
-		//	prrr(data->cmd_parse, 0);
 			j += len;
 		}
 		else

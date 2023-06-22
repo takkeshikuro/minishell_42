@@ -6,7 +6,7 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 16:33:16 by keshikuro         #+#    #+#             */
-/*   Updated: 2023/06/04 18:18:54 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/06/22 23:59:25 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	add_redirection(t_lexer *tmp, t_parser_data *p_data)
 	int			id;
 	int			id_next;
 
-	ft_putendl_fd("[check redir] adding redir", 1);
+//	ft_putendl_fd("[check redir] adding redir", 1);
 	str_file = ft_strdup(tmp->next->str);
 	id = tmp->i;
 	id_next = tmp->next->i;
@@ -44,7 +44,7 @@ void	redirection(t_parser_data *p_data)
 		tmp = tmp->next;
 	if (!tmp)
 		return ;
-	ft_putendl_fd("[check redir] operateur found", 1);
+//	ft_putendl_fd("[check redir] operateur found", 1);
 	if (tmp->operateur)
 	{
 		if (tmp->operateur == PIPE)

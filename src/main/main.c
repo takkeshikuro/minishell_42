@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 03:45:35 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/06/20 02:30:56 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/06/22 23:59:02 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "../../inc/minishell.h"
 
@@ -34,10 +35,7 @@
 
 
 //probleme pour crtl-c   dans un cat (rl_redisplay)
-//idem pour crtl-backslash dans cat
-//probleme d'espace pour <echo "ok $ok ok">
 //probleme de prompt desfois (random)
-//mettre <minishell: command not found: cmd> pour cmd invalide 
 //link les builtins a l'execution
 
 
@@ -92,9 +90,13 @@ void	start_in_loop(t_main *data, char *input)
 	handle_quote_n_expand(data);
  	if (!ft_strncmp(data->cmd_parse->cmd_tab[0], "exit", 4))
 		built_exit(data, data->cmd_parse);
-	if (!ft_strncmp(data->cmd_parse->cmd_tab[0], "cd", 2))
-		built_cd(data, data->cmd_parse);
-///	prrr(data->cmd_parse, 0);
+	//if (!ft_strncmp(data->cmd_parse->cmd_tab[0], "echo", 4))
+//	{
+		
+	//	built_echo(data, data->cmd_parse);
+		//fprintf(stderr, "to check\n");
+	//}
+//	prrr(data->cmd_parse, 0);
 }
 
 
