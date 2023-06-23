@@ -6,7 +6,7 @@
 /*   By: rmarecar <rmarecar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 15:26:12 by marecarraya       #+#    #+#             */
-/*   Updated: 2023/06/22 19:26:46 by rmarecar         ###   ########.fr       */
+/*   Updated: 2023/06/23 15:24:28 by rmarecar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,27 @@ void	pipe_work(t_main *data, int in, int out, t_cmd_parse *node)
 	pid = fork();
 	if (pid == 0)
 	{
+		if (node->redirection)
+		{
+			if (node->redirection->operateur == RIGHT)
+			{
+				out = open(node->redirection->str, O_CREAT | O_RDWR | O_TRUNC, 0644);
+				if (out == -1)
+				{
+					perror(node->redirection->str);
+					exit(1);
+				}
+			
+				if (node->redirection->operateur == LEFT)
+	
+				in = open(node->redirection->str, O_RDWR);
+				if (in == -1)
+				{
+					perror(node->redirection->str);
+					exit(1);
+				}
+			}
+		} 
 		if (in)
 		{
 			dup2(in, 0);
@@ -128,8 +149,6 @@ void	pipe_work(t_main *data, int in, int out, t_cmd_parse *node)
 		}
 		if (out != 1)
 		{
-/* 			if (node->redirection->operateur == RIGHT)
-				out = open(node->redirection->str, O_CREAT | O_RDWR | O_TRUNC, 0644); */
 			dup2(out, 1);
 			close(out);
 		}
@@ -167,13 +186,33 @@ void	exec(t_main *data, t_cmd_parse *node)
 	pid = fork();
 	if (pid == 0)
 	{
+
+ 		if (node->redirection)
+		{
+			if (node->redirection->operateur == RIGHT)
+			{
+				out = open(node->redirection->str, O_CREAT | O_RDWR | O_TRUNC, 0644);
+				if (out == -1)
+				{
+					perror(node->redirection->str);
+					exit(1);
+				}
+				dup2(out, 1);
+				close(out);
+			}
+			if (node->redirection->operateur == LEFT)
+			{
+				in = open(node->redirection->str, O_CREAT | O_RDWR | O_TRUNC, 0644);
+				if (in == -1)
+				{
+					perror(node->redirection->str);
+					exit(1);
+				}
+				close(in);
+			}
+		} 
 		if (in)
 			dup2(in, 0);
-/* 		if (node->redirection->operateur == RIGHT)
-		{
-			out = open(node->redirection->str, O_CREAT | O_RDWR | O_TRUNC, 0644);
-			dup2(out, 1);
-		} */
 		cmd = get_command(data->cmd_paths, node->cmd_tab[0]);
 		if (cmd == NULL)
 		{
