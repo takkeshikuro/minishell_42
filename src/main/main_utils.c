@@ -6,7 +6,7 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 16:29:32 by keshikuro         #+#    #+#             */
-/*   Updated: 2023/06/14 18:21:33 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/06/25 01:36:01 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,75 @@ void prrr(t_cmd_parse *cmd_parse, int ok)  // show final list
 		tmp = tmp->next;
 	}
 	fprintf(stderr, "\n");
+}
+
+int	copy_name(t_main *data, char *tmp, int i)
+{
+	int j;
+	int k;
+
+	j = 0;
+	k = 0;
+	while (data->env_bis[i][j] != '=')
+	{
+		tmp[j] = data->env_bis[i][j];
+		j++;
+		k++;
+	}
+	tmp[k] = '=';
+	k++;
+	tmp[k] = '"';
+	k++;
+	j++;
+	while (data->env_bis[i][j])
+	{
+		tmp[k] = data->env_bis[i][j];
+		j++;
+		k++;
+	}
+	tmp[k] = '"';
+	k += 1;
+	return (k);
+}
+
+void	copy_env(t_main *data, char *decla)
+{
+	int i;
+	int j;
+	int size;
+	char *tmp;
+
+	i = 0;
+	while (data->env_bis[i])
+	{
+		j = 0;
+		size = ft_strlen(data->env_bis[i]);
+		tmp = malloc(sizeof(char) * (size + 2) + 1);
+		if (!tmp)
+			exit (1);
+		j += copy_name(data, tmp, i);
+		tmp[j] = '\0';
+		data->env_exp[i] = ft_strjoin(decla, tmp);
+		free(tmp);
+		i++;
+	}
+	data->env_exp[i] = 0;
+}
+
+void    get_env_export(t_main *data)
+{
+	int 	i;
+	char	 *decla;
+
+	i = 0;
+	decla = "declare -x ";
+	while (data->env_bis[i])
+		i++;
+	data->env_exp = malloc(sizeof(char *) * (i * 2));
+	if (!data->env_exp)
+		exit (1);
+	i = 0;
+	copy_env(data, decla);
 }
 
 void	get_env(t_main *data, char **env)

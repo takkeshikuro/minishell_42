@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmarecar <rmarecar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 05:04:38 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/06/23 14:47:23 by rmarecar         ###   ########.fr       */
+/*   Updated: 2023/06/25 01:21:35 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ typedef struct s_main
 	t_lexer				*lexer_list;
 	struct s_cmd_parse	*cmd_parse;
 	char				**env_bis;
+	char				**env_exp;
 	int					return_value;
 
 	char				**tab_input_blank;
@@ -107,6 +108,9 @@ void					parsing(t_main *data, char **env);
 void					get_env(t_main *data, char **env);
 void					reset_stuff(t_main *data);
 void					init_stuff(t_main *data);
+void    get_env_export(t_main *data);
+
+
 
 //lexer.c  && utils && clear
 int						go_lexer(t_main *data);
@@ -169,9 +173,14 @@ int						built_echo(t_main *data, t_cmd_parse *cmd_parse);
 int						built_cd(t_main *data, t_cmd_parse *cmd_parse);
 int						built_unset(t_main *data, t_cmd_parse *cmd_parse);
 int						built_exit(t_main *data, t_cmd_parse *cmd_parse);
+int						built_export(t_main *data, t_cmd_parse *cmd_parse);
+
+
+
+int	show_env_exp(t_main *data);
 
 // signal.c
-void					EOT_handler(t_main *data);
+void					eot_handler(t_main *data);
 void					sig_handler(int sig);
 void					init_signals(void);
 

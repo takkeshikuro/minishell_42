@@ -6,38 +6,16 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 03:45:35 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/06/22 23:59:02 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/06/25 02:57:07 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "../../inc/minishell.h"
 
-/* void	parsing(t_main *data, char **env)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	(void)env;
-	data->tab_input_blank = ft_split(data->input_line, ' ');
-	while (data->input_line[i])
-	{
-		if (!ft_strncmp(data->input_line, "echo", 4))
-		{
-			builtin_echo(data);
-			break ;
-		}
-		i++;
-	}
-	free_tab(data->tab_input_blank);
-} */
-
-
 //probleme pour crtl-c   dans un cat (rl_redisplay)
-//probleme de prompt desfois (random)
+// export in progress
 //link les builtins a l'execution
-
+// regler env -i ./minishell
 
 void	parsing(t_main *data, char **env)
 {
@@ -57,8 +35,8 @@ void	parsing(t_main *data, char **env)
 
 void	handle_quote_n_expand(t_main *data)
 {
-	t_cmd_parse *node;
-	int 		i;
+	t_cmd_parse	*node;
+	int			i;
 
 	node = data->cmd_parse;
 	while (node)
@@ -83,19 +61,23 @@ void	start_in_loop(t_main *data, char *input)
 	ft_strlcpy(data->input_line, input, ft_strlen(input));
 	if (!go_lexer(data))
 		exit_bash_error("lexing failed.");
-//	pr(data->lexer_list);
+	pr(data->lexer_list);
 	if (!go_parser(data))
 		exit_bash_error("parsing failed.");
 //	prrr(data->cmd_parse, 1);
 	handle_quote_n_expand(data);
- 	if (!ft_strncmp(data->cmd_parse->cmd_tab[0], "exit", 4))
-		built_exit(data, data->cmd_parse);
-	//if (!ft_strncmp(data->cmd_parse->cmd_tab[0], "echo", 4))
+ //	if (!ft_strncmp(data->cmd_parse->cmd_tab[0], "export", 6))
+//	{
+//		fprintf(stderr, "[rentre dans builtin]\n");
+//		built_export(data, data->cmd_parse);
+//		fprintf(stderr, "[sort builtin]\n");
+//	}
+//	if (!ft_strncmp(data->cmd_parse->cmd_tab[0], "env", 3))
 //	{
 		
-	//	built_echo(data, data->cmd_parse);
-		//fprintf(stderr, "to check\n");
-	//}
+	//	built_env(data, data->cmd_parse);
+//		fprintf(stderr, "to check\n");
+//	}
 //	prrr(data->cmd_parse, 0);
 }
 
@@ -107,9 +89,9 @@ void	mini_loop(t_main *data, char **env)
 
 	while (42)
 	{
-		input = readline("$>");
+		input = readline("[42] $> ");
 		if (!input)
-			EOT_handler(data);
+			eot_handler(data);
 		if (check_space(input) && pb_quote(input, 34) && pb_quote(input, 39))
 		{
 			if (input[0] != '\0')
@@ -139,6 +121,7 @@ int	main(int ac, char **av, char **env)
 	if (!env[0])
 		return (error("env"));
 	get_env(&data, env);
+	get_env_export(&data);
 	init_stuff(&data);
 	mini_loop(&data, env);
 	return (0);
