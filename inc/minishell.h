@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
+/*   By: rmarecar <rmarecar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 05:04:38 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/06/26 16:14:02 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/06/26 19:57:26 by rmarecar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,19 +28,6 @@
 // a normer :
 // copy_past() in expander_dol_utils
 // add_word() in lexer
-
-typedef struct s_pipex
-{
-	pid_t				pid;
-	int					infile;
-	int					outfile;
-	int					*pipe_fd;
-	char				*paths;
-	char				**cmd_paths;
-	char				**cmd_args;
-	char				*cmd;
-	char				*argv[];
-}						t_pipex;
 
 typedef enum s_operateurs
 {
@@ -73,7 +60,6 @@ typedef struct s_main
 	int					return_value;
 
 	char				**tab_input_blank;
-	t_pipex				*pipex;
 	int					*pipe_fd;
 	char				*path;
 	char				**cmd_paths;
@@ -160,9 +146,19 @@ char					*copy_without_dol(t_cmd_parse *node, int i, int j,
 char					*keep_good_str(char **env, int nb_env);
 char					*check_char_after(t_cmd_parse *node, int i, int j);
 
-// pipe_manage.c
+// pipe_manage.c && utils
 void					execute_cmd(t_main *data);
 void					wait_childs(int count);
+int						open_outfile(t_cmd_parse *node);
+int						open_infile(t_cmd_parse *node);
+int						contains_char(char *str, char c);
+char					*get_command(char **paths, char *cmd);
+int						lstsize(t_cmd_parse *lst);
+char					*find_path(char **envp);
+void					close_pipe(t_main *data, int count);
+int						open_append(t_cmd_parse *node);
+
+
 
 //  builtins.c
 int						built_env(t_main *data, t_cmd_parse *cmd_parse);

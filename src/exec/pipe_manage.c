@@ -6,40 +6,11 @@
 /*   By: rmarecar <rmarecar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 15:26:12 by marecarraya       #+#    #+#             */
-/*   Updated: 2023/06/23 15:24:28 by rmarecar         ###   ########.fr       */
+/*   Updated: 2023/06/26 20:16:01 by rmarecar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-char	*find_path(char **envp)
-{
-	int	i;
-
-	i = 0;
-	while (envp[i])
-	{
-		if (!ft_strncmp("PATH", envp[i], 4))
-			return (envp[i] + 5);
-		i++;
-	}
-	return (" ");
-}
-
-int	lstsize(t_cmd_parse *lst)
-{
-	int	size;
-	t_cmd_parse	*lsts;
-
-	lsts = lst;
-	size = 0;
-	while (lsts != NULL)
-	{
-		lsts = lsts->next;
-		size++;
-	}
-	return (size);
-}
 
 void	pipe_init(t_main *data)
 {
@@ -47,70 +18,11 @@ void	pipe_init(t_main *data)
 	data->cmd_paths = ft_split(data->path, ':');
 }
 
-void	close_pipe(t_main *data, int count)
+void	no_command(t_main *data, t_cmd_parse *node)
 {
-	int	i;
-
-	i = 0;
-	while (i < count)
-	{
-		close(data->pipe_fd[i]);
-		i++;
-	}
-}
-
-int		contains_char(char *str, char c)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == c)
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
-char	*get_command(char **paths, char *cmd)
-{
-	char	*command;
-	char	*tmp;
-
-	if (!paths || !cmd)
-		return (NULL);
-	
-	if (contains_char(cmd, '/'))
-	{
-		if (access(cmd, X_OK) == 0)
-			return (cmd);
-		return (NULL);
-	}
-	while (*paths)
-	{
-		tmp = ft_strjoin(*paths, "/");
-		command = ft_strjoin(tmp, cmd);
-		free(tmp);
-		if (access(command, X_OK) == 0)
-			return (command);
-		free(command);
-		paths++;
-	}
-	return (NULL);
-}
-
-void	wait_childs(int count)
-{
-	int	i;
-
-	i = 0;
-	while (i <= count)
-	{
-		write(2, "- ", 2);
-		waitpid(-1, NULL, 0);
-		i++;
-	}
+	write(2, node->cmd_tab[0], ft_strlen(node->cmd_tab[0]));
+	write(2, ": command not found\n", 20);
+	exit(1);
 }
 
 void	pipe_work(t_main *data, int in, int out, t_cmd_parse *node)
@@ -121,27 +33,16 @@ void	pipe_work(t_main *data, int in, int out, t_cmd_parse *node)
 	pid = fork();
 	if (pid == 0)
 	{
-		if (node->redirection)
+		while (node->redirection)
 		{
 			if (node->redirection->operateur == RIGHT)
-			{
-				out = open(node->redirection->str, O_CREAT | O_RDWR | O_TRUNC, 0644);
-				if (out == -1)
-				{
-					perror(node->redirection->str);
-					exit(1);
-				}
-			
-				if (node->redirection->operateur == LEFT)
-	
-				in = open(node->redirection->str, O_RDWR);
-				if (in == -1)
-				{
-					perror(node->redirection->str);
-					exit(1);
-				}
-			}
-		} 
+				out = open_outfile(node);
+			if (node->redirection->operateur == LEFT)
+				in = open_infile(node);
+			if (node->redirection->operateur == RIGHT_RIGHT)
+				out = open_append(node);
+			node->redirection = node->redirection->next;
+		}
 		if (in)
 		{
 			dup2(in, 0);
@@ -154,24 +55,20 @@ void	pipe_work(t_main *data, int in, int out, t_cmd_parse *node)
 		}
 		cmd = get_command(data->cmd_paths, node->cmd_tab[0]);
 		if (cmd == NULL)
-		{
-			write(2, node->cmd_tab[0], ft_strlen(node->cmd_tab[0]));
-			write(2, ": command not found\n", 20);
-			exit(1);
-		}
+			no_command(data, node);
 		execve(cmd, node->cmd_tab, data->env_bis);
 		exit(1);
 	}
 }
-void	exec(t_main *data, t_cmd_parse *node)
+
+int	child_processes(t_main *data, t_cmd_parse *node)
 {
-	int		i;
-	int		in;
-	int		pid;
-	int		fd[2];
-	char	*cmd;
-	int		out;
-	
+	int	in;
+	int	i;
+	int	pid;
+	int	out;
+	int	fd[2];
+
 	i = 0;
 	in = 0;
 	while (i < data->pipe_count)
@@ -181,60 +78,80 @@ void	exec(t_main *data, t_cmd_parse *node)
 		close(fd[1]);
 		in = fd[0];
 		node = node->next;
-		i++; 
+		i++;
+	}
+	return (in);
+}
+
+void	last_process(t_main *data, t_cmd_parse *node, char *cmd, int in)
+{
+	int	out;
+
+	while (node->redirection)
+	{
+		if (node->redirection->operateur == RIGHT)
+		{
+			out = open_outfile(node);
+			dup2(out, 1);
+			close(out);
+		}
+		if (node->redirection->operateur == LEFT)
+			in = open_infile(node);
+		if (node->redirection->operateur == RIGHT_RIGHT)
+		{
+			out = open_append(node);
+			dup2(out, 1);
+			close(out);
+		}
+		node->redirection = node->redirection->next;
+	}
+	if (in)
+	{
+		dup2(in, 0);
+		close(in);
+	}
+	cmd = get_command(data->cmd_paths, node->cmd_tab[0]);
+	if (cmd == NULL)
+		no_command(data, node);	
+	execve(cmd, node->cmd_tab, data->env_bis);
+	exit (1);
+}
+
+void	exec(t_main *data, t_cmd_parse *node, char *cmd)
+{
+	int		i;
+	int		in;
+	int		pid;
+	int		fd[2];
+
+	i = 0;
+	in = 0;
+	while (i < data->pipe_count)
+	{
+		pipe(fd);
+		pipe_work(data, in, fd[1], node);
+		close(fd[1]);
+		in = fd[0];
+		node = node->next;
+		i++;
 	}
 	pid = fork();
 	if (pid == 0)
-	{
-
- 		if (node->redirection)
-		{
-			if (node->redirection->operateur == RIGHT)
-			{
-				out = open(node->redirection->str, O_CREAT | O_RDWR | O_TRUNC, 0644);
-				if (out == -1)
-				{
-					perror(node->redirection->str);
-					exit(1);
-				}
-				dup2(out, 1);
-				close(out);
-			}
-			if (node->redirection->operateur == LEFT)
-			{
-				in = open(node->redirection->str, O_CREAT | O_RDWR | O_TRUNC, 0644);
-				if (in == -1)
-				{
-					perror(node->redirection->str);
-					exit(1);
-				}
-				close(in);
-			}
-		} 
-		if (in)
-			dup2(in, 0);
-		cmd = get_command(data->cmd_paths, node->cmd_tab[0]);
-		if (cmd == NULL)
-		{
-			write(2, node->cmd_tab[0], ft_strlen(node->cmd_tab[0]));
-			write(2, ": command not found\n", 20);
-			exit(1);
-		}		
-		execve(cmd, node->cmd_tab, data->env_bis);
-		exit (1);
-	}
+		last_process(data, node, cmd, in);
 }
+
 void	execute_cmd(t_main *data)
 {
 	t_cmd_parse	*node;
 	int			i;
+	char		*cmd;
 
+	cmd = NULL;
 	node = data->cmd_parse;
-	data->pipe_count = lstsize(data->cmd_parse) - 1;
+	data->pipe_count = lstsize(node) - 1;
 	i = 0;
-	
 	pipe_init(data);
-	exec(data, node);
+	exec(data, node, cmd);
 	while (i <= data->pipe_count)
 	{
 		waitpid(-1, NULL, 0);
