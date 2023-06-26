@@ -6,7 +6,7 @@
 /*   By: rmarecar <rmarecar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 15:26:12 by marecarraya       #+#    #+#             */
-/*   Updated: 2023/06/26 20:16:01 by rmarecar         ###   ########.fr       */
+/*   Updated: 2023/06/26 20:57:00 by rmarecar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,25 @@ int	child_processes(t_main *data, t_cmd_parse *node)
 	return (in);
 }
 
+void	here_doc_manage(t_main *data, t_cmd_parse *node)
+{
+	char	*input;
+	char	*here_doc;
+	int		size;
+
+	here_doc = "";
+	while (1)
+	{
+		input = readline(">");
+		size = ft_strlen(node->redirection->str);
+		if (!ft_strncmp(input, node->redirection->str, size))
+			break ;
+		here_doc = ft_strjoin(here_doc, input);
+		here_doc = ft_strjoin(here_doc, "\n");
+	}
+	fprintf(stderr, "%s", here_doc);
+}
+
 void	last_process(t_main *data, t_cmd_parse *node, char *cmd, int in)
 {
 	int	out;
@@ -103,6 +122,8 @@ void	last_process(t_main *data, t_cmd_parse *node, char *cmd, int in)
 			dup2(out, 1);
 			close(out);
 		}
+		if (node->redirection->operateur == LEFT_LEFT)
+			here_doc_manage(data, node);
 		node->redirection = node->redirection->next;
 	}
 	if (in)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
+/*   By: rmarecar <rmarecar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 03:45:35 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/06/26 16:13:50 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/06/26 20:30:00 by rmarecar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ void	mini_loop(t_main *data, char **env)
 			{
 				start_in_loop(data, input);
 				execute_cmd(data);
-				//wait_childs(data->pipe_count);
 				reset_stuff(data);
 			}
 		}
