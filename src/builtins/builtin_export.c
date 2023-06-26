@@ -6,7 +6,7 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 13:05:43 by keshikuro         #+#    #+#             */
-/*   Updated: 2023/06/26 03:47:45 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/06/26 16:11:28 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,23 +37,25 @@ int	simple_check(char *s)
 
 void	add_total_stuff(t_main *data, char *s)
 {
-	char	*tmp_s;
-	char	*check_tmp;
+	char	*s_quoted;
+	char	*s_check;
 	int		i;
 
 	i = 0;
-	tmp_s = malloc(sizeof(char) * ft_strlen(s) + 3);
-	if (!tmp_s)
+	s_quoted = malloc(sizeof(char) * ft_strlen(s) + 3);
+	if (!s_quoted)
 		exit (1);
-	i = cp_string(s, tmp_s);
-	tmp_s[i] = '\0';
-	check_tmp = good_tmp(s);
-//	if (check_v_exist_bis(data, check_tmp) >= 0)
-//		rm_variable_bis(data, check_v_exist_bis(data, check_tmp));
-//	if (check_v_exist_exp(data, check_tmp) >= 0)
-//		rm_variable_exp(data, check_v_exist_exp(data, check_tmp));
+	i = cp_string_quoted(s, s_quoted);
+	s_quoted[i] = '\0';
+	s_check = cp_string_name(s);
+	if (check_v_exist_bis(data, s_check) >= 0)
+		rm_variable_bis(data, check_v_exist_bis(data, s_check));
+	if (check_v_exist_exp(data, s_check) >= 0)
+		rm_variable_exp(data, check_v_exist_exp(data, s_check));
+	free(s_check);
 	add_to_bis(data, s);
-	add_v_to_envexp(data, tmp_s);
+	add_v_to_envexp(data, s_quoted);
+	free(s_quoted);
 }
 
 void	export_support(t_main *data, char *s)
@@ -73,12 +75,8 @@ void	export_support(t_main *data, char *s)
 			if ((check_v_exist_bis(data, s) >= 0))
 				return ;
 			else if (check_v_exist_exp(data, s) >= 0)
-			{
-				fprintf(stderr, "return\n");
 				return ;
-			}
 			add_v_to_envexp(data, s);
-		//	show_env_exp(data);
 		}
 		i++;
 	}
@@ -102,5 +100,6 @@ int	built_export(t_main *data, t_cmd_parse *cmd_parse)
 			export_support(data, cmd_parse->cmd_tab[i]);
 		i++;
 	}
-	fprintf(stderr, "no more in builtin\n");
+	data->return_value = 0;
+	return (0);
 }

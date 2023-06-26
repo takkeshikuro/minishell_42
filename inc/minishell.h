@@ -6,7 +6,7 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 05:04:38 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/06/26 03:21:40 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/06/26 16:14:02 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,9 +108,7 @@ void					parsing(t_main *data, char **env);
 void					get_env(t_main *data, char **env);
 void					reset_stuff(t_main *data);
 void					init_stuff(t_main *data);
-void    get_env_export(t_main *data);
-
-
+void					get_env_export(t_main *data);
 
 //lexer.c  && utils && clear
 int						go_lexer(t_main *data);
@@ -177,21 +175,25 @@ int						built_export(t_main *data, t_cmd_parse *cmd_parse);
 
 
 // export & utils
-int	show_env_exp(t_main *data);
-void	add_to_bis(t_main *data, char *s);
-void	add_v_to_envexp(t_main *data, char *s);
-void	rm_variable_exp(t_main *data, int supp);
-void	rm_variable_bis(t_main *data, int supp);
-char	*good_tmp(char *s);
-int	check_v_exist_exp(t_main *data, char *s);
+void	export_support(t_main *data, char *s);
+void	add_total_stuff(t_main *data, char *s);
+int	simple_check(char *s);
+// check
 int	check_v_exist_bis(t_main *data, char *s);
+int	check_v_exist_exp(t_main *data, char *s);
+// add & rm 
+void	rm_variable_bis(t_main *data, int supp);
+void	rm_variable_exp(t_main *data, int supp);
+void	add_v_to_envexp(t_main *data, char *s);
+void	add_to_bis(t_main *data, char *s);
+int	show_env_exp(t_main *data);
+// utils
+int	cp_string_quoted(char *s1, char *s2);
+char	*cp_string_name(char *s);
+int	check_valid_identifier(char c);
+int	equal_env(char *s);
 int	print_error_export(char *s, int ok);
 
-
-//utilsbuitltin
-int	cp_string(char *s1, char *s2);
-int	equal_env(char *s);
-int	check_valid_identifier(char c);
 
 // signal.c
 void					eot_handler(t_main *data);
