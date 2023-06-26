@@ -6,7 +6,7 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 03:45:35 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/06/25 02:57:07 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/06/26 03:40:26 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,17 +61,17 @@ void	start_in_loop(t_main *data, char *input)
 	ft_strlcpy(data->input_line, input, ft_strlen(input));
 	if (!go_lexer(data))
 		exit_bash_error("lexing failed.");
-	pr(data->lexer_list);
+//	pr(data->lexer_list);
 	if (!go_parser(data))
 		exit_bash_error("parsing failed.");
 //	prrr(data->cmd_parse, 1);
 	handle_quote_n_expand(data);
- //	if (!ft_strncmp(data->cmd_parse->cmd_tab[0], "export", 6))
-//	{
+ 	if (!ft_strncmp(data->cmd_parse->cmd_tab[0], "export", 6))
+	{
 //		fprintf(stderr, "[rentre dans builtin]\n");
-//		built_export(data, data->cmd_parse);
-//		fprintf(stderr, "[sort builtin]\n");
-//	}
+		built_export(data, data->cmd_parse);
+		fprintf(stderr, "[sort builtin]\n");
+	}
 //	if (!ft_strncmp(data->cmd_parse->cmd_tab[0], "env", 3))
 //	{
 		
@@ -120,9 +120,9 @@ int	main(int ac, char **av, char **env)
 		return (error("run ./minishell without arg"));
 	if (!env[0])
 		return (error("env"));
+	init_stuff(&data);
 	get_env(&data, env);
 	get_env_export(&data);
-	init_stuff(&data);
 	mini_loop(&data, env);
 	return (0);
 }

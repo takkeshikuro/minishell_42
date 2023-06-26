@@ -6,74 +6,11 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 13:05:43 by keshikuro         #+#    #+#             */
-/*   Updated: 2023/06/25 02:56:26 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/06/26 03:47:45 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-
-int	equal_env(char *s)
-{
-	int i;
-
-	i = 0;
-	while (s[i])
-	{
-		if (s[i] == '=')
-			return (i + 1);
-		i++;
-	}
-	return (0);
-}
-
-int	check_valid_identifier(char c)
-{
-	if (c == '|' || c == '<' || c == '>' || c == '[' || c == ']'
-		|| c == '\'' || c == '\"' || c == ' ' || c == ',' || c == '.'
-		|| c == ':' || c == '/' || c == '{' || c == '}' || c == '+'
-		|| c == '^' || c == '%' || c == '#' || c == '@' || c == '!'
-		|| c == '~'
-		|| c == '=' || c == '-' || c == '?' || c == '&' || c == '*')
-	{
-		return (1);
-	}
-	else
-		return (0);
-}
-
-int	check_variable(t_main *data, char *s)
-{
-	int i;
-
-	i = 0;
-	while (data->env_bis[i])
-	{
-		if (!ft_strncmp(data->env_bis[i], s, equal_env(data->env_bis[i])))
-		{
-			free(data->env_bis[i]);
-			data->env_bis[i] = ft_strdup(s);
-			return (1);
-		}
-		i++;
-	}
-}
-
-int	print_error_export(char *s, int ok)
-{
-	int	i;
-
-	i = 0;
-	if (ok)
-	{
-		ft_putstr_fd("minishell: export: `", 2);
-		while (s[i] && s[i] != '=')
-			ft_putchar_fd(s[i++], 2);
-		ft_putstr_fd("': not a valid identifier\n", 2);
-		return (1);
-	}
-	return (0);
-}
 
 int	simple_check(char *s)
 {
@@ -98,21 +35,72 @@ int	simple_check(char *s)
 	return (0);
 }
 
-int	built_export(t_main *data, t_cmd_parse *cmd_parse)
+void	add_total_stuff(t_main *data, char *s)
 {
-    int i;
-	char *tmp;
+	char	*tmp_s;
+	char	*check_tmp;
+	int		i;
 
 	i = 0;
-	if (!cmd_parse->cmd_tab[1] || cmd_parse->cmd_tab[1][0] == '\0')
-		return (show_env_exp(data));
-	if (simple_check(cmd_parse->cmd_tab[1]))
-		return (1);
-	while (cmd_parse->cmd_tab[1][i])
+	tmp_s = malloc(sizeof(char) * ft_strlen(s) + 3);
+	if (!tmp_s)
+		exit (1);
+	i = cp_string(s, tmp_s);
+	tmp_s[i] = '\0';
+	check_tmp = good_tmp(s);
+//	if (check_v_exist_bis(data, check_tmp) >= 0)
+//		rm_variable_bis(data, check_v_exist_bis(data, check_tmp));
+//	if (check_v_exist_exp(data, check_tmp) >= 0)
+//		rm_variable_exp(data, check_v_exist_exp(data, check_tmp));
+	add_to_bis(data, s);
+	add_v_to_envexp(data, tmp_s);
+}
+
+void	export_support(t_main *data, char *s)
+{
+	int	i;
+
+	i = 0;
+	while (s[i])
 	{
-		if (cmd_parse->cmd_tab[1][i] == '=')
-			//function do shit
+		if (s[i] == '=')
+		{
+			add_total_stuff(data, s);
+			break ;
+		}
+		else if (s[i + 1] == '\0')
+		{
+			if ((check_v_exist_bis(data, s) >= 0))
+				return ;
+			else if (check_v_exist_exp(data, s) >= 0)
+			{
+				fprintf(stderr, "return\n");
+				return ;
+			}
+			add_v_to_envexp(data, s);
+		//	show_env_exp(data);
+		}
 		i++;
 	}
-	//function add varibale to env export;
+	return ;
+}
+
+int	built_export(t_main *data, t_cmd_parse *cmd_parse)
+{
+	int		i;
+	int		j;
+	char	*tmp;
+
+	i = 1;
+	if (!cmd_parse->cmd_tab[1] || cmd_parse->cmd_tab[1][0] == '\0')
+		return (show_env_exp(data));
+	while (cmd_parse->cmd_tab[i])
+	{
+		if (simple_check(cmd_parse->cmd_tab[i]))
+			return (1);
+		else
+			export_support(data, cmd_parse->cmd_tab[i]);
+		i++;
+	}
+	fprintf(stderr, "no more in builtin\n");
 }

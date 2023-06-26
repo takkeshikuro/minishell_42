@@ -6,7 +6,7 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 05:04:38 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/06/25 01:21:35 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/06/26 03:21:40 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,8 +176,22 @@ int						built_exit(t_main *data, t_cmd_parse *cmd_parse);
 int						built_export(t_main *data, t_cmd_parse *cmd_parse);
 
 
-
+// export & utils
 int	show_env_exp(t_main *data);
+void	add_to_bis(t_main *data, char *s);
+void	add_v_to_envexp(t_main *data, char *s);
+void	rm_variable_exp(t_main *data, int supp);
+void	rm_variable_bis(t_main *data, int supp);
+char	*good_tmp(char *s);
+int	check_v_exist_exp(t_main *data, char *s);
+int	check_v_exist_bis(t_main *data, char *s);
+int	print_error_export(char *s, int ok);
+
+
+//utilsbuitltin
+int	cp_string(char *s1, char *s2);
+int	equal_env(char *s);
+int	check_valid_identifier(char c);
 
 // signal.c
 void					eot_handler(t_main *data);

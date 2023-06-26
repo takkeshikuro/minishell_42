@@ -6,7 +6,7 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 16:29:32 by keshikuro         #+#    #+#             */
-/*   Updated: 2023/06/25 01:36:01 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/06/26 03:30:43 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,10 +116,8 @@ int	copy_name(t_main *data, char *tmp, int i)
 		j++;
 		k++;
 	}
-	tmp[k] = '=';
-	k++;
-	tmp[k] = '"';
-	k++;
+	tmp[k++] = '=';
+	tmp[k++] = '"';
 	j++;
 	while (data->env_bis[i][j])
 	{
@@ -127,8 +125,7 @@ int	copy_name(t_main *data, char *tmp, int i)
 		j++;
 		k++;
 	}
-	tmp[k] = '"';
-	k += 1;
+	tmp[k++] = '"';
 	return (k);
 }
 
