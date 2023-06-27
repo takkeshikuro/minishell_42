@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmarecar <rmarecar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 03:45:35 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/06/26 20:30:00 by rmarecar         ###   ########.fr       */
+/*   Updated: 2023/06/27 04:13:18 by tmorikaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 //probleme pour crtl-c   dans un cat (rl_redisplay)
 //link les builtins a l'execution
 // regler env -i ./minishell
+// unset need to rm at env_exp to now
+// add += 1 a SHLVL (env) si la commande est ./minishell ou bash
 
 void	handle_quote_n_expand(t_main *data)
 {
@@ -48,8 +50,10 @@ void	start_in_loop(t_main *data, char *input)
 		exit_bash_error("parsing failed.");
 //	prrr(data->cmd_parse, 1);
 	handle_quote_n_expand(data);
-//	if (!ft_strncmp(data->cmd_parse->cmd_tab[0], "export", 6))
-//		built_export(data, data->cmd_parse);
+	if (!ft_strncmp(data->cmd_parse->cmd_tab[0], "export", 6))
+		built_export(data, data->cmd_parse);
+	else if (!ft_strncmp(data->cmd_parse->cmd_tab[0], "cd", 2))
+		built_cd(data, data->cmd_parse);
 //	prrr(data->cmd_parse, 0);
 }
 
@@ -87,7 +91,7 @@ int	main(int ac, char **av, char **env)
 	if (ac != 1)
 		return (error("run ./minishell without arg"));
 	if (!env[0])
-		return (error("env"));
+		return (error("env is missing"));
 	init_stuff(&data);
 	get_env(&data, env);
 	get_env_export(&data);

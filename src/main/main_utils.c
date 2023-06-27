@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
+/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 16:29:32 by keshikuro         #+#    #+#             */
-/*   Updated: 2023/06/26 03:30:43 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/06/27 03:45:44 by tmorikaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,7 +162,7 @@ void    get_env_export(t_main *data)
 	decla = "declare -x ";
 	while (data->env_bis[i])
 		i++;
-	data->env_exp = malloc(sizeof(char *) * (i * 2));
+	data->env_exp = (char **)malloc(sizeof(char *) * (i + 1));
 	if (!data->env_exp)
 		exit (1);
 	i = 0;

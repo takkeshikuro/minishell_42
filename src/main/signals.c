@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
+/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 08:28:59 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/06/24 19:03:29 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/06/27 02:27:54 by tmorikaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void	eot_handler(t_main *data)
 	printf("Quit minishell by crtl-D\n");
 	free_tab(data->env_bis);
 	data->env_bis = NULL;
+	free_tab(data->env_exp);
+	data->env_exp = NULL;
 	exit(0);
 }
 

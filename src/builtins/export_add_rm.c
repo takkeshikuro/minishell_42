@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_add_rm.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
+/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 00:07:45 by keshikuro         #+#    #+#             */
-/*   Updated: 2023/06/26 16:03:54 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/06/27 03:50:45 by tmorikaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	add_to_bis(t_main *data, char *s)
 	i = 0;
 	while (data->env_bis[i])
 		i++;
-	new_tab = malloc(sizeof(char *) * i + 2);
+	new_tab = malloc(sizeof(char *) * (i + 2));
 	if (!new_tab)
 		exit (1);
 	i = 0;
@@ -59,7 +59,7 @@ void	add_v_to_envexp(t_main *data, char *s)
 	tmp = "declare -x ";
 	while (data->env_exp[i])
 		i++;
-	new_tab = malloc(sizeof(char *) * i + 2);
+	new_tab = malloc(sizeof(char *) * (i + 2));
 	if (!new_tab)
 		exit (1);
 	i = 0;
@@ -83,7 +83,7 @@ void	rm_variable_exp(t_main *data, int supp)
 	i = 0;
 	while (data->env_exp[i])
 		i++;
-	new_tab = malloc(sizeof(char *) * i + 1);
+	new_tab = malloc(sizeof(char *) * (i + 1));
 	if (!new_tab)
 		exit (1);
 	i = -1;
@@ -111,7 +111,7 @@ void	rm_variable_bis(t_main *data, int supp)
 	i = 0;
 	while (data->env_bis[i])
 		i++;
-	new_tab = malloc(sizeof(char *) * i + 1);
+	new_tab = malloc(sizeof(char *) * (i + 1));
 	if (!new_tab)
 		exit (1);
 	i = -1;

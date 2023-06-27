@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
+/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 04:07:31 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/06/15 15:59:22 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/06/27 02:55:50 by tmorikaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	add_to_list(char *str, t_operateurs operateur, t_lexer **lexer_list)
 	return (1);
 }
 
-int	add_word(char *str, int i, t_lexer **lexer_list)
+int	add_word_support(char *str, int i)
 {
 	int	j;
 
@@ -52,13 +52,24 @@ int	add_word(char *str, int i, t_lexer **lexer_list)
 		else
 			j++;
 	}
+	return (j);
+}
+
+int	add_word(char *str, int i, t_lexer **lexer_list)
+{
+	int		j;
+	char	*tmp;
+
+	j = add_word_support(str, i);
 	if (j == 1)
 	{
-		if (!add_to_list(ft_substr(str, i, j), 0, lexer_list))
+		tmp = ft_substr(str, i, j);
+		if (!add_to_list(tmp, 0, lexer_list))
 			return (-1);
 		return (j);
 	}
-	if (!add_to_list(ft_substr(str, i, (j - 1)), 0, lexer_list))
+	tmp = ft_substr(str, i, (j - 1));
+	if (!add_to_list(tmp, 0, lexer_list))
 		return (-1);
 	return (j);
 }

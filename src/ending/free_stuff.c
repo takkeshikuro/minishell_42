@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_stuff.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
+/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 06:03:08 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/06/14 18:20:48 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/06/27 03:30:46 by tmorikaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,14 @@
 void	free_tab(char **tab)
 {
 	int		i;
+	int		j;
 
+	j = 0;
 	i = 0;
 	while (tab[i])
-	{
-		free(tab[i]);
 		i++;
-	}
+	while (i <= j)
+		free(tab[i++]);
 	free(tab);
 }
 

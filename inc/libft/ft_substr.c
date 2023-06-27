@@ -6,7 +6,7 @@
 /*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 21:56:35 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/05/17 05:10:21 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/06/27 02:54:01 by tmorikaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*ft_substr(const char *s, unsigned int start, size_t len)
 		len = 0;
 	else if (ft_strlen(s + start) < len)
 		len = ft_strlen(s + start);
-	str = malloc(sizeof(char) * (len + 1));
+	str = malloc(sizeof(char) * len + 2);
 	if (!str)
 		return (NULL);
 	if (len != 0)
