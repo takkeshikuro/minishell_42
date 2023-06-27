@@ -6,7 +6,7 @@
 /*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 03:45:35 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/06/27 04:13:18 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/06/27 07:48:55 by tmorikaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,10 @@
 
 //probleme pour crtl-c   dans un cat (rl_redisplay)
 //link les builtins a l'execution
-// regler env -i ./minishell
 // unset need to rm at env_exp to now
 // add += 1 a SHLVL (env) si la commande est ./minishell ou bash
+// a voir pour echo $$$$$
+
 
 void	handle_quote_n_expand(t_main *data)
 {

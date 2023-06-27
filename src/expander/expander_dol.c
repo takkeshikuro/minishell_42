@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander_dol.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
+/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 23:48:00 by keshikuro         #+#    #+#             */
-/*   Updated: 2023/06/22 23:59:33 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/06/27 07:48:13 by tmorikaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ int	expanding_bis(t_main *data, t_cmd_parse *node, int i, int j)
 void	expanding(t_main *data, t_cmd_parse *node, int i)
 {
 	int			j;
+	int 		dol;
 	int			len;
 
 	j = 0;
@@ -90,7 +91,13 @@ void	expanding(t_main *data, t_cmd_parse *node, int i)
 	{
 		if (node->cmd_tab[i][j] == '$')
 		{
-			len = expanding_bis(data, node, i, j);
+			dol = j;
+			while (node->cmd_tab[i][dol] == '$')
+				dol++;
+			if (node->cmd_tab[i][dol] == '\0' || node->cmd_tab[i][dol] == 32)
+				len = (dol - j);
+			else
+				len = expanding_bis(data, node, i, j);
 			j += len;
 		}
 		else
