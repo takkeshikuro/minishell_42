@@ -29,7 +29,10 @@ void	pipe_work(t_main *data, int in, int out, t_cmd_parse *node)
 {
 	pid_t	pid;
 	char	*cmd;
+	int		fd[2];
+	int		hd;
 
+	hd = 0;
 	pid = fork();
 	if (pid == 0)
 	{
@@ -41,9 +44,18 @@ void	pipe_work(t_main *data, int in, int out, t_cmd_parse *node)
 				in = open_infile(node);
 			if (node->redirection->operateur == RIGHT_RIGHT)
 				out = open_append(node);
+			if (node->redirection->operateur == LEFT_LEFT)
+			{
+				hd = 1;
+				pipe(fd);
+				here_doc_manage(data, node, fd);
+				close(fd[1]);
+				dup2(fd[0], 0);
+				close(fd[0]);
+			}
 			node->redirection = node->redirection->next;
 		}
-		if (in)
+		if (in && !hd)
 		{
 			dup2(in, 0);
 			close(in);
@@ -83,7 +95,7 @@ int	child_processes(t_main *data, t_cmd_parse *node)
 	return (in);
 }
 
-void	here_doc_manage(t_main *data, t_cmd_parse *node)
+void	here_doc_manage(t_main *data, t_cmd_parse *node, int fd[2])
 {
 	char	*input;
 	char	*here_doc;
@@ -93,19 +105,23 @@ void	here_doc_manage(t_main *data, t_cmd_parse *node)
 	while (1)
 	{
 		input = readline(">");
-		size = ft_strlen(node->redirection->str);
+		size = ft_strlen(input);
 		if (!ft_strncmp(input, node->redirection->str, size))
 			break ;
 		here_doc = ft_strjoin(here_doc, input);
 		here_doc = ft_strjoin(here_doc, "\n");
 	}
-	fprintf(stderr, "%s", here_doc);
+	write(fd[1], here_doc, ft_strlen(here_doc));
 }
 
 void	last_process(t_main *data, t_cmd_parse *node, char *cmd, int in)
 {
 	int	out;
+	int	pid;
+	int	fd[2];
+	int	hd;
 
+	hd = 0;
 	while (node->redirection)
 	{
 		if (node->redirection->operateur == RIGHT)
@@ -123,10 +139,17 @@ void	last_process(t_main *data, t_cmd_parse *node, char *cmd, int in)
 			close(out);
 		}
 		if (node->redirection->operateur == LEFT_LEFT)
-			here_doc_manage(data, node);
+		{
+			hd = 1;
+			pipe(fd);
+			here_doc_manage(data, node, fd);
+			close(fd[1]);
+			dup2(fd[0], 0);
+			close(fd[0]);
+		}
 		node->redirection = node->redirection->next;
 	}
-	if (in)
+	if (in && hd == 0)
 	{
 		dup2(in, 0);
 		close(in);

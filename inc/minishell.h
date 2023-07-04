@@ -171,6 +171,7 @@ int						lstsize(t_cmd_parse *lst);
 char					*find_path(char **envp);
 void					close_pipe(t_main *data, int count);
 int						open_append(t_cmd_parse *node);
+void					here_doc_manage(t_main *data, t_cmd_parse *node, int fd[2]);
 
 
 
