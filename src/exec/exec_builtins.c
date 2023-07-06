@@ -17,8 +17,14 @@ void	builtin_exec_3(t_main *data, t_cmd_parse *node, char *cmd)
 	if (!ft_strncmp(cmd, "unset", ft_strlen(cmd)))
 	{
 		built_unset(data, node);
-		exit (1);	
+		exit(1);	
 	}
+	if (contains_char(cmd, '=') && cmd[0] != '=')
+	{
+		add_v_to_envexp(data, cmd);
+		exit(1);
+	}
+
 }
 
 void	builtin_exec_2(t_main *data, t_cmd_parse *node, char *cmd)

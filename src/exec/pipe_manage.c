@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 15:26:12 by marecarraya       #+#    #+#             */
-/*   Updated: 2023/07/06 19:28:52 by marvin           ###   ########.fr       */
+/*   Updated: 2023/07/06 20:59:09 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,6 +160,11 @@ void	exec(t_main *data, t_cmd_parse *node, char *cmd)
 		in = fd[0];
 		node = node->next;
 		i++;
+	}
+	if (data->pipe_count == 0 && contains_char(node->cmd_tab[0], '=') && node->cmd_tab[0][0] != '=')
+	{
+		add_v_to_envexp(data, node->cmd_tab[0]);
+		return ;
 	}
 	pid = fork();
 	if (pid == 0)

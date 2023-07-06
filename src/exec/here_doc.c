@@ -66,15 +66,25 @@ char	*get_var_content(t_main *data, char *var_name)
 	int		i;
 	char	*content;
 	char	**envp;
+	char	**envp_exp;
 	int		len;
 
 	len = ft_strlen(var_name);
 	i = 0;
 	envp = data->env_bis;
+	envp_exp = data->env_exp;
 	while (envp[i])
 	{
 		if (!ft_strncmp(var_name, envp[i], len))
 			return (envp[i] + len + 1);
+		i++;
+	}
+	i = 0;
+	while (envp_exp[i])
+	{
+		//fprintf(stderr, "%s\n", envp_exp[i]);
+		if (!ft_strncmp(var_name, envp_exp[i] + 11, len))
+			return (envp_exp[i] + 12 + len);
 		i++;
 	}
 	return (NULL);
@@ -101,7 +111,8 @@ void	here_doc_manage(t_main *data, t_cmd_parse *node, int fd[2])
 			{
 				var_name = get_var_name(input + i);
 				var_content = get_var_content(data, var_name);
-				write(fd[1], var_content, ft_strlen(var_content));
+				if (var_content != NULL)
+					write(fd[1], var_content, ft_strlen(var_content));
 				i += ft_strlen(var_name) + 1;
 				free(var_name);
 			}
