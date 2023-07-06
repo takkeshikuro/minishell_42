@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 15:26:12 by marecarraya       #+#    #+#             */
-/*   Updated: 2023/07/07 00:52:23 by marvin           ###   ########.fr       */
+/*   Updated: 2023/07/07 01:09:42 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,10 +178,12 @@ void	execute_cmd(t_main *data)
 	i = 0;
 	node = data->cmd_parse;
 	len = ft_strlen(node->cmd_tab[0]);
-	if (!ft_strncmp(node->cmd_tab[0], "exit", len))
+	if (!ft_strncmp(node->cmd_tab[0], "exit", len) && len)
 		built_exit(data, node);
 	if (!ft_strncmp(node->cmd_tab[0], "unset", len) && node->next == NULL)
 	 	built_unset(data, node);
+	if (!ft_strncmp(node->cmd_tab[0], "export", len) && node->next == NULL)
+		built_export(data, node);
 	data->pipe_count = lstsize(node) - 1;
 	pipe_init(data, node);
 	while (i < data->hd_count)
