@@ -40,6 +40,7 @@ void	builtin_exec_2(t_main *data, t_cmd_parse *node, char *cmd)
 	else
 	builtin_exec_3(data, node, cmd);
 }
+
 void	builtin_exec(t_main *data, t_cmd_parse *node)
 {
 	char	*cmd;

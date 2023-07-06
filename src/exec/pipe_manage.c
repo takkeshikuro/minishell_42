@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 15:26:12 by marecarraya       #+#    #+#             */
-/*   Updated: 2023/07/06 18:52:29 by marvin           ###   ########.fr       */
+/*   Updated: 2023/07/06 19:28:52 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,8 +94,6 @@ int	child_processes(t_main *data, t_cmd_parse *node)
 	}
 	return (in);
 }
-
-
 
 void	last_process(t_main *data, t_cmd_parse *node, char *cmd, int in)
 {
