@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 05:04:38 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/06/27 02:27:14 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/07/06 19:02:49 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,9 +160,10 @@ char					*copy_without_dol(t_cmd_parse *node, int i, int j,
 char					*keep_good_str(char **env, int nb_env);
 char					*check_char_after(t_cmd_parse *node, int i, int j);
 
+/*****************EXEC DIRECTORY***********************/
+
 // pipe_manage.c && utils
 void					execute_cmd(t_main *data);
-void					wait_childs(int count);
 int						open_outfile(t_cmd_parse *node);
 int						open_infile(t_cmd_parse *node);
 int						contains_char(char *str, char c);
@@ -172,7 +173,18 @@ char					*find_path(char **envp);
 void					close_pipe(t_main *data, int count);
 int						open_append(t_cmd_parse *node);
 void					here_doc_manage(t_main *data, t_cmd_parse *node, int fd[2]);
+//execbuiltin
+void					builtin_exec(t_main *data, t_cmd_parse *node);
+void					builtin_exec_2(t_main *data, t_cmd_parse *node, char *cmd);
+void					builtin_exec_3(t_main *data, t_cmd_parse *node, char *cmd);
+//hd.c
+int						has_variable(char *input);
+int						ft_varname_len(char *str);
+char					*get_var_name(char *input);
+char					*get_var_content(t_main *data, char *var_name);
+void					here_doc_manage(t_main *data, t_cmd_parse *node, int fd[2]);
 
+/***********************************************************/
 
 
 //  builtins.c
@@ -184,26 +196,25 @@ int						built_unset(t_main *data, t_cmd_parse *cmd_parse);
 int						built_exit(t_main *data, t_cmd_parse *cmd_parse);
 int						built_export(t_main *data, t_cmd_parse *cmd_parse);
 
-
 // export & utils
-void	export_support(t_main *data, char *s);
-void	add_total_stuff(t_main *data, char *s);
-int	simple_check(char *s);
+void					export_support(t_main *data, char *s);
+void					add_total_stuff(t_main *data, char *s);
+int						simple_check(char *s);
 // check
-int	check_v_exist_bis(t_main *data, char *s);
-int	check_v_exist_exp(t_main *data, char *s);
+int						check_v_exist_bis(t_main *data, char *s);
+int						check_v_exist_exp(t_main *data, char *s);
 // add & rm 
-void	rm_variable_bis(t_main *data, int supp);
-void	rm_variable_exp(t_main *data, int supp);
-void	add_v_to_envexp(t_main *data, char *s);
-void	add_to_bis(t_main *data, char *s);
-int	show_env_exp(t_main *data);
+void					rm_variable_bis(t_main *data, int supp);
+void					rm_variable_exp(t_main *data, int supp);
+void					add_v_to_envexp(t_main *data, char *s);
+void					add_to_bis(t_main *data, char *s);
+int						show_env_exp(t_main *data);
 // utils
-int	cp_string_quoted(char *s1, char *s2);
-char	*cp_string_name(char *s);
-int	check_valid_identifier(char c);
-int	equal_env(char *s);
-int	print_error_export(char *s, int ok);
+int						cp_string_quoted(char *s1, char *s2);
+char					*cp_string_name(char *s);
+int						check_valid_identifier(char c);
+int						equal_env(char *s);
+int						print_error_export(char *s, int ok);
 
 
 // signal.c
