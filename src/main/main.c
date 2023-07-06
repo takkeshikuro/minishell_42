@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 03:45:35 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/06/27 07:48:55 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/07/07 00:31:37 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,10 @@ void	start_in_loop(t_main *data, char *input)
 		exit_bash_error("parsing failed.");
 //	prrr(data->cmd_parse, 1);
 	handle_quote_n_expand(data);
-	if (!ft_strncmp(data->cmd_parse->cmd_tab[0], "export", 6))
-		built_export(data, data->cmd_parse);
-	else if (!ft_strncmp(data->cmd_parse->cmd_tab[0], "cd", 2))
-		built_cd(data, data->cmd_parse);
+	//if (!ft_strncmp(data->cmd_parse->cmd_tab[0], "export", 6))
+	//	built_export(data, data->cmd_parse);
+	//else if (!ft_strncmp(data->cmd_parse->cmd_tab[0], "cd", 2))
+	//	built_cd(data, data->cmd_parse);
 //	prrr(data->cmd_parse, 0);
 }
 

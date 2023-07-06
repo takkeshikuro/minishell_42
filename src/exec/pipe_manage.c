@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 15:26:12 by marecarraya       #+#    #+#             */
-/*   Updated: 2023/07/07 00:13:04 by marvin           ###   ########.fr       */
+/*   Updated: 2023/07/07 00:52:23 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ void	pipe_work(t_main *data, int in, int out, t_cmd_parse *node, int hd_pos)
 			dup2(out, 1);
 			close(out);
 		}
+		builtin_exec(data, node);
 		cmd = get_command(data->cmd_paths, node->cmd_tab[0]);
 		if (cmd == NULL)
 			no_command(data, node);
@@ -174,12 +175,14 @@ void	execute_cmd(t_main *data)
 	int			pid;
 
 	cmd = NULL;
+	i = 0;
 	node = data->cmd_parse;
 	len = ft_strlen(node->cmd_tab[0]);
 	if (!ft_strncmp(node->cmd_tab[0], "exit", len))
 		built_exit(data, node);
+	if (!ft_strncmp(node->cmd_tab[0], "unset", len) && node->next == NULL)
+	 	built_unset(data, node);
 	data->pipe_count = lstsize(node) - 1;
-	i = 0;
 	pipe_init(data, node);
 	while (i < data->hd_count)
 	{
