@@ -124,4 +124,5 @@ void	here_doc_manage(t_main *data, t_cmd_parse *node, int fd[2])
 		}
 		write(fd[1], "\n", 1);
 	}
+	exit(1);
 }

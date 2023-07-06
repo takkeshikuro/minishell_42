@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 05:04:38 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/07/06 19:02:49 by marvin           ###   ########.fr       */
+/*   Updated: 2023/07/06 21:47:05 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,12 @@
 ==402996==    by 0x10D0C6: main (in /mnt/nfs/homes/tmorikaw/Desktop/minishell_ok/minishell)
 */
 
+typedef struct s_here_doc
+{
+	int	fd[2];
+	int	pos;
+}				t_here_doc;
+
 typedef enum s_operateurs
 {
 	DEFAULT,
@@ -72,7 +78,8 @@ typedef struct s_main
 	char				**env_bis;
 	char				**env_exp;
 	int					return_value;
-
+	int					hd_count;
+	t_here_doc			*here_doc;
 	char				**tab_input_blank;
 	int					*pipe_fd;
 	char				*path;

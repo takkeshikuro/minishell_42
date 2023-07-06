@@ -6,16 +6,32 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 15:26:12 by marecarraya       #+#    #+#             */
-/*   Updated: 2023/07/06 20:59:09 by marvin           ###   ########.fr       */
+/*   Updated: 2023/07/07 00:13:04 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	pipe_init(t_main *data)
+void	pipe_init(t_main *data, t_cmd_parse *node)
 {
+	t_cmd_parse *tmp;
+
+	tmp = node;
 	data->path = find_path(data->env_bis);
 	data->cmd_paths = ft_split(data->path, ':');
+	data->hd_count = 0;
+	data->here_doc = NULL;
+	while (tmp)
+	{
+		if (tmp->redirection)
+		{
+			if (tmp->redirection->operateur == LEFT_LEFT)
+				data->hd_count++;
+		}
+		tmp = tmp->next;
+	}
+	if (data->hd_count)
+		data->here_doc = malloc(sizeof(t_here_doc) * data->hd_count);
 }
 
 void	no_command(t_main *data, t_cmd_parse *node)
@@ -25,7 +41,7 @@ void	no_command(t_main *data, t_cmd_parse *node)
 	exit(1);
 }
 
-void	pipe_work(t_main *data, int in, int out, t_cmd_parse *node)
+void	pipe_work(t_main *data, int in, int out, t_cmd_parse *node, int hd_pos)
 {
 	pid_t	pid;
 	char	*cmd;
@@ -46,12 +62,8 @@ void	pipe_work(t_main *data, int in, int out, t_cmd_parse *node)
 				out = open_append(node);
 			if (node->redirection->operateur == LEFT_LEFT)
 			{
-				hd = 1;
-				pipe(fd);
-				here_doc_manage(data, node, fd);
-				close(fd[1]);
-				dup2(fd[0], 0);
-				close(fd[0]);
+				dup2(data->here_doc[hd_pos].fd[0], 0);
+				close(data->here_doc[hd_pos].fd[0]);
 			}
 			node->redirection = node->redirection->next;
 		}
@@ -73,29 +85,7 @@ void	pipe_work(t_main *data, int in, int out, t_cmd_parse *node)
 	}
 }
 
-int	child_processes(t_main *data, t_cmd_parse *node)
-{
-	int	in;
-	int	i;
-	int	pid;
-	int	out;
-	int	fd[2];
-
-	i = 0;
-	in = 0;
-	while (i < data->pipe_count)
-	{
-		pipe(fd);
-		pipe_work(data, in, fd[1], node);
-		close(fd[1]);
-		in = fd[0];
-		node = node->next;
-		i++;
-	}
-	return (in);
-}
-
-void	last_process(t_main *data, t_cmd_parse *node, char *cmd, int in)
+void	last_process(t_main *data, t_cmd_parse *node, char *cmd, int in, int hd_pos)
 {
 	int	out;
 	int	pid;
@@ -122,11 +112,8 @@ void	last_process(t_main *data, t_cmd_parse *node, char *cmd, int in)
 		if (node->redirection->operateur == LEFT_LEFT)
 		{
 			hd = 1;
-			pipe(fd);
-			here_doc_manage(data, node, fd);
-			close(fd[1]);
-			dup2(fd[0], 0);
-			close(fd[0]);
+			dup2(data->here_doc[hd_pos].fd[0], 0);
+			close(data->here_doc[hd_pos].fd[0]);
 		}
 		node->redirection = node->redirection->next;
 	}
@@ -149,15 +136,22 @@ void	exec(t_main *data, t_cmd_parse *node, char *cmd)
 	int		in;
 	int		pid;
 	int		fd[2];
+	int		hd_pos;
 
+	hd_pos = 0;
 	i = 0;
 	in = 0;
 	while (i < data->pipe_count)
 	{
 		pipe(fd);
-		pipe_work(data, in, fd[1], node);
+		pipe_work(data, in, fd[1], node, hd_pos);
 		close(fd[1]);
 		in = fd[0];
+		if (node->redirection)
+		{
+			if (node->redirection->operateur == LEFT_LEFT)
+				hd_pos++;
+		}
 		node = node->next;
 		i++;
 	}
@@ -168,7 +162,7 @@ void	exec(t_main *data, t_cmd_parse *node, char *cmd)
 	}
 	pid = fork();
 	if (pid == 0)
-		last_process(data, node, cmd, in);
+		last_process(data, node, cmd, in, 0); //test avec 0
 }
 
 void	execute_cmd(t_main *data)
@@ -177,6 +171,8 @@ void	execute_cmd(t_main *data)
 	int			i;
 	char		*cmd;
 	int			len;
+	int			pid;
+
 	cmd = NULL;
 	node = data->cmd_parse;
 	len = ft_strlen(node->cmd_tab[0]);
@@ -184,7 +180,18 @@ void	execute_cmd(t_main *data)
 		built_exit(data, node);
 	data->pipe_count = lstsize(node) - 1;
 	i = 0;
-	pipe_init(data);
+	pipe_init(data, node);
+	while (i < data->hd_count)
+	{
+		pipe(data->here_doc[i].fd);
+		pid = fork();
+		if (pid == 0)
+			here_doc_manage(data, node, data->here_doc[i].fd);
+		waitpid(-1, NULL, 0);
+		close(data->here_doc[i].fd[1]);
+		i++;
+	}
+	i = 0;
 	exec(data, node, cmd);
 	while (i <= data->pipe_count)
 	{
