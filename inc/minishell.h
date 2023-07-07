@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 05:04:38 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/07/06 21:47:05 by marvin           ###   ########.fr       */
+/*   Updated: 2023/07/07 08:19:56 by tmorikaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,21 +117,31 @@ void					reset_stuff(t_main *data);
 void					init_stuff(t_main *data);
 void					get_env_export(t_main *data);
 
-//lexer.c  && utils && clear
+
+/*****************lexer DIRECTORY***********************/
 int						go_lexer(t_main *data);
 t_operateurs			is_operateur(int c);
 int						add_operateur(char *str, int i, t_lexer **lexer_list);
 int						add_word(char *str, int i, t_lexer **lexer_list);
 int						add_to_list(char *str, t_operateurs operateur,
 							t_lexer **lexer_list);
+//utils
+void	rm_space(t_lexer *lst);
+int	count_doub_quote(char *str, int i);
+int	count_simp_quote(char *str, int i);
+int	different_add_w(char *s, int i, int nb_quote, int quote);
+int	add_word_support(char *str, int i);
+//listing
 t_lexer					*ft_lexernew(char *str, int operateur);
 void					ft_lexeradd_back(t_lexer **lst, t_lexer *new);
-void					rm_space(t_lexer *lst);
 void					lexer_del_first(t_lexer **lst);
 t_lexer					*lexerclear_one(t_lexer **lst);
 void					ft_lexerdelone(t_lexer **lexer_list, int id);
+/***********************************************************/
 
-// parser.c  && utils && redir
+
+
+/*****************parser & expander DIRECTORY***********************/
 int						go_parser(t_main *data);
 t_cmd_parse				*init_cmd(t_parser_data *p_data);
 t_cmd_parse				*cmd_parse_new(char **tab, int num_redir,
@@ -147,6 +157,7 @@ void					add_redirection(t_lexer *tmp, t_parser_data *p_data);
 // quote_manage.c  && utils
 int						quote_manage(t_main *data, t_cmd_parse *node, int i);
 int						rm_quote(t_cmd_parse *node, int i_tab, int quote);
+int						nb_qt(char *s, int quote);
 char					*ft_strim(char const *s1, int quote);
 int						check_set(char c, int quote);
 
@@ -161,11 +172,11 @@ int						check_env_bis(char **env, char *str_dol);
 char					*good_variable(char *s);
 void					copy_past(t_cmd_parse *cmd_node, int i, int j_dol,
 							char *str_replace);
-
 char					*copy_without_dol(t_cmd_parse *node, int i, int j,
 							char *s);
 char					*keep_good_str(char **env, int nb_env);
 char					*check_char_after(t_cmd_parse *node, int i, int j);
+/***********************************************************/
 
 /*****************EXEC DIRECTORY***********************/
 
@@ -194,7 +205,7 @@ void					here_doc_manage(t_main *data, t_cmd_parse *node, int fd[2]);
 /***********************************************************/
 
 
-//  builtins.c
+///  builtins.c
 int						built_env(t_main *data, t_cmd_parse *cmd_parse);
 int						built_pwd(t_main *data, t_cmd_parse *cmd_parse);
 int						built_echo(t_main *data, t_cmd_parse *cmd_parse);
@@ -203,7 +214,13 @@ int						built_unset(t_main *data, t_cmd_parse *cmd_parse);
 int						built_exit(t_main *data, t_cmd_parse *cmd_parse);
 int						built_export(t_main *data, t_cmd_parse *cmd_parse);
 
-// export & utils
+//utils unset
+void					copy_good_exp(t_main *data, char **tab);
+void					copy_good_bis(t_main *data, char **tab);
+char					**crt_exp(char **old_tab, char *s, int len);
+char					**crt_bis(char **old_tab, char *s, int len);
+
+//////////////// export & utils
 void					export_support(t_main *data, char *s);
 void					add_total_stuff(t_main *data, char *s);
 int						simple_check(char *s);

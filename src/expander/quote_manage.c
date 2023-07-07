@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quote_manage.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
+/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 06:31:03 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/06/16 16:37:05 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/07/07 04:52:58 by tmorikaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,23 @@ char	*need_malloc(t_cmd_parse *node, int i)
 	return (str);
 }
 
-int	rm_quote(t_cmd_parse *node, int i_tab, int quote)
+int	nb_qt(char *s, int quote)
+{
+	int		i;
+	int		ok;
+
+	i = 0;
+	ok = 0;
+	while (s[i])
+	{
+		if (s[i] == quote)
+			ok++;
+		i++;
+	}
+	return (ok);
+}
+
+int	rm_quote(t_cmd_parse *node, int i_tab, int qt)
 {
 	char	*new;
 	int		j;
@@ -32,23 +48,22 @@ int	rm_quote(t_cmd_parse *node, int i_tab, int quote)
 
 	j = 0;
 	i = 0;
-	if (node->cmd_tab[i_tab][0] == quote)
-		node->cmd_tab[i_tab] = ft_strim(node->cmd_tab[i_tab], quote);
+	if (node->cmd_tab[i_tab][0] == qt && nb_qt(node->cmd_tab[i_tab], qt) == 2)
+		node->cmd_tab[i_tab] = ft_strim(node->cmd_tab[i_tab], qt);
 	else
 	{
 		new = need_malloc(node, i_tab);
 		while (node->cmd_tab[i_tab][j])
 		{
-			if (node->cmd_tab[i_tab][j] == quote)
+			if (node->cmd_tab[i_tab][j] == qt)
 				j++;
-			new[i] = node->cmd_tab[i_tab][j];
-			i++;
-			j++;
+			else
+				new[i++] = node->cmd_tab[i_tab][j++];
 		}
 		new[i] = '\0';
 		node->cmd_tab[i_tab] = ft_strdup(new);
 	}
-	if (quote == 39)
+	if (qt == 39)
 		return (1);
 	return (0);
 }

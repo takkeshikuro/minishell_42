@@ -3,21 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 03:45:35 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/07/07 00:31:37 by marvin           ###   ########.fr       */
+/*   Updated: 2023/07/07 08:18:11 by tmorikaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
 //probleme pour crtl-c   dans un cat (rl_redisplay)
-//link les builtins a l'execution
-// unset need to rm at env_exp to now
 // add += 1 a SHLVL (env) si la commande est ./minishell ou bash
-// a voir pour echo $$$$$
-
+// pb pour "ls |"
+//leak list lexer
+// gerer return value
+//free node list (si leak)
+// refaire batterie test echo / refaire built_echo
 
 void	handle_quote_n_expand(t_main *data)
 {

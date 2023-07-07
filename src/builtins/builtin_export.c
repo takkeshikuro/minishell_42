@@ -6,7 +6,7 @@
 /*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 13:05:43 by keshikuro         #+#    #+#             */
-/*   Updated: 2023/06/27 03:05:07 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/07/07 08:04:38 by tmorikaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,8 @@ void	add_total_stuff(t_main *data, char *s)
 	i = cp_string_quoted(s, s_quoted);
 	s_quoted[i] = '\0';
 	s_check = cp_string_name(s);
-	
 	if (check_v_exist_bis(data, s_check) >= 0)
-	{
 		rm_variable_bis(data, check_v_exist_bis(data, s_check));
-		fprintf(stderr, "ici\n");
-	}
-	
 	if (check_v_exist_exp(data, s_check) >= 0)
 		rm_variable_exp(data, check_v_exist_exp(data, s_check));
 	add_to_bis(data, s);

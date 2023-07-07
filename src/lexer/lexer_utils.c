@@ -12,37 +12,81 @@
 
 #include "../../inc/minishell.h"
 
-t_lexer	*ft_lexernew(char *str, int operateur)
+int	add_word_support(char *str, int i)
 {
-	t_lexer		*new;
-	static int	i;
+	int	j;
 
-//	i = 0;
-	new = (t_lexer *)malloc(sizeof(t_lexer));
-	if (!new)
-		exit (1);
-	new->str = str;
-	new->operateur = operateur;
-	new->i = i++;
-	new->next = NULL;
-	new->prev = NULL;
-	return (new);
+	j = 0;
+	while (str[i + j] && !is_space(str[i + j]) && !is_operateur(str[i + j]))
+	{
+		if (str[i + j] == 34)
+		{
+			j++;
+			while (str[i + j] != 34 && str[i + j])
+				j++;
+			j++;
+			break ;
+		}
+		else if (str[i + j] == 39)
+		{
+			j++;
+			while (str[i + j] != 39 && str[i + j])
+				j++;
+			j++;
+			break ;
+		}
+		else
+			j++;
+	}
+	return (j);
 }
 
-void	ft_lexeradd_back(t_lexer **lst, t_lexer *new)
+int	different_add_w(char *s, int i, int nb_quote, int quote)
 {
-	t_lexer	*tmp;
+	int	j;
+	int ok;
 
-	tmp = *lst;
-	if (*lst == NULL)
+	j = 0;
+	ok = 1;
+	while (s[i + j] && ok <= nb_quote)
 	{
-		*lst = new;
-		return ;
+		if (s[i + j] == quote)
+			ok++;
+		j++;
 	}
-	while (tmp->next != NULL)
-		tmp = tmp->next;
-	tmp->next = new;
-	new->prev = tmp;
+	return (j);
+}
+
+int	count_simp_quote(char *str, int i)
+{
+	int	simp;
+
+	simp = 0;
+	while (str[i])
+	{
+		if (str[i] == 32 && !simp)
+			return (0);
+		if (str[i] == 39)
+			simp++;
+		i++;
+	}
+	return (simp);
+}
+
+int	count_doub_quote(char *str, int i)
+{
+	int	doub;
+
+	doub = 0;
+	while (str[i])
+	{
+		if (str[i] == 32 && !doub)
+			return (0);
+		if (str[i] == 34)
+			doub++;
+		i++;
+	}
+	return (doub);
 }
 
 void	rm_space(t_lexer *lst)

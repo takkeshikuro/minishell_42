@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_manage.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 15:26:12 by marecarraya       #+#    #+#             */
-/*   Updated: 2023/07/07 01:09:42 by marvin           ###   ########.fr       */
+/*   Updated: 2023/07/07 07:13:49 by tmorikaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ void	last_process(t_main *data, t_cmd_parse *node, char *cmd, int in, int hd_pos
 	builtin_exec(data, node);
 	cmd = get_command(data->cmd_paths, node->cmd_tab[0]);
 	if (cmd == NULL)
-		no_command(data, node);	
+		no_command(data, node);
 	execve(cmd, node->cmd_tab, data->env_bis);
 	exit (1);
 }
@@ -181,7 +181,7 @@ void	execute_cmd(t_main *data)
 	if (!ft_strncmp(node->cmd_tab[0], "exit", len) && len)
 		built_exit(data, node);
 	if (!ft_strncmp(node->cmd_tab[0], "unset", len) && node->next == NULL)
-	 	built_unset(data, node);
+		built_unset(data, node);
 	if (!ft_strncmp(node->cmd_tab[0], "export", len) && node->next == NULL)
 		built_export(data, node);
 	data->pipe_count = lstsize(node) - 1;

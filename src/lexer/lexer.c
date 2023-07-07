@@ -6,7 +6,7 @@
 /*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 04:07:31 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/06/27 02:55:50 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/07/07 04:58:50 by tmorikaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,41 +26,31 @@ int	add_to_list(char *str, t_operateurs operateur, t_lexer **lexer_list)
 	return (1);
 }
 
-int	add_word_support(char *str, int i)
-{
-	int	j;
+/* exec_test 'echo test     \    test'
+exec_test 'echo \"test'
+exec_test 'echo "\$TEST"'
 
-	j = 0;
-	while (str[i + j] && !is_space(str[i + j]) && !is_operateur(str[i + j]))
-	{
-		if (str[i + j] == 34)
-		{
-			j++;
-			while (str[i + j] != 34 && str[i + j])
-				j++;
-			j++;
-			break ;
-		}
-		else if (str[i + j] == 39)
-		{
-			j++;
-			while (str[i + j] != 39 && str[i + j])
-				j++;
-			j++;
-			break ;
-		}
-		else
-			j++;
-	}
-	return (j);
-}
+exec_test 'echo "$TEST$TEST=lol$TEST"'
+exec_test 'echo $TEST$TEST=lol$TEST""lol'
+exec_test 'echo    $TEST lol $TEST' -> pb espace
+exec_test 'echo "$=TEST"'
+
+exec_test 'echo "$?TEST"'
+exec_test 'echo "$1TEST"'
+
+ */
 
 int	add_word(char *str, int i, t_lexer **lexer_list)
 {
 	int		j;
 	char	*tmp;
 
-	j = add_word_support(str, i);
+	if (count_doub_quote(str, i) > 2)
+		j = different_add_w(str, i, count_doub_quote(str, i), 34);
+	else if (count_simp_quote(str, i) > 2)
+		j = different_add_w(str, i, count_simp_quote(str, i), 39);
+	else
+		j = add_word_support(str, i);
 	if (j == 1)
 	{
 		tmp = ft_substr(str, i, j);
@@ -122,7 +112,7 @@ t_operateurs	is_operateur(int c)
 int	go_lexer(t_main *data)
 {
 	long unsigned int		i;
-	int		j;
+	int						j;
 
 	i = 0;
 	while (data->input_line[i])
