@@ -50,6 +50,8 @@ void	builtin_exec(t_main *data, t_cmd_parse *node)
 {
 	char	*cmd;
 
+	if (node->cmd_tab[0] == NULL)
+		return ;
 	cmd = node->cmd_tab[0];
 	if (!ft_strncmp(cmd, "cd", ft_strlen(cmd)))
 	{

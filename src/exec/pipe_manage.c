@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_manage.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rmarecar <rmarecar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 15:26:12 by marecarraya       #+#    #+#             */
-/*   Updated: 2023/07/07 07:13:49 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/07/11 15:28:52 by rmarecar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ void	no_command(t_main *data, t_cmd_parse *node)
 {
 	write(2, node->cmd_tab[0], ft_strlen(node->cmd_tab[0]));
 	write(2, ": command not found\n", 20);
+	//free_tab(node->cmd_tab);
+	//free_kill(data);
 	exit(1);
 }
 
@@ -62,6 +64,7 @@ void	pipe_work(t_main *data, int in, int out, t_cmd_parse *node, int hd_pos)
 				out = open_append(node);
 			if (node->redirection->operateur == LEFT_LEFT)
 			{
+				hd = 1;
 				dup2(data->here_doc[hd_pos].fd[0], 0);
 				close(data->here_doc[hd_pos].fd[0]);
 			}
@@ -156,16 +159,44 @@ void	exec(t_main *data, t_cmd_parse *node, char *cmd)
 		node = node->next;
 		i++;
 	}
-	if (data->pipe_count == 0 && contains_char(node->cmd_tab[0], '=') && node->cmd_tab[0][0] != '=')
+	if (node->cmd_tab[0])
 	{
-		add_v_to_envexp(data, node->cmd_tab[0]);
-		return ;
+		if (data->pipe_count == 0 && contains_char(node->cmd_tab[0], '=') && node->cmd_tab[0][0] != '=')
+		{
+			add_v_to_envexp(data, node->cmd_tab[0]);
+			return ;
+		}
 	}
 	pid = fork();
 	if (pid == 0)
-		last_process(data, node, cmd, in, 0); //test avec 0
+		last_process(data, node, cmd, in, hd_pos); //test avec 0
 }
 
+int		first_builtins(t_main *data, t_cmd_parse *node)
+{
+	int	len;
+
+	if (node->cmd_tab[0] == NULL)
+		return (0);
+	if (node->cmd_tab[0])
+		len = ft_strlen(node->cmd_tab[0]);
+	if (!ft_strncmp(node->cmd_tab[0], "exit", len) && len)
+	{
+		built_exit(data, node);
+		return (1);
+	}
+	if (!ft_strncmp(node->cmd_tab[0], "unset", len) && node->next == NULL)
+	{
+		built_unset(data, node);
+		return (1);
+	}
+	if (!ft_strncmp(node->cmd_tab[0], "export", len) && node->next == NULL)
+	{
+		built_export(data, node);
+		return (1);
+	}
+	return (0);
+}
 void	execute_cmd(t_main *data)
 {
 	t_cmd_parse	*node;
@@ -177,14 +208,9 @@ void	execute_cmd(t_main *data)
 	cmd = NULL;
 	i = 0;
 	node = data->cmd_parse;
-	len = ft_strlen(node->cmd_tab[0]);
-	if (!ft_strncmp(node->cmd_tab[0], "exit", len) && len)
-		built_exit(data, node);
-	if (!ft_strncmp(node->cmd_tab[0], "unset", len) && node->next == NULL)
-		built_unset(data, node);
-	if (!ft_strncmp(node->cmd_tab[0], "export", len) && node->next == NULL)
-		built_export(data, node);
 	data->pipe_count = lstsize(node) - 1;
+	if (first_builtins(data, node))
+		return ;
 	pipe_init(data, node);
 	while (i < data->hd_count)
 	{
