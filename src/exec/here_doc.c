@@ -17,7 +17,7 @@ int	has_variable(char *input)
 	int	i;
 
 	i = 0;
-	while(input[i])
+	while (input[i])
 	{
 		if (input[i] == '$')
 			return (1);
@@ -29,11 +29,11 @@ int	has_variable(char *input)
 int	ft_varname_len(char *str)
 {
 	int	len;
-	
+
 	len = 1;
 	while (str[len] > ' ' && str[len] < 127 && str[len] != '$')
 		len++;
-	return(len - 1);
+	return (len - 1);
 }
 
 char	*get_var_name(char *input)
@@ -51,7 +51,7 @@ char	*get_var_name(char *input)
 		exit (1);
 	}
 	len = 0;
-	while (input[i] != '$' && input[i] > ' '  && input[i] < 127)
+	while (input[i] != '$' && input[i] > ' ' && input[i] < 127)
 	{
 		name[len] = input[i];
 		i++;
@@ -82,7 +82,6 @@ char	*get_var_content(t_main *data, char *var_name)
 	i = 0;
 	while (envp_exp[i])
 	{
-		//fprintf(stderr, "%s\n", envp_exp[i]);
 		if (!ft_strncmp(var_name, envp_exp[i] + 11, len))
 			return (envp_exp[i] + 12 + len);
 		i++;
@@ -125,4 +124,21 @@ void	here_doc_manage(t_main *data, t_cmd_parse *node, int fd[2])
 		write(fd[1], "\n", 1);
 	}
 	exit(1);
+}
+
+void	here_doc_init(t_main *data, t_cmd_parse *node)
+{
+	int	i;
+	int	pid;
+
+	while (i < data->hd_count)
+	{
+		pipe(data->here_doc[i].fd);
+		pid = fork();
+		if (pid == 0)
+			here_doc_manage(data, node, data->here_doc[i].fd);
+		waitpid(-1, NULL, 0);
+		close(data->here_doc[i].fd[1]);
+		i++;
+	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rmarecar <rmarecar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 05:04:38 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/07/07 08:19:56 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/07/11 15:40:11 by rmarecar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,6 +201,7 @@ int						ft_varname_len(char *str);
 char					*get_var_name(char *input);
 char					*get_var_content(t_main *data, char *var_name);
 void					here_doc_manage(t_main *data, t_cmd_parse *node, int fd[2]);
+void					here_doc_init(t_main *data, t_cmd_parse *node);
 
 /***********************************************************/
 

@@ -6,7 +6,7 @@
 /*   By: rmarecar <rmarecar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 15:26:12 by marecarraya       #+#    #+#             */
-/*   Updated: 2023/07/11 15:28:52 by rmarecar         ###   ########.fr       */
+/*   Updated: 2023/07/11 15:40:37 by rmarecar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,6 @@ void	no_command(t_main *data, t_cmd_parse *node)
 {
 	write(2, node->cmd_tab[0], ft_strlen(node->cmd_tab[0]));
 	write(2, ": command not found\n", 20);
-	//free_tab(node->cmd_tab);
-	//free_kill(data);
 	exit(1);
 }
 
@@ -169,7 +167,7 @@ void	exec(t_main *data, t_cmd_parse *node, char *cmd)
 	}
 	pid = fork();
 	if (pid == 0)
-		last_process(data, node, cmd, in, hd_pos); //test avec 0
+		last_process(data, node, cmd, in, hd_pos);
 }
 
 int		first_builtins(t_main *data, t_cmd_parse *node)
@@ -197,6 +195,8 @@ int		first_builtins(t_main *data, t_cmd_parse *node)
 	}
 	return (0);
 }
+
+
 void	execute_cmd(t_main *data)
 {
 	t_cmd_parse	*node;
@@ -212,17 +212,7 @@ void	execute_cmd(t_main *data)
 	if (first_builtins(data, node))
 		return ;
 	pipe_init(data, node);
-	while (i < data->hd_count)
-	{
-		pipe(data->here_doc[i].fd);
-		pid = fork();
-		if (pid == 0)
-			here_doc_manage(data, node, data->here_doc[i].fd);
-		waitpid(-1, NULL, 0);
-		close(data->here_doc[i].fd[1]);
-		i++;
-	}
-	i = 0;
+	here_doc_init(data, node);
 	exec(data, node, cmd);
 	while (i <= data->pipe_count)
 	{
