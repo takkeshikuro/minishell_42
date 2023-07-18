@@ -6,7 +6,7 @@
 /*   By: rmarecar <rmarecar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 05:04:38 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/07/18 16:55:11 by rmarecar         ###   ########.fr       */
+/*   Updated: 2023/07/18 20:00:12 by rmarecar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,6 +207,12 @@ char					*get_var_name(char *input);
 char					*get_var_content(t_main *data, char *var_name);
 void					here_doc_manage(t_main *data, t_cmd_parse *node, int fd[2]);
 void					here_doc_init(t_main *data, t_cmd_parse *node);
+
+void					no_command(t_main *data, t_cmd_parse *node);
+void					pipe_init(t_main *data, t_cmd_parse *node);
+
+void					redir_pipe(t_main *data, t_cmd_parse *node, int *in, int *out);
+void					last_redir(t_main *data, t_cmd_parse *node, int *in, int *out);
 
 /***********************************************************/
 
