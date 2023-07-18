@@ -6,7 +6,7 @@
 /*   By: rmarecar <rmarecar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 05:04:38 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/07/11 15:40:11 by rmarecar         ###   ########.fr       */
+/*   Updated: 2023/07/18 16:55:11 by rmarecar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ typedef struct s_lexer
 typedef struct s_main
 {
 	int					ok;
+	int					pid_last;
 	char				*input_line;
 	int					pipe_count;
 	t_lexer				*lexer_list;
@@ -79,6 +80,7 @@ typedef struct s_main
 	char				**env_exp;
 	int					return_value;
 	int					hd_count;
+	int					hd_pos;
 	t_here_doc			*here_doc;
 	char				**tab_input_blank;
 	int					*pipe_fd;
@@ -94,6 +96,7 @@ typedef struct s_cmd_parse
 	int					num_redirection;
 	char				*hd_file_name;
 	t_lexer				*redirection;
+	int					hd_check;
 	struct s_cmd_parse	*next;
 	struct s_cmd_parse	*prev;
 }						t_cmd_parse;
@@ -195,6 +198,8 @@ void					here_doc_manage(t_main *data, t_cmd_parse *node, int fd[2]);
 void					builtin_exec(t_main *data, t_cmd_parse *node);
 void					builtin_exec_2(t_main *data, t_cmd_parse *node, char *cmd);
 void					builtin_exec_3(t_main *data, t_cmd_parse *node, char *cmd);
+int						first_builtins(t_main *data, t_cmd_parse *node);
+
 //hd.c
 int						has_variable(char *input);
 int						ft_varname_len(char *str);

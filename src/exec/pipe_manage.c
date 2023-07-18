@@ -6,7 +6,7 @@
 /*   By: rmarecar <rmarecar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 15:26:12 by marecarraya       #+#    #+#             */
-/*   Updated: 2023/07/11 15:40:37 by rmarecar         ###   ########.fr       */
+/*   Updated: 2023/07/18 19:09:48 by rmarecar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	pipe_init(t_main *data, t_cmd_parse *node)
 {
-	t_cmd_parse *tmp;
+	t_cmd_parse	*tmp;
 
 	tmp = node;
 	data->path = find_path(data->env_bis);
@@ -38,10 +38,30 @@ void	no_command(t_main *data, t_cmd_parse *node)
 {
 	write(2, node->cmd_tab[0], ft_strlen(node->cmd_tab[0]));
 	write(2, ": command not found\n", 20);
-	exit(1);
+	exit(127);
 }
 
-void	pipe_work(t_main *data, int in, int out, t_cmd_parse *node, int hd_pos)
+void	redir_pipe(t_main *data, t_cmd_parse *node, int *in, int *out)
+{
+	while (node->redirection)
+	{
+		if (node->redirection->operateur == RIGHT)
+			*out = open_outfile(node);
+		if (node->redirection->operateur == LEFT)
+			*in = open_infile(node);
+		if (node->redirection->operateur == RIGHT_RIGHT)
+			*out = open_append(node);
+		if (node->redirection->operateur == LEFT_LEFT)
+		{
+			node->hd_check = 1;
+			dup2(data->here_doc[data->hd_pos].fd[0], 0);
+			close(data->here_doc[data->hd_pos].fd[0]);
+		}
+		node->redirection = node->redirection->next;
+	}
+}
+
+void	pipe_work(t_main *data, int in, int out, t_cmd_parse *node)
 {
 	pid_t	pid;
 	char	*cmd;
@@ -50,25 +70,12 @@ void	pipe_work(t_main *data, int in, int out, t_cmd_parse *node, int hd_pos)
 
 	hd = 0;
 	pid = fork();
+	node->hd_check = 0;
+	cmd = NULL;
 	if (pid == 0)
 	{
-		while (node->redirection)
-		{
-			if (node->redirection->operateur == RIGHT)
-				out = open_outfile(node);
-			if (node->redirection->operateur == LEFT)
-				in = open_infile(node);
-			if (node->redirection->operateur == RIGHT_RIGHT)
-				out = open_append(node);
-			if (node->redirection->operateur == LEFT_LEFT)
-			{
-				hd = 1;
-				dup2(data->here_doc[hd_pos].fd[0], 0);
-				close(data->here_doc[hd_pos].fd[0]);
-			}
-			node->redirection = node->redirection->next;
-		}
-		if (in && !hd)
+		redir_pipe(data, node, &in, &out);
+		if (in && node->hd_check == 0)
 		{
 			dup2(in, 0);
 			close(in);
@@ -87,39 +94,42 @@ void	pipe_work(t_main *data, int in, int out, t_cmd_parse *node, int hd_pos)
 	}
 }
 
-void	last_process(t_main *data, t_cmd_parse *node, char *cmd, int in, int hd_pos)
+void	last_redir(t_main *data, t_cmd_parse *node, int *in, int *out)
 {
-	int	out;
-	int	pid;
-	int	fd[2];
-	int	hd;
-
-	hd = 0;
 	while (node->redirection)
 	{
 		if (node->redirection->operateur == RIGHT)
 		{
-			out = open_outfile(node);
-			dup2(out, 1);
-			close(out);
+			*out = open_outfile(node);
+			dup2(*out, 1);
+			close(*out);
 		}
 		if (node->redirection->operateur == LEFT)
-			in = open_infile(node);
+			*in = open_infile(node);
 		if (node->redirection->operateur == RIGHT_RIGHT)
 		{
-			out = open_append(node);
-			dup2(out, 1);
-			close(out);
+			*out = open_append(node);
+			dup2(*out, 1);
+			close(*out);
 		}
 		if (node->redirection->operateur == LEFT_LEFT)
 		{
-			hd = 1;
-			dup2(data->here_doc[hd_pos].fd[0], 0);
-			close(data->here_doc[hd_pos].fd[0]);
+			node->hd_check = 1;
+			dup2(data->here_doc[data->hd_pos].fd[0], 0);
+			close(data->here_doc[data->hd_pos].fd[0]);
 		}
 		node->redirection = node->redirection->next;
 	}
-	if (in && hd == 0)
+}
+
+void	last_process(t_main *data, t_cmd_parse *node, char *cmd, int in)
+{
+	int	out;
+	int	pid;
+	int	fd[2];
+
+	last_redir(data, node, &in, &out);
+	if (in && node->hd_check == 0)
 	{
 		dup2(in, 0);
 		close(in);
@@ -138,64 +148,37 @@ void	exec(t_main *data, t_cmd_parse *node, char *cmd)
 	int		in;
 	int		pid;
 	int		fd[2];
-	int		hd_pos;
 
-	hd_pos = 0;
+	data->hd_pos = 0;
 	i = 0;
 	in = 0;
 	while (i < data->pipe_count)
 	{
 		pipe(fd);
-		pipe_work(data, in, fd[1], node, hd_pos);
+		pipe_work(data, in, fd[1], node);
 		close(fd[1]);
 		in = fd[0];
 		if (node->redirection)
 		{
 			if (node->redirection->operateur == LEFT_LEFT)
-				hd_pos++;
+				data->hd_pos++;
 		}
 		node = node->next;
 		i++;
 	}
 	if (node->cmd_tab[0])
 	{
-		if (data->pipe_count == 0 && contains_char(node->cmd_tab[0], '=') && node->cmd_tab[0][0] != '=')
+		if (data->pipe_count == 0 && contains_char(node->cmd_tab[0], '=')
+			&& node->cmd_tab[0][0] != '=')
 		{
 			add_v_to_envexp(data, node->cmd_tab[0]);
 			return ;
 		}
 	}
-	pid = fork();
-	if (pid == 0)
-		last_process(data, node, cmd, in, hd_pos);
+	data->pid_last = fork();
+	if (data->pid_last == 0)		
+		last_process(data, node, cmd, in);
 }
-
-int		first_builtins(t_main *data, t_cmd_parse *node)
-{
-	int	len;
-
-	if (node->cmd_tab[0] == NULL)
-		return (0);
-	if (node->cmd_tab[0])
-		len = ft_strlen(node->cmd_tab[0]);
-	if (!ft_strncmp(node->cmd_tab[0], "exit", len) && len)
-	{
-		built_exit(data, node);
-		return (1);
-	}
-	if (!ft_strncmp(node->cmd_tab[0], "unset", len) && node->next == NULL)
-	{
-		built_unset(data, node);
-		return (1);
-	}
-	if (!ft_strncmp(node->cmd_tab[0], "export", len) && node->next == NULL)
-	{
-		built_export(data, node);
-		return (1);
-	}
-	return (0);
-}
-
 
 void	execute_cmd(t_main *data)
 {
@@ -203,8 +186,8 @@ void	execute_cmd(t_main *data)
 	int			i;
 	char		*cmd;
 	int			len;
-	int			pid;
-
+	int			status;
+	
 	cmd = NULL;
 	i = 0;
 	node = data->cmd_parse;
@@ -214,9 +197,14 @@ void	execute_cmd(t_main *data)
 	pipe_init(data, node);
 	here_doc_init(data, node);
 	exec(data, node, cmd);
-	while (i <= data->pipe_count)
+	waitpid(data->pid_last, &status, 0);
+	while (i < data->pipe_count)
 	{
 		waitpid(-1, NULL, 0);
 		i++;
 	}
+	if (WIFEXITED(status))
+		data->return_value = WEXITSTATUS(status); 
+	if (data->hd_count)
+		free(data->here_doc);
 }
