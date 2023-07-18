@@ -6,7 +6,7 @@
 /*   By: rmarecar <rmarecar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 15:26:12 by marecarraya       #+#    #+#             */
-/*   Updated: 2023/07/18 20:02:31 by rmarecar         ###   ########.fr       */
+/*   Updated: 2023/07/18 20:39:04 by rmarecar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,7 @@ void	pipe_work(t_main *data, int in, int out, t_cmd_parse *node)
 		}
 		builtin_exec(data, node);
 		cmd = get_command(data->cmd_paths, node->cmd_tab[0]);
-		if (cmd == NULL)
-			no_command(data, node);
-		execve(cmd, node->cmd_tab, data->env_bis);
-		exit(1);
+		ft_execve(data, node, cmd);
 	}
 }
 
@@ -86,15 +83,6 @@ void	exec(t_main *data, t_cmd_parse *node, char *cmd)
 		}
 		node = node->next;
 		i++;
-	}
-	if (node->cmd_tab[0])
-	{
-		if (data->pipe_count == 0 && contains_char(node->cmd_tab[0], '=')
-			&& node->cmd_tab[0][0] != '=')
-		{
-			add_v_to_envexp(data, node->cmd_tab[0]);
-			return ;
-		}
 	}
 	data->pid_last = fork();
 	if (data->pid_last == 0)

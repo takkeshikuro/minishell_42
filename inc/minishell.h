@@ -6,7 +6,7 @@
 /*   By: rmarecar <rmarecar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 05:04:38 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/07/18 20:00:12 by rmarecar         ###   ########.fr       */
+/*   Updated: 2023/07/18 20:39:32 by rmarecar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,6 +213,8 @@ void					pipe_init(t_main *data, t_cmd_parse *node);
 
 void					redir_pipe(t_main *data, t_cmd_parse *node, int *in, int *out);
 void					last_redir(t_main *data, t_cmd_parse *node, int *in, int *out);
+
+void					ft_execve(t_main *data, t_cmd_parse *node, char *cmd);
 
 /***********************************************************/
 
