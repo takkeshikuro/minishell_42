@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
+/*   By: rmarecar <rmarecar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 03:45:35 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/07/19 03:20:14 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/07/19 16:43:35 by rmarecar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
+int	*global_int=NULL;
 //probleme pour crtl-c   dans un cat (rl_redisplay)
 // a gerer surement avec la global
 
@@ -50,7 +51,7 @@ void	start_in_loop(t_main *data, char *input)
 	ft_strlcpy(data->input_line, input, ft_strlen(input));
 	if (!go_lexer(data))
 		exit_bash_error("lexing failed.");
-	pr(data->lexer_list);
+	//pr(data->lexer_list);
 	if (!go_parser(data))
 		exit_bash_error("parsing failed.");
 //	prrr(data->cmd_parse, 1);
@@ -59,8 +60,8 @@ void	start_in_loop(t_main *data, char *input)
 	//	built_export(data, data->cmd_parse);
 	//else if (!ft_strncmp(data->cmd_parse->cmd_tab[0], "cd", 2))
 	//	built_cd(data, data->cmd_parse);
-	prrr(data->cmd_parse, 0);
-	pr(data->lexer_list);
+	//prrr(data->cmd_parse, 0);
+	//pr(data->lexer_list);
 }
 
 void	mini_loop(t_main *data, char **env)

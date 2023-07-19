@@ -68,6 +68,12 @@ int	here_doc_var(t_main *data, char *input, int i, int fd[2])
 	return (len);
 }
 
+void	sig_hd(int signal)
+{
+	close(global_int[0]);
+	close(global_int[1]);
+	exit (1);
+}
 void	here_doc_manage(t_main *data, t_cmd_parse *node, int fd[2])
 {
 	char	*input;
@@ -75,12 +81,18 @@ void	here_doc_manage(t_main *data, t_cmd_parse *node, int fd[2])
 	char	*var_name;
 	char	*var_content;
 
+	signal(SIGINT, sig_hd);
+	close(fd[0]);
 	while (1)
 	{
 		i = 0;
 		input = readline(">");
 		if (!init_loop(node, input, fd))
+		{
+			free (input);
+			close(fd[1]);
 			break ;
+		}
 		while (input[i])
 		{
 			if (input[i] == '$' && input[i + 1] != ' ')
@@ -92,6 +104,7 @@ void	here_doc_manage(t_main *data, t_cmd_parse *node, int fd[2])
 			}
 		}
 		write(fd[1], "\n", 1);
+		free(input);
 	}
 	exit(1);
 }
@@ -104,9 +117,11 @@ void	here_doc_init(t_main *data, t_cmd_parse *node)
 
 	nodebis = node;
 	i = 0;
+	signal(SIGINT, SIG_IGN);
 	while (i < data->hd_count)
 	{
 		pipe(data->here_doc[i].fd);
+		global_int = data->here_doc[i].fd;
 		pid = fork();
 		if (pid == 0)
 			here_doc_manage(data, nodebis, data->here_doc[i].fd);
@@ -115,4 +130,5 @@ void	here_doc_init(t_main *data, t_cmd_parse *node)
 		i++;
 		nodebis = nodebis->next;
 	}
+	signal(SIGINT, sig_handler);
 }
