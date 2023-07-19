@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmarecar <rmarecar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 05:04:38 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/07/18 20:39:32 by rmarecar         ###   ########.fr       */
+/*   Updated: 2023/07/19 03:37:28 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,20 +28,7 @@
 // a normer :
 // copy_past() in expander_dol_utils
 // add_word() in lexer
-/*
-896 bytes in 1 blocks are still reachable in loss record 26 of 64
-==402996==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==402996==    by 0x10D784: get_env_export (in /mnt/nfs/homes/tmorikaw/Desktop/minishell_ok/minishell)
-==402996==    by 0x10D0C6: main (in /mnt/nfs/homes/tmorikaw/Desktop/minishell_ok/minishell)
-
-
-4,421 bytes in 56 blocks are still reachable in loss record 50 of 64
-==402996==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==402996==    by 0x10E4BE: ft_strjoin (in /mnt/nfs/homes/tmorikaw/Desktop/minishell_ok/minishell)
-==402996==    by 0x10D6D8: copy_env (in /mnt/nfs/homes/tmorikaw/Desktop/minishell_ok/minishell)
-==402996==    by 0x10D7C0: get_env_export (in /mnt/nfs/homes/tmorikaw/Desktop/minishell_ok/minishell)
-==402996==    by 0x10D0C6: main (in /mnt/nfs/homes/tmorikaw/Desktop/minishell_ok/minishell)
-*/
+// init_cmd() in parser
 
 typedef struct s_here_doc
 {
@@ -269,6 +256,7 @@ int						ft_nbstr(char const *str, char sep);
 //free_stuff.c
 void					free_tab(char **tab);
 void					free_kill(t_main *data);
+void	free_cmd_list(t_main *data);
 
 //error.c
 int						error(char *s);

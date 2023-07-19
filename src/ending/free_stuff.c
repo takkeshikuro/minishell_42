@@ -3,14 +3,44 @@
 /*                                                        :::      ::::::::   */
 /*   free_stuff.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 06:03:08 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/06/27 03:30:46 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/07/19 03:44:59 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+/*
+t_cmd_parse	*clear_one(t_cmd_parse *lst)
+{
+	if (lst->cmd_tab[0])
+		free_tab(lst->cmd_tab);
+	free(lst);
+}
+
+void	free_cmd_list(t_main *data)
+{
+	t_cmd_parse	*tmp;
+	t_cmd_parse	*start;
+	int			i;
+
+	tmp = data->cmd_parse;
+	start = tmp;
+	i = 0;
+	while (tmp)
+	{
+		tmp = tmp->next;
+		i++;
+	}
+	tmp = start;
+	while (i < 0)
+	{
+		clear_one(tmp);
+		i--;
+	}
+}*/
 
 void	free_tab(char **tab)
 {
@@ -19,8 +49,8 @@ void	free_tab(char **tab)
 
 	j = 0;
 	i = 0;
-	while (tab[i])
-		i++;
+	while (tab[j])
+		j++;
 	while (i <= j)
 		free(tab[i++]);
 	free(tab);

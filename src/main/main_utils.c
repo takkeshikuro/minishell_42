@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 16:29:32 by keshikuro         #+#    #+#             */
-/*   Updated: 2023/06/27 07:28:32 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/07/19 04:09:17 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,39 @@ void	init_stuff(t_main *data)
 	init_signals();
 }
 
+void	free_cmd_tab(t_main *data)
+{
+	t_cmd_parse	*tmp;
+
+	tmp = data->cmd_parse;
+	while (tmp)
+	{
+		free_tab(tmp->cmd_tab);
+		tmp->cmd_tab = NULL;
+		tmp = tmp->next;
+	}
+}
+
+void	free_cmd_lst(t_cmd_parse *lst)
+{
+	t_cmd_parse	*tmp;
+
+	tmp = lst;
+	while (tmp)
+	{
+		lst = tmp->next;
+		if (tmp)
+			free(tmp);
+		tmp = lst;
+	}
+}
+
 void	reset_stuff(t_main *data)
 {
 	if (data->cmd_parse->cmd_tab[0])
-		free_tab(data->cmd_parse->cmd_tab);
+		free_cmd_tab(data);
+	if (data->cmd_parse)
+		free_cmd_lst(data->cmd_parse);
 	if (data->input_line)
 		free(data->input_line);
 	init_stuff(data);

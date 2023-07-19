@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 23:55:37 by keshikuro         #+#    #+#             */
-/*   Updated: 2023/06/13 03:19:32 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/07/19 03:21:25 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ t_cmd_parse	*init_cmd(t_parser_data *p_data)
 	if (!tab)
 		exit(1);
 	current = p_data->lexer_list;
-	while (nb_word > 0)
+	while (nb_word-- > 0)
 	{
 		if (current->str)
 		{
@@ -53,7 +53,6 @@ t_cmd_parse	*init_cmd(t_parser_data *p_data)
 			current = p_data->lexer_list;
 			i++;
 		}
-		nb_word--;
 	}
 	tab[i] = 0;
 	new_node = cmd_parse_new(tab, p_data->num_redir, p_data->redirection);

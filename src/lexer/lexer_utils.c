@@ -88,16 +88,3 @@ int	count_doub_quote(char *str, int i)
 	}
 	return (doub);
 }
-
-void	rm_space(t_lexer *lst)
-{
-	t_lexer	*tmp;
-
-	tmp = lst;
-	while (tmp)
-	{
-		if (tmp->str)
-			tmp->str = ft_strtrim(tmp->str, " ");
-		tmp = tmp->next;
-	}
-}

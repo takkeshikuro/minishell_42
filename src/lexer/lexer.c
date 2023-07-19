@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 04:07:31 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/07/07 04:58:50 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/07/19 03:15:48 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,12 @@ int	add_word(char *str, int i, t_lexer **lexer_list)
 	{
 		tmp = ft_substr(str, i, j);
 		if (!add_to_list(tmp, 0, lexer_list))
-			return (-1);
+			return (free(tmp), -1);
 		return (j);
 	}
 	tmp = ft_substr(str, i, (j - 1));
 	if (!add_to_list(tmp, 0, lexer_list))
-		return (-1);
+		return (free(tmp), -1);
 	return (j);
 }
 
@@ -125,15 +125,12 @@ int	go_lexer(t_main *data)
 		if (is_operateur(data->input_line[i]))
 			j = add_operateur(data->input_line, i, &data->lexer_list);
 		else
-		{
 			j = add_word(data->input_line, i, &data->lexer_list);
-		}
 		if (j < 0)
 			return (0);
 		i += j;
 		if (i >= ft_strlen(data->input_line))
 			break ;
 	}
-	rm_space(data->lexer_list);
 	return (1);
 }
