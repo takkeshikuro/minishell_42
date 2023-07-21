@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmarecar <rmarecar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 03:45:35 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/07/19 16:43:35 by rmarecar         ###   ########.fr       */
+/*   Updated: 2023/07/21 18:21:48 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ int	*global_int=NULL;
 
 // gerer return value
 // refaire batterie test echo / refaire built_echo
+// pb si input = 'NEW=okok' -> ne doit pas etre dans env_bis/exp
+// bash : syntax error near unexpected token -> ne doit pas exit
 
 void	handle_quote_n_expand(t_main *data)
 {
