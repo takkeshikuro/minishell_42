@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_manage.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmarecar <rmarecar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 15:26:12 by marecarraya       #+#    #+#             */
-/*   Updated: 2023/07/19 16:20:49 by rmarecar         ###   ########.fr       */
+/*   Updated: 2023/07/25 13:12:09 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,4 +116,6 @@ void	execute_cmd(t_main *data)
 		data->return_value = WEXITSTATUS(status);
 	if (data->hd_count)
 		free(data->here_doc);
+	if (data->cmd_paths)
+		free_tab(data->cmd_paths);
 }
