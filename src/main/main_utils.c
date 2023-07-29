@@ -6,7 +6,7 @@
 /*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 16:29:32 by keshikuro         #+#    #+#             */
-/*   Updated: 2023/07/29 04:39:52 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/07/29 05:46:25 by tmorikaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,11 @@ void	reset_stuff(t_main *data)
 {
 	if (data->input_line)
 		free(data->input_line);
+/* 	if (global_int[0])
+	{
+		free(global_int);
+		global_int = NULL;
+	} */
 	if (data->lexer_list)
 		free_lxr_lst(data->lexer_list);
 	data->lexer_list = NULL;

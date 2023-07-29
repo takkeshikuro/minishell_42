@@ -6,16 +6,13 @@
 /*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 03:45:35 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/07/29 04:46:47 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/07/29 06:45:00 by tmorikaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
 int		*global_int = NULL;
-//probleme pour crtl-c   dans un cat (rl_redisplay)
-// a gerer surement avec la global
-
 // add += 1 a SHLVL (env)
 
 //leak list parser + env_bis/export
@@ -25,6 +22,11 @@ int		*global_int = NULL;
 
 // refaire batterie test echo / refaire built_echo
 // pb si input = 'NEW=okok' -> ne doit pas etre dans env_bis/exp
+
+// cas derreur (valgrind)
+// ls > test
+
+
 
 void	handle_quote_n_expand(t_main *data)
 {

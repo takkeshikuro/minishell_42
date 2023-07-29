@@ -6,7 +6,7 @@
 /*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 23:55:37 by keshikuro         #+#    #+#             */
-/*   Updated: 2023/07/29 04:23:56 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/07/29 06:35:09 by tmorikaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,23 @@ t_cmd_parse	*init_cmd(t_parser_data *p_data)
 	return (new_node);
 }
 
+/* void	check_cat(t_main *data)
+{
+	int		len;
+	int		len_tab;
+
+	len = ft_strlen(data->cmd_parse->cmd_tab[0]);
+	len_tab = 0;
+	while (data->cmd_parse->cmd_tab[len_tab])
+		len_tab++;
+	if (!ft_strncmp(data->cmd_parse->cmd_tab[0], "cat", len)
+		&& len_tab == 1)
+	{
+		global_int = malloc(sizeof(int));
+		global_int[0] = 100;
+	}
+}
+ */
 int	go_parser(t_main *data)
 {
 	t_cmd_parse		*node;
@@ -80,5 +97,6 @@ int	go_parser(t_main *data)
 		if (data->lexer_list && data->lexer_list->operateur == PIPE)
 			ft_lexerdelone(&data->lexer_list, data->lexer_list->i);
 	}
+	//check_cat(data);
 	return (1);
 }

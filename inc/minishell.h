@@ -6,7 +6,7 @@
 /*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 05:04:38 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/07/29 04:22:32 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/07/29 06:05:10 by tmorikaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,9 @@
 // copy_past() in expander_dol_utils
 // add_word() in lexer
 // init_cmd() in parser
+
 extern int	*global_int;
 
-/* int *tmp = global_int;
-
-int vat_vat = 1000;
-global_int = &cat_var;
-
- */
 typedef struct s_here_doc
 {
 	int	fd[2];
