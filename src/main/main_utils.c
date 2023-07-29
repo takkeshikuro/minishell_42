@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
+/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 16:29:32 by keshikuro         #+#    #+#             */
-/*   Updated: 2023/07/21 17:34:45 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/07/29 04:39:52 by tmorikaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ void	init_stuff(t_main *data)
 {
 	data->lexer_list = NULL;
 	data->cmd_parse = NULL;
+	data->return_value = 0;
+	data->syntaxe_check = 0;
 	init_signals();
 }
 
@@ -44,17 +46,39 @@ void	free_cmd_lst(t_cmd_parse *lst)
 			free(tmp);
 		tmp = lst;
 	}
+	free(lst);
+}
+void	free_lxr_lst(t_lexer *lst)
+{
+	t_lexer	*tmp;
+
+	tmp = lst;
+	while (tmp)
+	{
+		lst = tmp->next;
+		if (tmp)
+			free(tmp);
+		tmp = lst;
+	}
+	free(lst);
 }
 
 void	reset_stuff(t_main *data)
 {
-	if (data->cmd_parse->cmd_tab[0])
-		free_cmd_tab(data);
-	if (data->cmd_parse)
-		free_cmd_lst(data->cmd_parse);
 	if (data->input_line)
 		free(data->input_line);
-	init_stuff(data);
+	if (data->lexer_list)
+		free_lxr_lst(data->lexer_list);
+	data->lexer_list = NULL;
+	if (data->syntaxe_check == 0)
+	{
+		if (data->cmd_parse->cmd_tab[0])
+			free_cmd_tab(data);
+		if (data->cmd_parse)
+			free_cmd_lst(data->cmd_parse);
+		data->cmd_parse = NULL;
+	}
+	init_signals();
 }
 
 void	pr(t_lexer *lexer_list)			// show lexer list

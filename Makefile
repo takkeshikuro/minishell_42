@@ -1,5 +1,5 @@
 NAME    = minishell
-CC 		= gcc
+CC 		= gcc -g
 CFLAGS 	= -I /inc/minishell.h
 
 LIBFT  	= ./inc/libft/

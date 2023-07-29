@@ -3,28 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
+/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 03:45:35 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/07/21 18:21:48 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/07/29 04:43:10 by tmorikaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	*global_int=NULL;
+int		*global_int = NULL;
 //probleme pour crtl-c   dans un cat (rl_redisplay)
 // a gerer surement avec la global
 
-// pb pour "ls |" (je pense pas quil faut gerer ce cas)
 // add += 1 a SHLVL (env)
 
-//leak list parser + env_bis/export 
+//leak list parser + env_bis/export
 
 // gerer return value
+// return value apres un crtl-C (1 aulieu de 130)
+
 // refaire batterie test echo / refaire built_echo
 // pb si input = 'NEW=okok' -> ne doit pas etre dans env_bis/exp
-// bash : syntax error near unexpected token -> ne doit pas exit
 
 void	handle_quote_n_expand(t_main *data)
 {
@@ -45,25 +45,29 @@ void	handle_quote_n_expand(t_main *data)
 	}
 }
 
-void	start_in_loop(t_main *data, char *input)
+int	start_in_loop(t_main *data, char *input)
 {
 	data->input_line = malloc(sizeof(char) * (ft_strlen(input) + 1));
 	if (!data->input_line)
 		error("malloc failed");
 	ft_strlcpy(data->input_line, input, ft_strlen(input));
 	if (!go_lexer(data))
-		exit_bash_error("lexing failed.");
-	//pr(data->lexer_list);
+		error("lexing failed.");
+	//	pr(data->lexer_list);
 	if (!go_parser(data))
-		exit_bash_error("parsing failed.");
-//	prrr(data->cmd_parse, 1);
+	{
+		data->syntaxe_check = 1;
+		return (1);
+	}
+	//	prrr(data->cmd_parse, 1);
 	handle_quote_n_expand(data);
 	//if (!ft_strncmp(data->cmd_parse->cmd_tab[0], "export", 6))
 	//	built_export(data, data->cmd_parse);
-	//else if (!ft_strncmp(data->cmd_parse->cmd_tab[0], "cd", 2))
+	//if (!ft_strncmp(data->cmd_parse->cmd_tab[0], "cd", 2))
 	//	built_cd(data, data->cmd_parse);
-	//prrr(data->cmd_parse, 0);
+	//	prrr(data->cmd_parse, 0);
 	//pr(data->lexer_list);
+	return (0);
 }
 
 void	mini_loop(t_main *data, char **env)
@@ -79,8 +83,8 @@ void	mini_loop(t_main *data, char **env)
 		{
 			if (input[0] != '\0')
 			{
-				start_in_loop(data, input);
-				execute_cmd(data);
+				if (!start_in_loop(data, input))
+					execute_cmd(data);
 				reset_stuff(data);
 			}
 		}

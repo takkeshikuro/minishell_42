@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
+/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 00:51:08 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/06/04 16:04:49 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/07/29 03:53:09 by tmorikaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,19 +39,21 @@ t_parser_data	init_p_data(t_lexer *lexer_list, t_main *data)
 	return (parser_data);
 }
 
-void	small_check(t_main *data)
+int	small_check(t_main *data)
 {
 	t_lexer	*current;
 
 	current = data->lexer_list;
 	if (current->operateur == PIPE)
-		exit_bash_error("syntax error near unexpected token `|'");
+		return (syntax_err(data, "near unexpected token `|'"));
 	while (current)
 	{
 		if (current->next == NULL)
 		{
 			if (current->operateur)
-				exit_bash_error("syntax error near unexpected token `newline'");
+				return (syntax_err(data, "near unexpected token `newline'"));
+			else
+				return (0);
 		}
 		current = current->next;
 	}

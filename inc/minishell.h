@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmarecar <rmarecar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 05:04:38 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/07/19 16:43:24 by rmarecar         ###   ########.fr       */
+/*   Updated: 2023/07/29 04:22:32 by tmorikaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,12 @@
 // init_cmd() in parser
 extern int	*global_int;
 
+/* int *tmp = global_int;
+
+int vat_vat = 1000;
+global_int = &cat_var;
+
+ */
 typedef struct s_here_doc
 {
 	int	fd[2];
@@ -75,6 +81,7 @@ typedef struct s_main
 	char				*path;
 	char				**cmd_paths;
 	char				*test;
+	int					syntaxe_check;
 }						t_main;
 
 typedef struct s_cmd_parse
@@ -99,7 +106,7 @@ typedef struct s_parser_data
 
 // main.c & utils
 void					mini_loop(t_main *data, char **env);
-void					start_in_loop(t_main *data, char *input);
+int						start_in_loop(t_main *data, char *input);
 void					handle_quote_n_expand(t_main *data);
 void					parsing(t_main *data, char **env);
 //utils
@@ -139,7 +146,7 @@ t_cmd_parse				*cmd_parse_new(char **tab, int num_redir,
 							t_lexer *redirection);
 int						count_pipe(char *s);
 int						count_words(t_lexer *lexer_list);
-void					small_check(t_main *data);
+int						small_check(t_main *data);
 t_parser_data			init_p_data(t_lexer *lexer_list, t_main *data);
 void					cmd_parseadd_back(t_cmd_parse **lst, t_cmd_parse *new);
 void					redirection(t_parser_data *p_data);
@@ -262,7 +269,7 @@ void	free_cmd_list(t_main *data);
 //error.c
 int						error(char *s);
 void					void_error(char *s);
-void					exit_bash_error(char *s);
+int						syntax_err(t_main *data, char *s);
 
 // a supp
 void					pr(t_lexer *lexer_list);              // for lexer

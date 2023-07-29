@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
+/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 13:05:38 by keshikuro         #+#    #+#             */
-/*   Updated: 2023/06/15 14:36:39 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/07/29 04:42:42 by tmorikaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,9 +86,14 @@ int	built_cd(t_main *data, t_cmd_parse *cmd_parse)
 		return (0);
 	}
 	ok = chdir(cmd_parse->cmd_tab[1]);
+	//fprintf(stderr, "CHDIR==%d\n", ok);
 	if (ok == -1)
+	{
 		printf("bash: cd: %s: No such file or directory\n",
-				cmd_parse->cmd_tab[1]);
+			cmd_parse->cmd_tab[1]);
+		data->return_value = 1;
+		return (0);
+	}
 	else
 		change_env(data);
 	data->return_value = 0;

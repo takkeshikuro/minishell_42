@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
+/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 06:02:15 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/06/04 16:04:13 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/07/29 04:42:32 by tmorikaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,10 @@ void	void_error(char *s)
 	return ;
 }
 
-void	exit_bash_error(char *s)
+int	syntax_err(t_main *data, char *s)
 {
-	printf("bash : %s", s);
-	exit (1);
+	ft_putstr_fd("bash : syntax error ", 1);
+	ft_putendl_fd(s, 1);
+	data->return_value = 2;
+	return (1);
 }

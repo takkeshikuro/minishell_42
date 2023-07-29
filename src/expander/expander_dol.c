@@ -6,7 +6,7 @@
 /*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 23:48:00 by keshikuro         #+#    #+#             */
-/*   Updated: 2023/06/27 07:48:13 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/07/29 00:52:22 by tmorikaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	rm_dollard(t_cmd_parse *cmd_node, int i, int j)
 	int		size_dol;
 	char	*new;
 	int		diff;
-	int 	tmp_j;
+	int		tmp_j;
 
 	size_dol = 0;
 	tmp_j = j;
@@ -41,7 +41,7 @@ int	rm_dollard(t_cmd_parse *cmd_node, int i, int j)
 	return (0);
 }
 
-int		expand_dollard(t_main *data, t_cmd_parse *node, int i, int j)
+int	expand_dollard(t_main *data, t_cmd_parse *node, int i, int j)
 {
 	int		nb_env;
 	char	*str_replace;
@@ -57,8 +57,8 @@ int		expand_dollard(t_main *data, t_cmd_parse *node, int i, int j)
 
 int	return_value(t_main *data, t_cmd_parse *node, int i, int j_dol)
 {
-	char *str_replace;
-	
+	char	*str_replace;
+
 	str_replace = ft_itoa(data->return_value);
 	copy_past(node, i, j_dol, str_replace);
 	return (ft_strlen(str_replace));
@@ -69,7 +69,6 @@ int	expanding_bis(t_main *data, t_cmd_parse *node, int i, int j)
 	int	nb_env;
 
 	nb_env = check_env_variable(data, node->cmd_tab[i], j);
-//	fprintf(stderr, "value exp bis = %d\n", nb_env);
 	if (nb_env >= 0)
 		return (expand_dollard(data, node, i, j));
 	else if (nb_env == -1)
@@ -83,7 +82,7 @@ int	expanding_bis(t_main *data, t_cmd_parse *node, int i, int j)
 void	expanding(t_main *data, t_cmd_parse *node, int i)
 {
 	int			j;
-	int 		dol;
+	int			dol;
 	int			len;
 
 	j = 0;
