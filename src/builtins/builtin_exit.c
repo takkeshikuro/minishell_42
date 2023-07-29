@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_exit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
+/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 13:05:40 by keshikuro         #+#    #+#             */
-/*   Updated: 2023/06/15 14:38:47 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/07/29 05:09:42 by tmorikaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ int	built_exit(t_main *data, t_cmd_parse *cmd_parse)
 {
 	printf("quit minishell\n");
 	free_kill(data);
-	exit(0);
+	exit (0);
 }
 
-// add 	data->return_value = ;
+//free stuff avant l.appel dans first_builtins() dans exec_built.c
 

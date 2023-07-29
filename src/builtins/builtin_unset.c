@@ -6,7 +6,7 @@
 /*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 13:05:46 by keshikuro         #+#    #+#             */
-/*   Updated: 2023/07/07 08:15:05 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/07/29 05:08:07 by tmorikaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,5 +59,5 @@ int	built_unset(t_main *data, t_cmd_parse *cmd_parse)
 		same_for_env_exp(data, cmd_parse->cmd_tab[i++], len);
 	}
 	data->return_value = 0;
-	return (0);
+	return (1);
 }

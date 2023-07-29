@@ -53,12 +53,8 @@ void	builtin_exec(t_main *data, t_cmd_parse *node)
 	if (node->cmd_tab[0] == NULL)
 		return ;
 	cmd = node->cmd_tab[0];
-	if (!ft_strncmp(cmd, "cd", ft_strlen(cmd)))
-	{
-		built_cd(data, node);
-		exit (data->return_value);
-	}
-	else if (!ft_strncmp(cmd, "echo", ft_strlen(cmd)))
+
+	if (!ft_strncmp(cmd, "echo", ft_strlen(cmd)))
 	{
 		built_echo(data, node);
 		exit (data->return_value);
@@ -96,17 +92,13 @@ int	first_builtins(t_main *data, t_cmd_parse *node)
 	if (!ft_strncmp(node->cmd_tab[0], "exit", len) && len)
 	{
 		built_exit(data, node);
-		return (data->return_value);
+		return (1);
 	}
 	if (!ft_strncmp(node->cmd_tab[0], "unset", len) && node->next == NULL)
-	{
-		built_unset(data, node);
-		return (data->return_value);
-	}
+		return (built_unset(data, node));
 	if (!ft_strncmp(node->cmd_tab[0], "export", len) && node->next == NULL)
-	{
-		built_export(data, node);
-		return (data->return_value);
-	}
+		return (built_export(data, node));
+	if (!ft_strncmp(node->cmd_tab[0], "cd", len) && node->next == NULL)
+		return (built_cd(data, node));
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 03:45:35 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/07/29 04:43:10 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/07/29 04:46:47 by tmorikaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	handle_quote_n_expand(t_main *data)
 	int			i;
 
 	node = data->cmd_parse;
+
 	while (node)
 	{
 		i = 0;
