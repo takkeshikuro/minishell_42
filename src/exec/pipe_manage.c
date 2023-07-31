@@ -100,11 +100,20 @@ void	execute_cmd(t_main *data)
 	cmd = NULL;
 	i = 0;
 	node = data->cmd_parse;
+	global_int = NULL;
 	data->pipe_count = lstsize(node) - 1;
 	if (first_builtins(data, node))
 		return ;
 	pipe_init(data, node);
 	here_doc_init(data, node);
+	if (global_int)
+	{
+		if (global_int[0] == -42)
+		{
+			global_int[0] = 0;
+			return ;
+		}
+	}
 	exec(data, node, cmd);
 	waitpid(data->pid_last, &status, 0);
 	while (i < data->pipe_count)

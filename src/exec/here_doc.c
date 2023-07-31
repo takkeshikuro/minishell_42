@@ -72,21 +72,29 @@ void	sig_hd(int signal)
 {
 	close(global_int[0]);
 	close(global_int[1]);
-	exit (1);
+	exit (42);
 }
+
 void	here_doc_manage(t_main *data, t_cmd_parse *node, int fd[2])
 {
 	char	*input;
 	int		i;
 	char	*var_name;
 	char	*var_content;
+	int		j;
 
+	j = 0;
 	signal(SIGINT, sig_hd);
 	close(fd[0]);
 	while (1)
 	{
 		i = 0;
 		input = readline(">");
+		if (!input)
+		{
+			fprintf(stderr, "bash: warning: here-document at line %d deliminited by end-of-file (wanted `%s')\n", j, node->redirection->str);
+			free(input);
+		}
 		if (!init_loop(node, input, fd))
 		{
 			free (input);
@@ -104,6 +112,7 @@ void	here_doc_manage(t_main *data, t_cmd_parse *node, int fd[2])
 			}
 		}
 		write(fd[1], "\n", 1);
+		j++;
 		free(input);
 	}
 	exit(1);
@@ -114,6 +123,7 @@ void	here_doc_init(t_main *data, t_cmd_parse *node)
 	int			i;
 	int			pid;
 	t_cmd_parse	*nodebis;
+	int			status;
 
 	nodebis = node;
 	i = 0;
@@ -125,7 +135,13 @@ void	here_doc_init(t_main *data, t_cmd_parse *node)
 		pid = fork();
 		if (pid == 0)
 			here_doc_manage(data, nodebis, data->here_doc[i].fd);
-		waitpid(-1, NULL, 0);
+		waitpid(-1, &status, 0);
+		if (WEXITSTATUS(status) == 42)
+		{
+			global_int[0] = -42;
+			close(data->here_doc[i].fd[1]);
+			break ;
+		}
 		close(data->here_doc[i].fd[1]);
 		i++;
 		nodebis = nodebis->next;
