@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 13:05:38 by keshikuro         #+#    #+#             */
-/*   Updated: 2023/07/29 05:06:37 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/08/01 19:25:43 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,15 +75,30 @@ void	change_env(t_main *data)
 	free(s_old);
 }
 
+void	get_home(t_main *data)
+{
+	char	*home_str;
+	int		i;
+
+	i = 0;
+	while (ft_strncmp(data->env_bis[i], "HOME", 4))
+		i++;
+	home_str = ft_substr(data->env_bis[i], 5, ft_strlen(data->env_bis[i]) - 5);
+	chdir(home_str);
+	free(home_str);
+	return ;
+}
+
 int	built_cd(t_main *data, t_cmd_parse *cmd_parse)
 {
 	int	ok;
 
 	if (!cmd_parse->cmd_tab[1])
 	{
-		chdir("/Desktop");
+		get_home(data);
 		change_env(data);
-		return (0);
+		data->return_value = 0;
+		return (1);
 	}
 	ok = chdir(cmd_parse->cmd_tab[1]);
 	if (ok == -1)
