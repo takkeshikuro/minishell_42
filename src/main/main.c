@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 03:45:35 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/07/29 06:45:00 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/08/01 06:08:16 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,6 @@ int		*global_int = NULL;
 // pb si input = 'NEW=okok' -> ne doit pas etre dans env_bis/exp
 
 // cas derreur (valgrind)
-// ls > test
-
-
 
 void	handle_quote_n_expand(t_main *data)
 {
@@ -34,7 +31,6 @@ void	handle_quote_n_expand(t_main *data)
 	int			i;
 
 	node = data->cmd_parse;
-
 	while (node)
 	{
 		i = 0;

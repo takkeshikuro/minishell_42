@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 23:55:37 by keshikuro         #+#    #+#             */
-/*   Updated: 2023/07/29 06:35:09 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/08/01 06:09:03 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int	go_parser(t_main *data)
 	t_cmd_parse		*node;
 	t_parser_data	parser_data;
 
-	if (small_check(data))
+	if (small_check(data) || ope_check(data))
 		return (0);
 	while (data->lexer_list)
 	{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 05:04:38 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/07/29 06:05:10 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/08/01 06:10:44 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,9 @@ t_cmd_parse				*cmd_parse_new(char **tab, int num_redir,
 							t_lexer *redirection);
 int						count_pipe(char *s);
 int						count_words(t_lexer *lexer_list);
-int						small_check(t_main *data);
+int	small_check(t_main *data);
+int	ope_check(t_main *data);
+int	lexer_size(t_lexer *lst);
 t_parser_data			init_p_data(t_lexer *lexer_list, t_main *data);
 void					cmd_parseadd_back(t_cmd_parse **lst, t_cmd_parse *new);
 void					redirection(t_parser_data *p_data);

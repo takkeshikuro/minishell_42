@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 16:29:32 by keshikuro         #+#    #+#             */
-/*   Updated: 2023/07/29 05:46:25 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/08/01 06:07:29 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,9 +80,9 @@ void	reset_stuff(t_main *data)
 		if (data->cmd_parse->cmd_tab[0])
 			free_cmd_tab(data);
 		if (data->cmd_parse)
-			free_cmd_lst(data->cmd_parse);
-		data->cmd_parse = NULL;
+			free_cmd_lst(data->cmd_parse);	
 	}
+	data->cmd_parse = NULL;
 	init_signals();
 }
 
