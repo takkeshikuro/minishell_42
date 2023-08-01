@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_manage.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rmarecar <rmarecar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 15:26:12 by marecarraya       #+#    #+#             */
-/*   Updated: 2023/07/25 13:12:09 by marvin           ###   ########.fr       */
+/*   Updated: 2023/08/01 21:16:01 by rmarecar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,12 +115,14 @@ void	execute_cmd(t_main *data)
 		}
 	}
 	exec(data, node, cmd);
+	signal(SIGINT, SIG_IGN);
 	waitpid(data->pid_last, &status, 0);
 	while (i < data->pipe_count)
 	{
 		waitpid(-1, NULL, 0);
 		i++;
 	}
+	signal(SIGINT, sig_handler);
 	if (WIFEXITED(status))
 		data->return_value = WEXITSTATUS(status);
 	if (data->hd_count)
