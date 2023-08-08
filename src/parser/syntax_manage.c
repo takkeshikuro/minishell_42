@@ -6,7 +6,7 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 16:24:58 by keshikuro         #+#    #+#             */
-/*   Updated: 2023/08/08 17:34:44 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/08/08 17:44:26 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	syntax_slash(t_main *data, char *s)
 	i = 0;
 	while (s[i])
 	{
-		if (cmpchar(s[i], '/'))
+		if (cmpchar(s[i], '/') && !cmpchar(s[i - 1], '.'))
 		{
 			j = i;
 			k = 0;
