@@ -6,7 +6,7 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 00:51:08 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/08/01 06:10:46 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/08/08 13:36:50 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,103 +50,6 @@ int	lexer_size(t_lexer *lst)
 		size++;
 	}
 	return (size);
-}
-
-int	small_check(t_main *data)
-{
-	t_lexer *tmp;
-	int		size;
-
-	tmp = data->lexer_list;
-	size = lexer_size(data->lexer_list);
-	while (tmp)
-	{
-		if (size == 1 && !tmp->operateur)
-		{
-			if (!ft_strncmp(tmp->str, "!", 1) || !ft_strncmp(tmp->str, ":", 1))
-				return (1);
-		}
-		tmp = tmp->next;
-	}
-	return (0);
-}
-
-// A NORMER 
-int	ope_check(t_main *data)
-{
-	t_lexer	*current;
-
-	current = data->lexer_list;
-	if (current->operateur == PIPE)
-		return (syntax_err(data, "near unexpected token `|'"));
-	while (current)
-	{
-		if (!current->next)
-		{
-			if (current->operateur > 1 && current->operateur < 6)
-				return (syntax_err(data, "near unexpected token `newline'"));
-			else
-				return (0);
-		}
-		if (current->operateur == RIGHT_RIGHT)
-		{
-			if (current->next->operateur == RIGHT)
-				return (syntax_err(data, "near unexpected token `>'"));
-			if (current->next->operateur == RIGHT_RIGHT)
-				return (syntax_err(data, "near unexpected token `>>'"));
-		}
-		if (current->operateur == LEFT_LEFT)
-		{
-			if (current->next->operateur == LEFT_LEFT)
-			{
-				if (!current->next->next || (current->next->next->operateur != LEFT && current->next->next->operateur != LEFT_LEFT))
-					return (syntax_err(data, "near unexpected token `<'"));
-				else if (current->next->next->operateur == LEFT)
-					return (syntax_err(data, "near unexpected token `<<'"));
-				else if (current->next->next->operateur == LEFT_LEFT)
-					return (syntax_err(data, "near unexpected token `<<<'"));
-			}
-		}
-		if (current->operateur == RIGHT)
-		{
-			if (current->next->operateur == LEFT)
-				return (syntax_err(data, "near unexpected token `<'"));
-			if (current->next->operateur == RIGHT)
-				return (syntax_err(data, "near unexpected token `>'"));
-			if (current->next->operateur == RIGHT_RIGHT)
-				return (syntax_err(data, "near unexpected token `>>'"));
-			if (current->next->operateur == LEFT_LEFT)
-			{
-				if (!current->next->next || (current->next->next->operateur != LEFT && current->next->next->operateur != LEFT_LEFT))
-					return (syntax_err(data, "near unexpected token `<<'"));
-				else if (current->next->next->operateur == LEFT || current->next->next->operateur == LEFT_LEFT)
-					return (syntax_err(data, "near unexpected token `<<<'"));
-			}
-		}
-		else if (current->operateur == LEFT)
-		{
-			if (current->next->operateur == RIGHT)
-				return (syntax_err(data, "near unexpected token `newline'"));
-			if (current->next->operateur == LEFT && (!current->next->next || current->next->next->operateur != LEFT))
-				return (syntax_err(data, "near unexpected token `<'"));
-			if (current->next->operateur == LEFT_LEFT)
-			{
-				if (!current->next->next || (current->next->next->operateur != LEFT && current->next->next->operateur != LEFT_LEFT))
-					return (syntax_err(data, "near unexpected token `<<'"));
-				else if (current->next->next && (current->next->next->operateur == LEFT || current->next->next->operateur == LEFT_LEFT))
-					return (syntax_err(data, "near unexpected token `<<<'"));
-			}
-			if (current->next->operateur == RIGHT_RIGHT)
-			{
-				if (!current->next->next || (current->next->next->operateur != RIGHT && current->next->next->operateur != RIGHT_RIGHT))
-					return (syntax_err(data, "near unexpected token `>'"));
-				else if (current->next->next->operateur == RIGHT || current->next->next->operateur == RIGHT_RIGHT)
-					return (syntax_err(data, "near unexpected token `>>'"));
-			}
-		}
-		current = current->next;
-	}
-	return (0);
 }
 
 int	count_words(t_lexer *lexer_list)

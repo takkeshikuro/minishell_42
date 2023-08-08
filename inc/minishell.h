@@ -6,7 +6,7 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 05:04:38 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/08/01 06:10:44 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/08/08 13:42:47 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,15 +139,24 @@ int						go_parser(t_main *data);
 t_cmd_parse				*init_cmd(t_parser_data *p_data);
 t_cmd_parse				*cmd_parse_new(char **tab, int num_redir,
 							t_lexer *redirection);
-int						count_pipe(char *s);
-int						count_words(t_lexer *lexer_list);
-int	small_check(t_main *data);
-int	ope_check(t_main *data);
-int	lexer_size(t_lexer *lst);
-t_parser_data			init_p_data(t_lexer *lexer_list, t_main *data);
-void					cmd_parseadd_back(t_cmd_parse **lst, t_cmd_parse *new);
+//parser ope/checking/redir
+int						small_check(t_main *data);
+int						ope_check(t_main *data);
+int						check_single(t_main *data, t_lexer *current);
+int						check_double(t_main *data, t_lexer *current);
+int						check_rr(t_main *data, t_lexer *crt);
+int						check_ll(t_main *data, t_lexer *crt);
+int 					check_p_r(t_main *data, t_lexer *tmp);
+int						check_r(t_main *data, t_lexer *crt);
+int 					check_l(t_main *data, t_lexer *crt);
 void					redirection(t_parser_data *p_data);
 void					add_redirection(t_lexer *tmp, t_parser_data *p_data);
+//parser utils random
+int						count_pipe(char *s);
+int						count_words(t_lexer *lexer_list);
+int						lexer_size(t_lexer *lst);
+t_parser_data			init_p_data(t_lexer *lexer_list, t_main *data);
+void					cmd_parseadd_back(t_cmd_parse **lst, t_cmd_parse *new);
 
 // quote_manage.c  && utils
 int						quote_manage(t_main *data, t_cmd_parse *node, int i);
@@ -211,7 +220,7 @@ void					ft_execve(t_main *data, t_cmd_parse *node, char *cmd);
 /***********************************************************/
 
 
-///  builtins.c
+/////////////////  builtins.c  ////////////////////
 int						built_env(t_main *data, t_cmd_parse *cmd_parse);
 int						built_pwd(t_main *data, t_cmd_parse *cmd_parse);
 int						built_echo(t_main *data, t_cmd_parse *cmd_parse);
@@ -219,14 +228,12 @@ int						built_cd(t_main *data, t_cmd_parse *cmd_parse);
 int						built_unset(t_main *data, t_cmd_parse *cmd_parse);
 int						built_exit(t_main *data, t_cmd_parse *cmd_parse);
 int						built_export(t_main *data, t_cmd_parse *cmd_parse);
-
-//utils unset
+///// utils unset
 void					copy_good_exp(t_main *data, char **tab);
 void					copy_good_bis(t_main *data, char **tab);
 char					**crt_exp(char **old_tab, char *s, int len);
 char					**crt_bis(char **old_tab, char *s, int len);
-
-//////////////// export & utils
+///// export & utils
 void					export_support(t_main *data, char *s);
 void					add_total_stuff(t_main *data, char *s);
 int						simple_check(char *s);
@@ -247,7 +254,7 @@ int						equal_env(char *s);
 int						print_error_export(char *s, int ok);
 
 
-// signal.c
+//////////// signal.c
 void					eot_handler(t_main *data);
 void					sig_handler(int sig);
 void					init_signals(void);
@@ -261,7 +268,7 @@ int						ft_nbstr(char const *str, char sep);
 //free_stuff.c
 void					free_tab(char **tab);
 void					free_kill(t_main *data);
-void	free_cmd_list(t_main *data);
+void					free_cmd_list(t_main *data);
 
 //error.c
 int						error(char *s);

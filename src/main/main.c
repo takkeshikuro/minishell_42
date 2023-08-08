@@ -6,7 +6,7 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 03:45:35 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/08/01 06:08:16 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/08/08 13:52:14 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@ int		*global_int = NULL;
 
 // refaire batterie test echo / refaire built_echo
 // pb si input = 'NEW=okok' -> ne doit pas etre dans env_bis/exp
-
-// cas derreur (valgrind)
 
 void	handle_quote_n_expand(t_main *data)
 {
@@ -52,13 +50,13 @@ int	start_in_loop(t_main *data, char *input)
 	ft_strlcpy(data->input_line, input, ft_strlen(input));
 	if (!go_lexer(data))
 		error("lexing failed.");
-	//	pr(data->lexer_list);
+//	pr(data->lexer_list);
 	if (!go_parser(data))
 	{
 		data->syntaxe_check = 1;
 		return (1);
 	}
-	//	prrr(data->cmd_parse, 1);
+//	prrr(data->cmd_parse, 1);
 	handle_quote_n_expand(data);
 	//if (!ft_strncmp(data->cmd_parse->cmd_tab[0], "export", 6))
 	//	built_export(data, data->cmd_parse);
