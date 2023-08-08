@@ -6,7 +6,7 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 16:24:58 by keshikuro         #+#    #+#             */
-/*   Updated: 2023/08/08 16:28:51 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/08/08 16:37:43 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ int	syntax_dig_two(t_main *data, char *s, int i)
 
 	if (cmpchar(s[i], ')'))
 		return (syntax_err(data, "near unexpected token `)'"));
+	else if (cmpchar(s[i], '\\'))
+		return (syntax_err(data, "near unexpected token `\\'"));
 	else if (cmpchar(s[i], '('))
 		return (syntax_err(data, "should close parentheses"));
 	else if (cmpchar(s[i], '/'))

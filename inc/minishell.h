@@ -6,7 +6,7 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 05:04:38 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/08/08 16:30:16 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/08/08 16:39:01 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,6 @@ void					ft_lexerdelone(t_lexer **lexer_list, int id);
 /***********************************************************/
 
 
-
 /*****************parser & expander DIRECTORY***********************/
 int						go_parser(t_main *data);
 t_cmd_parse				*init_cmd(t_parser_data *p_data);
@@ -146,17 +145,17 @@ int						check_single(t_main *data, t_lexer *current);
 int						check_double(t_main *data, t_lexer *current);
 int						check_rr(t_main *data, t_lexer *crt);
 int						check_ll(t_main *data, t_lexer *crt);
-int 					check_p_r(t_main *data, t_lexer *tmp);
+int						check_p_r(t_main *data, t_lexer *tmp);
 int						check_r(t_main *data, t_lexer *crt);
-int 					check_l(t_main *data, t_lexer *crt);
+int						check_l(t_main *data, t_lexer *crt);
 void					redirection(t_parser_data *p_data);
 void					add_redirection(t_lexer *tmp, t_parser_data *p_data);
 //syntax_manage
-int	cmpchar(char c, char ok);
-int	cp_s(char *tmp, char *s, int i);
-int	syntax_dig_2(t_main *data, char *s, int i);
-int	syntax_dig(t_main *data, char *s);
-int	syntax_check(t_main *data, int size);
+int						cmpchar(char c, char ok);
+int						cp_s(char *tmp, char *s, int i);
+int						syntax_dig_2(t_main *data, char *s, int i);
+int						syntax_dig(t_main *data, char *s);
+int						syntax_check(t_main *data, int size);
 
 //parser utils random
 int						count_pipe(char *s);
