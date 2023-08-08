@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_manage.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 15:26:12 by marecarraya       #+#    #+#             */
-/*   Updated: 2023/08/08 14:30:27 by marvin           ###   ########.fr       */
+/*   Updated: 2023/08/08 14:41:30 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	last_process(t_main *data, t_cmd_parse *node, char *cmd, int in)
 	last_redir(data, node, &in, &out);
 	if (in && node->hd_check == 0)
 	{
-		fprintf(stderr, "ininin\n");
+//		fprintf(stderr, "ininin\n");
 		dup2(in, 0);
 		close(in);
 	}
@@ -57,7 +57,7 @@ void	last_process(t_main *data, t_cmd_parse *node, char *cmd, int in)
 	cmd = get_command(data->cmd_paths, node->cmd_tab[0]);
 	if (cmd == NULL)
 		no_command(data, node);
-	fprintf(stderr, "%s\n", cmd);
+//	fprintf(stderr, "%s\n", cmd);
 	execve(cmd, node->cmd_tab, data->env_bis);
 	exit (1);
 }

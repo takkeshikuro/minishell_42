@@ -6,7 +6,7 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 05:04:38 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/08/08 13:42:47 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/08/08 16:30:16 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,6 +151,13 @@ int						check_r(t_main *data, t_lexer *crt);
 int 					check_l(t_main *data, t_lexer *crt);
 void					redirection(t_parser_data *p_data);
 void					add_redirection(t_lexer *tmp, t_parser_data *p_data);
+//syntax_manage
+int	cmpchar(char c, char ok);
+int	cp_s(char *tmp, char *s, int i);
+int	syntax_dig_2(t_main *data, char *s, int i);
+int	syntax_dig(t_main *data, char *s);
+int	syntax_check(t_main *data, int size);
+
 //parser utils random
 int						count_pipe(char *s);
 int						count_words(t_lexer *lexer_list);
@@ -274,6 +281,7 @@ void					free_cmd_list(t_main *data);
 int						error(char *s);
 void					void_error(char *s);
 int						syntax_err(t_main *data, char *s);
+int	is_dir_error(t_main *data, char *s, int ok);
 
 // a supp
 void					pr(t_lexer *lexer_list);              // for lexer

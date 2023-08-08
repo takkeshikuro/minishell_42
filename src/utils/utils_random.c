@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_random.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 05:38:24 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/06/20 02:21:33 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/08/08 15:23:05 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	pb_quote(const char *str, int sep)
 		return (1);
 	else
 	{
-		printf("minishell: need to close quote\n");
+		printf("minishell: should close quote\n");
 		return (0);
 	}
 }

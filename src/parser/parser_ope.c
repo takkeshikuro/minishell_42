@@ -6,7 +6,7 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 13:32:15 by keshikuro         #+#    #+#             */
-/*   Updated: 2023/08/08 13:57:11 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/08/08 16:26:12 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,11 +82,13 @@ int	ope_check(t_main *data)
 
 int	small_check(t_main *data)
 {
-	t_lexer			*tmp;
 	int				size;
+	t_lexer			*tmp;
 
 	tmp = data->lexer_list;
 	size = lexer_size(data->lexer_list);
+	if (syntax_check(data, size))
+		return (1);
 	while (tmp)
 	{
 		if (size == 1 && !tmp->operateur)
