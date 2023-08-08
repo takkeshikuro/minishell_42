@@ -6,7 +6,7 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 03:45:35 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/08/08 13:52:14 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/08/08 17:20:30 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ void	handle_quote_n_expand(t_main *data)
 
 int	start_in_loop(t_main *data, char *input)
 {
+//	if (global_int[0] == -123)
+	//	data->return_value = 130;
 	data->input_line = malloc(sizeof(char) * (ft_strlen(input) + 1));
 	if (!data->input_line)
 		error("malloc failed");
@@ -62,7 +64,7 @@ int	start_in_loop(t_main *data, char *input)
 	//	built_export(data, data->cmd_parse);
 	//if (!ft_strncmp(data->cmd_parse->cmd_tab[0], "cd", 2))
 	//	built_cd(data, data->cmd_parse);
-	//	prrr(data->cmd_parse, 0);
+//		prrr(data->cmd_parse, 0);
 	//pr(data->lexer_list);
 	return (0);
 }

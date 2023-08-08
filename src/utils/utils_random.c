@@ -6,7 +6,7 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 05:38:24 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/08/08 15:23:05 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/08/08 17:17:56 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,4 +74,11 @@ int	ft_nbstr(char const *str, char sep)
 			i++;
 	}
 	return (nbword);
+}
+
+int	cmpchar(char c, char ok)
+{
+	if (c == ok)
+		return (1);
+	return (0);
 }

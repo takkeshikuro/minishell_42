@@ -6,7 +6,7 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 23:55:37 by keshikuro         #+#    #+#             */
-/*   Updated: 2023/08/01 06:09:03 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/08/08 16:48:03 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,11 @@ t_cmd_parse	*cmd_parse_new(char **tab, int num_redir, t_lexer *redirection)
 	return (new);
 }
 
-t_cmd_parse	*init_cmd(t_parser_data *p_data)
+t_cmd_parse	*init_cmd(t_parser_data *p_data, int nb_word)
 {
 	char		**tab;
 	t_lexer		*current;
 	t_cmd_parse	*new_node;
-	int			nb_word;
 	int			i;
 
 	i = 0;
@@ -59,34 +58,18 @@ t_cmd_parse	*init_cmd(t_parser_data *p_data)
 	return (new_node);
 }
 
-/* void	check_cat(t_main *data)
-{
-	int		len;
-	int		len_tab;
-
-	len = ft_strlen(data->cmd_parse->cmd_tab[0]);
-	len_tab = 0;
-	while (data->cmd_parse->cmd_tab[len_tab])
-		len_tab++;
-	if (!ft_strncmp(data->cmd_parse->cmd_tab[0], "cat", len)
-		&& len_tab == 1)
-	{
-		global_int = malloc(sizeof(int));
-		global_int[0] = 100;
-	}
-}
- */
 int	go_parser(t_main *data)
 {
 	t_cmd_parse		*node;
 	t_parser_data	parser_data;
+	int				nb;
 
 	if (small_check(data) || ope_check(data))
 		return (0);
 	while (data->lexer_list)
 	{
 		parser_data = init_p_data(data->lexer_list, data);
-		node = init_cmd(&parser_data);
+		node = init_cmd(&parser_data, nb);
 		if (!node)
 			exit(1);
 		if (!data->cmd_parse)
@@ -97,6 +80,5 @@ int	go_parser(t_main *data)
 		if (data->lexer_list && data->lexer_list->operateur == PIPE)
 			ft_lexerdelone(&data->lexer_list, data->lexer_list->i);
 	}
-	//check_cat(data);
 	return (1);
 }

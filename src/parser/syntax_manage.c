@@ -6,18 +6,11 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 16:24:58 by keshikuro         #+#    #+#             */
-/*   Updated: 2023/08/08 16:37:43 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/08/08 17:34:44 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-int	cmpchar(char c, char ok)
-{
-	if (c == ok)
-		return (1);
-	return (0);
-}
 
 int	cp_s(char *tmp, char *s, int i)
 {
@@ -38,29 +31,41 @@ int	cp_s(char *tmp, char *s, int i)
 
 int	syntax_dig_two(t_main *data, char *s, int i)
 {
-	char	*tmp;
-	int		j;
-	int		k;
-	int		ok;
-
 	if (cmpchar(s[i], ')'))
 		return (syntax_err(data, "near unexpected token `)'"));
 	else if (cmpchar(s[i], '\\'))
 		return (syntax_err(data, "near unexpected token `\\'"));
 	else if (cmpchar(s[i], '('))
 		return (syntax_err(data, "should close parentheses"));
-	else if (cmpchar(s[i], '/'))
+	return (0);
+}
+
+int	syntax_slash(t_main *data, char *s)
+{
+	int		i;
+	int		k;
+	int		j;
+	char	*tmp;
+	int		ok;
+
+	i = 0;
+	while (s[i])
 	{
-		j = i;
-		k = 0;
-		while (s[j] && s[j++] != ' ')
-			k++;
-		tmp = malloc(sizeof(char) * k + 1);
-		if (!tmp)
-			exit (1);
-		ok = cp_s(tmp, s, i);
-		return (is_dir_error(data, tmp, ok));
+		if (cmpchar(s[i], '/'))
+		{
+			j = i;
+			k = 0;
+			while (s[j] && s[j++] != ' ')
+				k++;
+			tmp = malloc(sizeof(char) * k + 1);
+			if (!tmp)
+				exit (1);
+			ok = cp_s(tmp, s, i);
+			return (is_dir_error(data, tmp, ok));
+		}
+		i++;
 	}
+	return (0);
 }
 
 int	syntax_dig(t_main *data, char *s)
@@ -99,13 +104,20 @@ int	syntax_check(t_main *data, int size)
 
 	i = 0;
 	current = data->lexer_list;
+	if (current->str)
+		if (syntax_slash(data, current->str))
+			return (1);
 	while (current)
 	{
-		if (current->str)
+		if (current->operateur)
 		{
+			if (current->next && current->next->str)
+				if (syntax_slash(data, current->next->str))
+					return (1);
+		}
+		else if (current->str)
 			if (syntax_dig(data, current->str))
 				return (1);
-		}
 		current = current->next;
 	}
 	return (0);
