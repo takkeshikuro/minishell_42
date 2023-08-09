@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
+/*   By: rmarecar <rmarecar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 13:05:38 by keshikuro         #+#    #+#             */
-/*   Updated: 2023/08/01 19:25:43 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/08/09 17:06:17 by rmarecar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ void	switch_path(t_main *data, char *s_old, char *s_new)
 		i++;
 	}
 	data->env_bis[i] = ft_strdup(s_old);
+	free(s_new);
+	free(s_old);
 }
 
 char	*just_copy(t_main *data, char *s, int i)

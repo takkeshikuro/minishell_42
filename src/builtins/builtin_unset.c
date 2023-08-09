@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_unset.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rmarecar <rmarecar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 13:05:46 by keshikuro         #+#    #+#             */
-/*   Updated: 2023/07/29 05:08:07 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/08/09 16:30:18 by rmarecar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	same_for_env_exp(t_main *data, char *s, int len)
 		}
 		i++;
 	}
+	free(decla);
 	return ;
 }
 

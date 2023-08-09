@@ -14,10 +14,10 @@
 
 void	built_in_free(t_main *data)
 {
-		free_tab(data->cmd_paths);
-		free_tab(data->env_bis);
-		free_tab(data->env_exp);
-		reset_stuff(data);
+	free_tab(data->cmd_paths);
+	free_tab(data->env_bis);
+	free_tab(data->env_exp);
+	reset_stuff(data);
 }
 
 void	builtin_exec_3(t_main *data, t_cmd_parse *node, char *cmd)
@@ -66,7 +66,6 @@ void	builtin_exec(t_main *data, t_cmd_parse *node)
 	if (node->cmd_tab[0] == NULL)
 		return ;
 	cmd = node->cmd_tab[0];
-
 	if (!ft_strncmp(cmd, "echo", ft_strlen(cmd)))
 	{
 		built_echo(data, node);

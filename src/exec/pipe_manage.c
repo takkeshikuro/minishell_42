@@ -6,7 +6,7 @@
 /*   By: rmarecar <rmarecar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 15:26:12 by marecarraya       #+#    #+#             */
-/*   Updated: 2023/08/09 16:09:44 by rmarecar         ###   ########.fr       */
+/*   Updated: 2023/08/09 16:47:57 by rmarecar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,12 +103,7 @@ void	execute_cmd(t_main *data)
 	global_int = NULL;
 	data->pipe_count = lstsize(node) - 1;
 	if (first_builtins(data, node))
-	{
-		//free_tab(data->env_bis);
-		//free_tab(data->env_exp);
-		//reset_stuff(data);
 		return ;
-	}
 	pipe_init(data, node);
 	here_doc_init(data, node);
 	if (global_int)

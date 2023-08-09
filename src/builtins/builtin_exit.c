@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_exit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rmarecar <rmarecar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 13:05:40 by keshikuro         #+#    #+#             */
-/*   Updated: 2023/07/29 05:09:42 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/08/09 16:41:37 by rmarecar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,4 +20,3 @@ int	built_exit(t_main *data, t_cmd_parse *cmd_parse)
 }
 
 //free stuff avant l.appel dans first_builtins() dans exec_built.c
-

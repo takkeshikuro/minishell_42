@@ -6,7 +6,7 @@
 /*   By: rmarecar <rmarecar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 19:57:05 by rmarecar          #+#    #+#             */
-/*   Updated: 2023/08/09 16:11:30 by rmarecar         ###   ########.fr       */
+/*   Updated: 2023/08/09 16:45:47 by rmarecar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void	no_command(t_main *data, t_cmd_parse *node)
 	free_tab(data->env_bis);
 	free_tab(data->env_exp);
 	reset_stuff(data);
-	//free_kill(data);
 	exit(127);
 }
 
