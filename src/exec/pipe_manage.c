@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_manage.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
+/*   By: rmarecar <rmarecar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 15:26:12 by marecarraya       #+#    #+#             */
-/*   Updated: 2023/08/08 14:41:30 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/08/09 16:09:44 by rmarecar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ void	last_process(t_main *data, t_cmd_parse *node, char *cmd, int in)
 	last_redir(data, node, &in, &out);
 	if (in && node->hd_check == 0)
 	{
-//		fprintf(stderr, "ininin\n");
 		dup2(in, 0);
 		close(in);
 	}
@@ -57,7 +56,6 @@ void	last_process(t_main *data, t_cmd_parse *node, char *cmd, int in)
 	cmd = get_command(data->cmd_paths, node->cmd_tab[0]);
 	if (cmd == NULL)
 		no_command(data, node);
-//	fprintf(stderr, "%s\n", cmd);
 	execve(cmd, node->cmd_tab, data->env_bis);
 	exit (1);
 }
@@ -105,7 +103,12 @@ void	execute_cmd(t_main *data)
 	global_int = NULL;
 	data->pipe_count = lstsize(node) - 1;
 	if (first_builtins(data, node))
+	{
+		//free_tab(data->env_bis);
+		//free_tab(data->env_exp);
+		//reset_stuff(data);
 		return ;
+	}
 	pipe_init(data, node);
 	here_doc_init(data, node);
 	if (global_int)

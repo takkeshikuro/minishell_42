@@ -12,16 +12,26 @@
 
 #include "../../inc/minishell.h"
 
+void	built_in_free(t_main *data)
+{
+		free_tab(data->cmd_paths);
+		free_tab(data->env_bis);
+		free_tab(data->env_exp);
+		reset_stuff(data);
+}
+
 void	builtin_exec_3(t_main *data, t_cmd_parse *node, char *cmd)
 {
 	if (!ft_strncmp(cmd, "unset", ft_strlen(cmd)))
 	{
 		built_unset(data, node);
+		built_in_free(data);
 		exit(data->return_value);
 	}
 	if (contains_char(cmd, '=') && cmd[0] != '=')
 	{
 		add_v_to_envexp(data, cmd);
+		built_in_free(data);
 		exit(data->return_value);
 	}
 }
@@ -30,16 +40,19 @@ void	builtin_exec_2(t_main *data, t_cmd_parse *node, char *cmd)
 {
 	if (!ft_strncmp(cmd, "exit", ft_strlen(cmd)))
 	{
+		built_in_free(data);
 		exit (data->return_value);
 	}
 	else if (!ft_strncmp(cmd, "export", ft_strlen(cmd)))
 	{
 		built_export(data, node);
+		built_in_free(data);
 		exit (data->return_value);
 	}
 	else if (!ft_strncmp(cmd, "pwd", ft_strlen(cmd)))
 	{
 		built_pwd(data, node);
+		built_in_free(data);
 		exit (data->return_value);
 	}
 	else
@@ -57,11 +70,13 @@ void	builtin_exec(t_main *data, t_cmd_parse *node)
 	if (!ft_strncmp(cmd, "echo", ft_strlen(cmd)))
 	{
 		built_echo(data, node);
+		built_in_free(data);
 		exit (data->return_value);
 	}
 	else if (!ft_strncmp(cmd, "env", ft_strlen(cmd)))
 	{
 		built_env(data, node);
+		built_in_free(data);
 		exit (data->return_value);
 	}
 	else
