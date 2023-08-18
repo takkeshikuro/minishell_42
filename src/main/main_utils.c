@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmarecar <rmarecar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 16:29:32 by keshikuro         #+#    #+#             */
-/*   Updated: 2023/08/09 16:38:28 by rmarecar         ###   ########.fr       */
+/*   Updated: 2023/08/18 04:36:37 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void	free_cmd_lst(t_cmd_parse *lst)
 	}
 	free(lst);
 }
+
 void	free_lxr_lst(t_lexer *lst)
 {
 	t_lexer	*tmp;
@@ -67,11 +68,6 @@ void	reset_stuff(t_main *data)
 {
 	if (data->input_line)
 		free(data->input_line);
-/* 	if (global_int[0])
-	{
-		free(global_int);
-		global_int = NULL;
-	} */
 	if (data->lexer_list)
 		free_lxr_lst(data->lexer_list);
 	data->lexer_list = NULL;
@@ -230,7 +226,7 @@ void    get_env_export(t_main *data)
 void	get_env(t_main *data, char **env)
 {
 	int	i;
-
+	
 	i = 0;
 	while (env[i])
 		i++;

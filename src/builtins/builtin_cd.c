@@ -3,60 +3,81 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmarecar <rmarecar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 13:05:38 by keshikuro         #+#    #+#             */
-/*   Updated: 2023/08/09 17:06:17 by rmarecar         ###   ########.fr       */
+/*   Updated: 2023/08/18 05:22:57 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	switch_path(t_main *data, char *s_old, char *s_new)
+char	**for_tmptab(t_main *data, char	**tmptab, char *s_new, char *s_old)
 {
 	int	i;
 
 	i = 0;
-	s_new = ft_strjoin("PWD=", s_new);
-	s_old = ft_strjoin("OLDPWD=", s_old);
 	while (data->env_bis[i])
 	{
 		if (!ft_strncmp(data->env_bis[i], "PWD", 3))
-			break ;
+			tmptab[i] = ft_strdup(s_new);
+		else if (!ft_strncmp(data->env_bis[i], "OLDPWD", 6))
+			tmptab[i] = ft_strdup(s_old);
+		else
+			tmptab[i] = ft_strdup(data->env_bis[i]);
 		i++;
 	}
-	data->env_bis[i] = ft_strdup(s_new);
+	tmptab[i] = 0;
+	return (tmptab);
+}
+
+void	switch_path(t_main *data, char *s_old, char *s_new)
+{
+	int		i;
+	char	**tmptab;
+
 	i = 0;
+	s_new = ft_strjoin("PWD=", s_new);
 	while (data->env_bis[i])
+		i++;
+	tmptab = (char **)malloc(sizeof(char *) * (i + 1));
+	if (!tmptab)
+		exit (1);
+	tmptab = for_tmptab(data, tmptab, s_new, s_old);
+	free_tab(data->env_bis);
+	data->env_bis = (char **)malloc(sizeof(char *) * (i + 1));
+	if (!data->env_bis)
+		exit (1);
+	i = 0;
+	while (tmptab[i])
 	{
-		if (!ft_strncmp(data->env_bis[i], "OLDPWD", 6))
-			break ;
+		data->env_bis[i] = ft_strdup(tmptab[i]);
 		i++;
 	}
-	data->env_bis[i] = ft_strdup(s_old);
+	data->env_bis[i] = 0;
+	free_tab(tmptab);
 	free(s_new);
-	free(s_old);
 }
 
 char	*just_copy(t_main *data, char *s, int i)
 {
-	int	j;
-	int	k;
+	int		j;
+	int		k;
+	char	*ok;
 
 	j = 4;
 	k = 0;
 	while (data->env_bis[i][j])
-	{
-		s[++k] = data->env_bis[i][j];
-		j++;
-	}
-	s[j] == '\0';
-	return (s);
+		s[k++] = data->env_bis[i][j++];
+	s[k] = '\0';
+	ok = ft_strjoin("OLDPWD=", s);
+	free(s);
+	return (ok);
 }
 
 void	change_env(t_main *data)
 {
-	char	s_new[256];
+	char	s_new[4096];
 	char	*s_old;
 	int		i;
 
@@ -69,7 +90,7 @@ void	change_env(t_main *data)
 			break ;
 		i++;
 	}
-	s_old = malloc(sizeof(char) * ft_strlen(data->env_bis[i]) * 2);
+	s_old = malloc(sizeof(char) * ft_strlen(data->env_bis[i]) + 1);
 	if (!s_old)
 		exit(1);
 	s_old = just_copy(data, s_old, i);
@@ -105,6 +126,7 @@ int	built_cd(t_main *data, t_cmd_parse *cmd_parse)
 	ok = chdir(cmd_parse->cmd_tab[1]);
 	if (ok == -1)
 	{
+		// print not a directory si c un fichier mais jsp faire
 		printf("bash: cd: %s: No such file or directory\n",
 			cmd_parse->cmd_tab[1]);
 		data->return_value = 1;

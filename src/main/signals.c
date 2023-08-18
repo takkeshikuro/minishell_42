@@ -6,7 +6,7 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 08:28:59 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/08/08 17:23:50 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/08/17 22:59:14 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,9 @@ void	sig_handler(int sig)
 {
 	if (sig == SIGINT)
 	{
-	//	global_int[0] = -123;
 		printf("\n");
 		rl_on_new_line();
 		rl_replace_line("", 0);
-/* 		if (global_int[0] == 100)
-			return ; */
 		rl_redisplay();
 	}
 }
