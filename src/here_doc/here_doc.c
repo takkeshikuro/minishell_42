@@ -67,11 +67,24 @@ int	here_doc_var(t_main *data, char *input, int i, int fd[2])
 	free(var_name);
 	return (len);
 }
+int	*return_hd(int fd[2])
+{
+	static int	fd_hd[2];
 
+	if (fd)
+	{
+		fd_hd[0] = fd[0];
+		fd_hd[1] = fd[1];
+	}
+	return (fd_hd);
+}
 void	sig_hd(int signal)
 {
-	close(global_int[0]);
-	close(global_int[1]);
+	int	*fd;
+
+	fd = return_hd(NULL);
+	close(fd[1]);
+	close(fd[0]);
 	exit (42);
 }
 
@@ -86,6 +99,8 @@ void	here_doc_manage(t_main *data, t_cmd_parse *node, int fd[2])
 	j = 0;
 	signal(SIGINT, sig_hd);
 	close(fd[0]);
+	global_int[1] = fd[1];
+	global_int[0] = fd[0];
 	while (1)
 	{
 		i = 0;
@@ -124,7 +139,7 @@ void	here_doc_init(t_main *data, t_cmd_parse *node)
 	int			pid;
 	t_cmd_parse	*nodebis;
 	int			status;
-
+	int			*hd_fd;
 	nodebis = node;
 	i = 0;
 	signal(SIGINT, SIG_IGN);
@@ -132,17 +147,21 @@ void	here_doc_init(t_main *data, t_cmd_parse *node)
 	{
 		pipe(data->here_doc[i].fd);
 		global_int = data->here_doc[i].fd;
+		hd_fd = return_hd(data->here_doc[i].fd);
 		pid = fork();
 		if (pid == 0)
 			here_doc_manage(data, nodebis, data->here_doc[i].fd);
 		waitpid(-1, &status, 0);
 		if (WEXITSTATUS(status) == 42)
 		{
-			global_int[0] = -42;
+			close(data->here_doc[i].fd[0]);
 			close(data->here_doc[i].fd[1]);
+			global_int[0] = -42;
 			break ;
 		}
 		close(data->here_doc[i].fd[1]);
+		if (!nodebis->cmd_tab[0])
+			close(data->here_doc[i].fd[0]);
 		i++;
 		nodebis = nodebis->next;
 	}
