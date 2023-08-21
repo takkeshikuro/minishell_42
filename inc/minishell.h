@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmarecar <rmarecar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 05:04:38 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/08/21 18:29:48 by rmarecar         ###   ########.fr       */
+/*   Updated: 2023/08/22 00:23:20 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,8 @@ typedef struct s_parser_data
 	struct s_main		*data;
 }						t_parser_data;
 
+void	free_lxr_lst(t_lexer *lst);
+
 // main.c & utils
 void					mini_loop(t_main *data, char **env);
 int						start_in_loop(t_main *data, char *input);
@@ -133,7 +135,7 @@ void					ft_lexerdelone(t_lexer **lexer_list, int id);
 
 /*****************parser & expander DIRECTORY***********************/
 int						go_parser(t_main *data);
-t_cmd_parse				*init_cmd(t_parser_data *p_data, int nb_word);
+t_cmd_parse	*init_cmd(t_parser_data *p_data, int nb_word);
 t_cmd_parse				*cmd_parse_new(char **tab, int num_redir,
 							t_lexer *redirection);
 //parser ope/checking/redir

@@ -6,7 +6,7 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 03:45:35 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/08/08 17:20:30 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/08/22 01:23:26 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,21 +44,17 @@ void	handle_quote_n_expand(t_main *data)
 
 int	start_in_loop(t_main *data, char *input)
 {
-//	if (global_int[0] == -123)
-	//	data->return_value = 130;
 	data->input_line = malloc(sizeof(char) * (ft_strlen(input) + 1));
 	if (!data->input_line)
 		error("malloc failed");
 	ft_strlcpy(data->input_line, input, ft_strlen(input));
 	if (!go_lexer(data))
 		error("lexing failed.");
-//	pr(data->lexer_list);
 	if (!go_parser(data))
 	{
 		data->syntaxe_check = 1;
 		return (1);
 	}
-//	prrr(data->cmd_parse, 1);
 	handle_quote_n_expand(data);
 	//if (!ft_strncmp(data->cmd_parse->cmd_tab[0], "export", 6))
 	//	built_export(data, data->cmd_parse);

@@ -6,7 +6,7 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 16:33:16 by keshikuro         #+#    #+#             */
-/*   Updated: 2023/08/08 14:43:17 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/08/22 00:51:17 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,6 @@ void	redirection(t_parser_data *p_data)
 			return ;
 		else
 			add_redirection(tmp, p_data);
-		if (!tmp->next)
-			return ;
 	}
 	redirection(p_data);
 }
