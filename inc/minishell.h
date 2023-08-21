@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
+/*   By: rmarecar <rmarecar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 05:04:38 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/08/08 16:47:41 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/08/21 18:29:48 by rmarecar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,6 @@
 // copy_past() in expander_dol_utils
 // add_word() in lexer
 // init_cmd() in parser
-
-extern int	*global_int;
 
 typedef struct s_here_doc
 {
