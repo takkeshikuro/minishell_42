@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmarecar <rmarecar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 07:53:22 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/08/09 16:40:59 by rmarecar         ###   ########.fr       */
+/*   Updated: 2023/08/22 01:36:43 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ void	copy_good_bis(t_main *data, char **tab)
 	int	i;
 
 	i = 0;
-	//free_tab(data->env_bis);
 	while (data->env_bis[i])
 		i++;
+	free_tab(data->env_bis);
 	data->env_bis = malloc(sizeof(char *) * i);
 	if (!data->env_bis)
 		exit(1);
@@ -71,7 +71,7 @@ char	**crt_exp(char **old_tab, char *s, int len)
 		exit(0);
 	i = 0;
 	while (old_tab[i])
-	{	
+	{
 		if (!ft_strncmp(old_tab[i], test, len + 11))
 			i++;
 		else
@@ -97,7 +97,7 @@ char	**crt_bis(char **old_tab, char *s, int len)
 		exit(0);
 	i = 0;
 	while (old_tab[i])
-	{	
+	{
 		if (!ft_strncmp(old_tab[i], s, len))
 			i++;
 		else

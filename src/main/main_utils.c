@@ -6,7 +6,7 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 16:29:32 by keshikuro         #+#    #+#             */
-/*   Updated: 2023/08/22 01:05:20 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/08/22 01:56:31 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,48 +70,8 @@ void	free_lxr_lst(t_lexer *lst)
 	}
 }
 
-void	ft_lexerclear(t_lexer **lst)
-{
-	t_lexer	*tmp;
-
-	if (!*lst)
-		return ;
-	while (*lst)
-	{
-		tmp = (*lst)->next;
-		if ((*lst)->str)
-			free((*lst)->str);
-		free(*lst);
-		*lst = tmp;
-	}
-	*lst = NULL;
-}
-
-void	ft_simple_cmdsclear(t_cmd_parse **lst)
-{
-	t_cmd_parse	*tmp;
-	t_lexer			*redirections_tmp;
-
-	if (!*lst)
-		return ;
-	while (*lst)
-	{
-		tmp = (*lst)->next;
-		redirections_tmp = (*lst)->redirection;
-		ft_lexerclear(&redirections_tmp);
-		if ((*lst)->cmd_tab)
-			free_tab((*lst)->cmd_tab);
-		if ((*lst)->hd_file_name)
-			free((*lst)->hd_file_name);
-		free(*lst);
-		*lst = tmp;
-	}
-	*lst = NULL;
-}
-
 void	reset_stuff(t_main *data)
 {
-	int i = 0;
 	if (data->input_line)
 		free(data->input_line);
 	if (data->lexer_list)
@@ -119,23 +79,16 @@ void	reset_stuff(t_main *data)
 	data->lexer_list = NULL;
 	if (data->syntaxe_check == 0)
 	{
-		/*if (data->cmd_parse->redirection)
+		if (data->cmd_parse->redirection)
 		{
 			free_lxr_lst(data->cmd_parse->redirection);
 			data->cmd_parse->redirection = NULL;
-			while (data->cmd_parse->redirection)
-			{
-				fprintf(stderr, "ko\n");
-				i++;
-			}
 			pr_redir(data->cmd_parse->redirection);
 		}
 		if (data->cmd_parse->cmd_tab[0])
 			free_cmd_tab(data);
 		if (data->cmd_parse)
 			free_cmd_lst(data->cmd_parse);
-		*/
-		ft_simple_cmdsclear(&data->cmd_parse);
 	}
 	data->cmd_parse = NULL;
 	init_signals();

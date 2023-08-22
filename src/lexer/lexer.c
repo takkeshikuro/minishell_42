@@ -6,7 +6,7 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 04:07:31 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/08/17 22:59:26 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/08/22 02:01:35 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,20 +25,6 @@ int	add_to_list(char *str, t_operateurs operateur, t_lexer **lexer_list)
 		ft_lexeradd_back(lexer_list, node);
 	return (1);
 }
-
-/* exec_test 'echo test     \    test'
-exec_test 'echo \"test'
-exec_test 'echo "\$TEST"'
-
-exec_test 'echo "$TEST$TEST=lol$TEST"'
-exec_test 'echo $TEST$TEST=lol$TEST""lol'
-exec_test 'echo    $TEST lol $TEST' -> pb espace
-exec_test 'echo "$=TEST"'
-
-exec_test 'echo "$?TEST"'
-exec_test 'echo "$1TEST"'
-
- */
 
 int	add_word(char *str, int i, t_lexer **lexer_list)
 {

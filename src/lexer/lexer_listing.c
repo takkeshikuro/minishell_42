@@ -6,7 +6,7 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 03:29:44 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/07/19 02:18:32 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/08/22 02:00:55 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ t_lexer	*ft_lexernew(char *str, int operateur)
 	t_lexer		*new;
 	static int	i;
 
-//	i = 0;
 	new = (t_lexer *)malloc(sizeof(t_lexer));
 	if (!new)
 		exit (1);

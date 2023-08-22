@@ -6,13 +6,14 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 03:45:35 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/08/22 01:23:26 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/08/22 01:53:33 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
 int		*global_int = NULL;
+
 // add += 1 a SHLVL (env)
 
 //leak list parser + env_bis/export
@@ -20,7 +21,6 @@ int		*global_int = NULL;
 // gerer return value
 // return value apres un crtl-C (1 aulieu de 130)
 
-// refaire batterie test echo / refaire built_echo
 // pb si input = 'NEW=okok' -> ne doit pas etre dans env_bis/exp
 
 void	handle_quote_n_expand(t_main *data)
@@ -56,12 +56,6 @@ int	start_in_loop(t_main *data, char *input)
 		return (1);
 	}
 	handle_quote_n_expand(data);
-	//if (!ft_strncmp(data->cmd_parse->cmd_tab[0], "export", 6))
-	//	built_export(data, data->cmd_parse);
-	//if (!ft_strncmp(data->cmd_parse->cmd_tab[0], "cd", 2))
-	//	built_cd(data, data->cmd_parse);
-//		prrr(data->cmd_parse, 0);
-	//pr(data->lexer_list);
 	return (0);
 }
 
@@ -106,8 +100,3 @@ int	main(int ac, char **av, char **env)
 	mini_loop(&data, env);
 	return (0);
 }
-
-//in the while :(idk if important)
-// Check for EOF.
-// if (!data.full_line)
-//     break ;
