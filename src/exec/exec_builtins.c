@@ -12,14 +12,6 @@
 
 #include "../../inc/minishell.h"
 
-void	built_in_free(t_main *data)
-{
-	free_tab(data->cmd_paths);
-	free_tab(data->env_bis);
-	free_tab(data->env_exp);
-	reset_stuff(data);
-}
-
 void	builtin_exec_3(t_main *data, t_cmd_parse *node, char *cmd)
 {
 	if (!ft_strncmp(cmd, "unset", ft_strlen(cmd)))

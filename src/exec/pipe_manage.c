@@ -6,7 +6,7 @@
 /*   By: rmarecar <rmarecar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 15:26:12 by marecarraya       #+#    #+#             */
-/*   Updated: 2023/08/21 18:44:10 by rmarecar         ###   ########.fr       */
+/*   Updated: 2023/08/22 13:09:17 by rmarecar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,27 +106,6 @@ void	execute_cmd(t_main *data)
 	pipe_init(data, node);
 	here_doc_init(data, node);
 	exec(data, node, cmd);
-	signal(SIGINT, SIG_IGN);
-	waitpid(data->pid_last, &status, 0);
-	while (i < data->pipe_count)
-	{
-		waitpid(-1, NULL, 0);
-		i++;
-	}
-	signal(SIGINT, sig_handler);
-	if (WIFEXITED(status))
-		data->return_value = WEXITSTATUS(status);
-	i = 0;
-	if (data->hd_count)
-	{
-		while (i < data->hd_count)
-		{
-			close(data->here_doc[i].fd[0]);
-			//close(data->here_doc[i].fd[1]);
-			i++;
-		}
-		free(data->here_doc);
-	}
-	if (data->cmd_paths)
-		free_tab(data->cmd_paths);
+	wait_exec(data);
+	free_process(data);
 }

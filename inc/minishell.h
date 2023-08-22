@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
+/*   By: rmarecar <rmarecar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 05:04:38 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/08/22 00:23:20 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/08/22 13:41:26 by rmarecar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -220,8 +220,17 @@ void					pipe_init(t_main *data, t_cmd_parse *node);
 
 void					redir_pipe(t_main *data, t_cmd_parse *node, int *in, int *out);
 void					last_redir(t_main *data, t_cmd_parse *node, int *in, int *out);
-
 void					ft_execve(t_main *data, t_cmd_parse *node, char *cmd);
+
+void					close_free_hd(t_cmd_parse *node, char *input, int fd, int check);
+void					write_hd(t_main *data, char *input, int fd[2]);
+
+//exec_end.c
+void					free_process(t_main *data);
+void					wait_exec(t_main *data);
+void					built_in_free(t_main *data);
+int						here_doc_var(t_main *data, char *input, int i, int fd[2]);
+
 
 /***********************************************************/
 
