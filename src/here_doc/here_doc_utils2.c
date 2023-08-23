@@ -6,13 +6,13 @@
 /*   By: rmarecar <rmarecar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 13:39:03 by rmarecar          #+#    #+#             */
-/*   Updated: 2023/08/22 13:43:52 by rmarecar         ###   ########.fr       */
+/*   Updated: 2023/08/23 20:04:18 by rmarecar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	close_free_hd(t_cmd_parse *node, char *input, int fd, int check)
+void	close_free_hd(t_main *data, t_cmd_parse *node, char *input, int fd, int check)
 {
 	if (check != -42)
 	{
@@ -21,6 +21,8 @@ void	close_free_hd(t_cmd_parse *node, char *input, int fd, int check)
 		fprintf(stderr, "(wanted `%s')\n", node->redirection->str);
 	}
 	free(input);
+	fprintf(stderr, "freeing stuff in hd process\n");
+	//reset_stuff(data);
 	close(fd);
 	exit (1);
 }

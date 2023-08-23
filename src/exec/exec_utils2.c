@@ -6,7 +6,7 @@
 /*   By: rmarecar <rmarecar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 19:57:05 by rmarecar          #+#    #+#             */
-/*   Updated: 2023/08/21 18:26:33 by rmarecar         ###   ########.fr       */
+/*   Updated: 2023/08/23 19:49:16 by rmarecar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	no_command(t_main *data, t_cmd_parse *node)
 		write(2, node->cmd_tab[0], ft_strlen(node->cmd_tab[0]));
 		write(2, ": command not found\n", 20);
 	}
+	fprintf(stderr, "freeing in exec process\n");
 	free_tab(data->cmd_paths);
 	free_tab(data->env_bis);
 	free_tab(data->env_exp);

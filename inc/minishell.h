@@ -6,7 +6,7 @@
 /*   By: rmarecar <rmarecar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 05:04:38 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/08/22 13:41:26 by rmarecar         ###   ########.fr       */
+/*   Updated: 2023/08/23 20:03:43 by rmarecar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -222,7 +222,7 @@ void					redir_pipe(t_main *data, t_cmd_parse *node, int *in, int *out);
 void					last_redir(t_main *data, t_cmd_parse *node, int *in, int *out);
 void					ft_execve(t_main *data, t_cmd_parse *node, char *cmd);
 
-void					close_free_hd(t_cmd_parse *node, char *input, int fd, int check);
+void					close_free_hd(t_main *data, t_cmd_parse *node, char *input, int fd, int check);
 void					write_hd(t_main *data, char *input, int fd[2]);
 
 //exec_end.c
