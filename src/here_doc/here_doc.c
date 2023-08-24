@@ -63,9 +63,9 @@ void	here_doc_manage(t_main *data, t_cmd_parse *node, int fd[2])
 		i = 0;
 		input = readline(">");
 		if (!input)
-			close_free_hd(node, input, fd[1], j);
+			close_free_hd(data, node, input, fd[1], j);
 		if (!init_loop(node, input, fd))
-			close_free_hd(node, input, fd[1], -42);
+			close_free_hd(data, node, input, fd[1], -42);
 		write_hd(data, input, fd);
 		j++;
 	}
