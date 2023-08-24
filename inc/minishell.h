@@ -6,7 +6,7 @@
 /*   By: rmarecar <rmarecar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 05:04:38 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/08/23 20:03:43 by rmarecar         ###   ########.fr       */
+/*   Updated: 2023/08/24 20:23:10 by rmarecar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ void					mini_loop(t_main *data, char **env);
 int						start_in_loop(t_main *data, char *input);
 void					handle_quote_n_expand(t_main *data);
 void					parsing(t_main *data, char **env);
+
 //utils
 void					get_env(t_main *data, char **env);
 void					reset_stuff(t_main *data);
@@ -213,7 +214,7 @@ int						ft_varname_len(char *str);
 char					*get_var_name(char *input);
 char					*get_var_content(t_main *data, char *var_name);
 void					here_doc_manage(t_main *data, t_cmd_parse *node, int fd[2]);
-void					here_doc_init(t_main *data, t_cmd_parse *node);
+int						here_doc_init(t_main *data, t_cmd_parse *node);
 
 void					no_command(t_main *data, t_cmd_parse *node);
 void					pipe_init(t_main *data, t_cmd_parse *node);

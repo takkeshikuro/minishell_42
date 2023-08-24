@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
+/*   By: rmarecar <rmarecar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 16:29:32 by keshikuro         #+#    #+#             */
-/*   Updated: 2023/08/22 01:56:31 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/08/24 19:52:11 by rmarecar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	reset_stuff(t_main *data)
 			data->cmd_parse->redirection = NULL;
 			pr_redir(data->cmd_parse->redirection);
 		}
-		if (data->cmd_parse->cmd_tab[0])
+		if (data->cmd_parse)
 			free_cmd_tab(data);
 		if (data->cmd_parse)
 			free_cmd_lst(data->cmd_parse);

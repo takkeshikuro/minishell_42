@@ -6,7 +6,7 @@
 /*   By: rmarecar <rmarecar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 15:26:12 by marecarraya       #+#    #+#             */
-/*   Updated: 2023/08/23 19:48:26 by rmarecar         ###   ########.fr       */
+/*   Updated: 2023/08/24 19:50:10 by rmarecar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,13 @@ void	execute_cmd(t_main *data)
 	if (first_builtins(data, node))
 		return ;
 	pipe_init(data, node);
-	here_doc_init(data, node);
+	if (here_doc_init(data, node) == 42)
+	{
+		free_tab(data->cmd_paths);
+		free(data->here_doc);
+		data->return_value = 130;
+		return ;
+	}
 	exec(data, node, cmd);
 	wait_exec(data);
 	free_process(data);

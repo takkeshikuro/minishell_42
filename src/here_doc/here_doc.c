@@ -72,7 +72,7 @@ void	here_doc_manage(t_main *data, t_cmd_parse *node, int fd[2])
 	exit(1);
 }
 
-void	here_doc_init(t_main *data, t_cmd_parse *node)
+int	here_doc_init(t_main *data, t_cmd_parse *node)
 {
 	int			i;
 	int			pid;
@@ -99,7 +99,8 @@ void	here_doc_init(t_main *data, t_cmd_parse *node)
 				close(data->here_doc[i].fd[1]);
 				i--;
 			}
-			break ;
+			signal(SIGINT, sig_handler);
+			return (42);
 		}
 		close(data->here_doc[i].fd[1]);
 		if (!nodebis->cmd_tab[0])

@@ -6,7 +6,7 @@
 /*   By: rmarecar <rmarecar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 13:06:52 by rmarecar          #+#    #+#             */
-/*   Updated: 2023/08/22 13:10:40 by rmarecar         ###   ########.fr       */
+/*   Updated: 2023/08/24 20:08:12 by rmarecar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,5 @@ void	built_in_free(t_main *data)
 	free_tab(data->cmd_paths);
 	free_tab(data->env_bis);
 	free_tab(data->env_exp);
-	fprintf(stderr, "freeing stuff in builtins\n");
 	reset_stuff(data);
 }
