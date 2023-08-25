@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmarecar <rmarecar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 05:04:38 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/08/24 20:23:10 by rmarecar         ###   ########.fr       */
+/*   Updated: 2023/08/25 02:06:29 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,8 +110,6 @@ void					get_env(t_main *data, char **env);
 void					reset_stuff(t_main *data);
 void					init_stuff(t_main *data);
 void					get_env_export(t_main *data);
-
-
 /*****************lexer DIRECTORY***********************/
 int						go_lexer(t_main *data);
 t_operateurs			is_operateur(int c);
@@ -204,8 +202,6 @@ int						open_append(t_cmd_parse *node);
 void					here_doc_manage(t_main *data, t_cmd_parse *node, int fd[2]);
 //execbuiltin
 void					builtin_exec(t_main *data, t_cmd_parse *node);
-void					builtin_exec_2(t_main *data, t_cmd_parse *node, char *cmd);
-void					builtin_exec_3(t_main *data, t_cmd_parse *node, char *cmd);
 int						first_builtins(t_main *data, t_cmd_parse *node);
 
 //hd.c
@@ -237,13 +233,13 @@ int						here_doc_var(t_main *data, char *input, int i, int fd[2]);
 
 
 /////////////////  builtins.c  ////////////////////
-int						built_env(t_main *data, t_cmd_parse *cmd_parse);
-int						built_pwd(t_main *data, t_cmd_parse *cmd_parse);
-int						built_echo(t_main *data, t_cmd_parse *cmd_parse);
-int						built_cd(t_main *data, t_cmd_parse *cmd_parse);
-int						built_unset(t_main *data, t_cmd_parse *cmd_parse);
-int						built_exit(t_main *data, t_cmd_parse *cmd_parse);
-int						built_export(t_main *data, t_cmd_parse *cmd_parse);
+int					built_env(t_main *data, t_cmd_parse *cmd_parse);
+int					built_pwd(t_main *data, t_cmd_parse *cmd_parse);
+int					built_echo(t_main *data, t_cmd_parse *cmd_parse);
+int					built_cd(t_main *data, t_cmd_parse *cmd_parse);
+int					built_unset(t_main *data, t_cmd_parse *cmd_parse);
+int					built_exit(t_main *data, t_cmd_parse *cmd_parse);
+int					built_export(t_main *data, t_cmd_parse *cmd_parse);
 ///// utils unset
 void					copy_good_exp(t_main *data, char **tab);
 void					copy_good_bis(t_main *data, char **tab);
@@ -253,21 +249,24 @@ char					**crt_bis(char **old_tab, char *s, int len);
 void					export_support(t_main *data, char *s);
 void					add_total_stuff(t_main *data, char *s);
 int						simple_check(char *s);
-// check
 int						check_v_exist_bis(t_main *data, char *s);
 int						check_v_exist_exp(t_main *data, char *s);
-// add & rm 
 void					rm_variable_bis(t_main *data, int supp);
 void					rm_variable_exp(t_main *data, int supp);
 void					add_v_to_envexp(t_main *data, char *s);
 void					add_to_bis(t_main *data, char *s);
 int						show_env_exp(t_main *data);
-// utils
 int						cp_string_quoted(char *s1, char *s2);
 char					*cp_string_name(char *s);
 int						check_valid_identifier(char c);
 int						equal_env(char *s);
 int						print_error_export(char *s, int ok);
+///// cd & utils
+void					change_envexp(t_main *data, char *s_new);
+void					switch_path_exp(t_main *data, char *s_old, char *s_new);
+char					*add_quote(char *s);
+char					*copy_declarex(t_main *data, char *s, int i);
+char					*just_copy(t_main *data, char *s, int i);
 
 
 //////////// signal.c

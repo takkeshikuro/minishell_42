@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmarecar <rmarecar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 16:29:32 by keshikuro         #+#    #+#             */
-/*   Updated: 2023/08/24 19:52:11 by rmarecar         ###   ########.fr       */
+/*   Updated: 2023/08/24 23:56:40 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,6 @@ void	reset_stuff(t_main *data)
 		{
 			free_lxr_lst(data->cmd_parse->redirection);
 			data->cmd_parse->redirection = NULL;
-			pr_redir(data->cmd_parse->redirection);
 		}
 		if (data->cmd_parse)
 			free_cmd_tab(data);

@@ -12,9 +12,9 @@
 
 #include "../../inc/minishell.h"
 
-void	builtin_exec_3(t_main *data, t_cmd_parse *node, char *cmd)
+void	builtin_exec_3(t_main *data, t_cmd_parse *node, char *cmd, int len)
 {
-	if (!ft_strncmp(cmd, "unset", ft_strlen(cmd)))
+	if (!ft_strncmp(cmd, "unset", len) && len == 5)
 	{
 		built_unset(data, node);
 		built_in_free(data);
@@ -28,50 +28,52 @@ void	builtin_exec_3(t_main *data, t_cmd_parse *node, char *cmd)
 	}
 }
 
-void	builtin_exec_2(t_main *data, t_cmd_parse *node, char *cmd)
+void	builtin_exec_2(t_main *data, t_cmd_parse *node, char *cmd, int len)
 {
-	if (!ft_strncmp(cmd, "exit", ft_strlen(cmd)))
+	if (!ft_strncmp(cmd, "exit", len) && len == 4)
 	{
 		built_in_free(data);
 		exit (data->return_value);
 	}
-	else if (!ft_strncmp(cmd, "export", ft_strlen(cmd)))
+	else if (!ft_strncmp(cmd, "export", len) && len == 6)
 	{
 		built_export(data, node);
 		built_in_free(data);
 		exit (data->return_value);
 	}
-	else if (!ft_strncmp(cmd, "pwd", ft_strlen(cmd)))
+	else if (!ft_strncmp(cmd, "pwd", len) && len == 3)
 	{
 		built_pwd(data, node);
 		built_in_free(data);
 		exit (data->return_value);
 	}
 	else
-		builtin_exec_3(data, node, cmd);
+		builtin_exec_3(data, node, cmd, len);
 }
 
 void	builtin_exec(t_main *data, t_cmd_parse *node)
 {
 	char	*cmd;
+	int		len;
 
 	if (node->cmd_tab[0] == NULL)
 		return ;
 	cmd = node->cmd_tab[0];
-	if (!ft_strncmp(cmd, "echo", ft_strlen(cmd)))
+	len = ft_strlen(cmd);
+	if (!ft_strncmp(cmd, "echo", len) && len == 4)
 	{
 		built_echo(data, node);
 		built_in_free(data);
 		exit (data->return_value);
 	}
-	else if (!ft_strncmp(cmd, "env", ft_strlen(cmd)))
+	else if (!ft_strncmp(cmd, "env", len) && len == 3)
 	{
 		built_env(data, node);
 		built_in_free(data);
 		exit (data->return_value);
 	}
 	else
-		builtin_exec_2(data, node, cmd);
+		builtin_exec_2(data, node, cmd, len);
 }
 
 int	first_builtins2(t_main *data, t_cmd_parse *node)
@@ -95,16 +97,19 @@ int	first_builtins(t_main *data, t_cmd_parse *node)
 		return (1);
 	if (node->cmd_tab[0])
 		len = ft_strlen(node->cmd_tab[0]);
-	if (!ft_strncmp(node->cmd_tab[0], "exit", len) && len)
+	if (!ft_strncmp(node->cmd_tab[0], "exit", len) && len == 4)
 	{
 		built_exit(data, node);
 		return (1);
 	}
-	if (!ft_strncmp(node->cmd_tab[0], "unset", len) && node->next == NULL)
+	if (!ft_strncmp(node->cmd_tab[0], "unset", len) && node->next == NULL 
+		&& len == 5)
 		return (built_unset(data, node));
-	if (!ft_strncmp(node->cmd_tab[0], "export", len) && node->next == NULL)
+	if (!ft_strncmp(node->cmd_tab[0], "export", len) && node->next == NULL 
+		&& len == 6)
 		return (built_export(data, node));
-	if (!ft_strncmp(node->cmd_tab[0], "cd", len) && node->next == NULL)
+	if (!ft_strncmp(node->cmd_tab[0], "cd", len) && node->next == NULL 
+		&& len == 2)
 		return (built_cd(data, node));
 	return (0);
 }

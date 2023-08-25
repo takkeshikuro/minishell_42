@@ -6,13 +6,13 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 13:05:38 by keshikuro         #+#    #+#             */
-/*   Updated: 2023/08/18 05:22:57 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/08/25 01:51:29 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-char	**for_tmptab(t_main *data, char	**tmptab, char *s_new, char *s_old)
+char	**for_tmptab(t_main *data, char	**tmptab, char *new, char *old)
 {
 	int	i;
 
@@ -20,9 +20,9 @@ char	**for_tmptab(t_main *data, char	**tmptab, char *s_new, char *s_old)
 	while (data->env_bis[i])
 	{
 		if (!ft_strncmp(data->env_bis[i], "PWD", 3))
-			tmptab[i] = ft_strdup(s_new);
+			tmptab[i] = ft_strdup(new);
 		else if (!ft_strncmp(data->env_bis[i], "OLDPWD", 6))
-			tmptab[i] = ft_strdup(s_old);
+			tmptab[i] = ft_strdup(old);
 		else
 			tmptab[i] = ft_strdup(data->env_bis[i]);
 		i++;
@@ -31,7 +31,7 @@ char	**for_tmptab(t_main *data, char	**tmptab, char *s_new, char *s_old)
 	return (tmptab);
 }
 
-void	switch_path(t_main *data, char *s_old, char *s_new)
+void	switch_path_bis(t_main *data, char *s_old, char *s_new)
 {
 	int		i;
 	char	**tmptab;
@@ -59,23 +59,7 @@ void	switch_path(t_main *data, char *s_old, char *s_new)
 	free(s_new);
 }
 
-char	*just_copy(t_main *data, char *s, int i)
-{
-	int		j;
-	int		k;
-	char	*ok;
-
-	j = 4;
-	k = 0;
-	while (data->env_bis[i][j])
-		s[k++] = data->env_bis[i][j++];
-	s[k] = '\0';
-	ok = ft_strjoin("OLDPWD=", s);
-	free(s);
-	return (ok);
-}
-
-void	change_env(t_main *data)
+void	change_envbis(t_main *data)
 {
 	char	s_new[4096];
 	char	*s_old;
@@ -94,8 +78,9 @@ void	change_env(t_main *data)
 	if (!s_old)
 		exit(1);
 	s_old = just_copy(data, s_old, i);
-	switch_path(data, s_old, s_new);
+	switch_path_bis(data, s_old, s_new);
 	free(s_old);
+	change_envexp(data, s_new);
 }
 
 void	get_home(t_main *data)
@@ -119,7 +104,7 @@ int	built_cd(t_main *data, t_cmd_parse *cmd_parse)
 	if (!cmd_parse->cmd_tab[1])
 	{
 		get_home(data);
-		change_env(data);
+		change_envbis(data);
 		data->return_value = 0;
 		return (1);
 	}
@@ -133,7 +118,7 @@ int	built_cd(t_main *data, t_cmd_parse *cmd_parse)
 		return (1);
 	}
 	else
-		change_env(data);
+		change_envbis(data);
 	data->return_value = 0;
 	return (1);
 }
