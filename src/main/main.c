@@ -3,20 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmarecar <rmarecar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 03:45:35 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/08/24 20:23:05 by rmarecar         ###   ########.fr       */
+/*   Updated: 2023/08/25 06:04:23 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
 // add += 1 a SHLVL (env)
-
-//leak list parser + env_bis/export
-
-// gerer return value
 // return value apres un crtl-C (1 aulieu de 130)
 
 // pb si input = 'NEW=okok' -> ne doit pas etre dans env_bis/exp
@@ -33,7 +29,7 @@ void	handle_quote_n_expand(t_main *data)
 		while (node->cmd_tab[i])
 		{
 			if (!quote_manage(data, node, i))
-				expanding(data, node, i);
+				expanding(data, node, i, 0);
 			i++;
 		}
 		node = node->next;
@@ -53,7 +49,9 @@ int	start_in_loop(t_main *data, char *input)
 		data->syntaxe_check = 1;
 		return (1);
 	}
+//	prrr(data->cmd_parse, 1);
 	handle_quote_n_expand(data);
+//	prrr(data->cmd_parse, 0);
 	return (0);
 }
 

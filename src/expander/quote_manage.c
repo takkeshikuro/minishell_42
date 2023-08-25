@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quote_manage.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 06:31:03 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/07/07 04:52:58 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/08/25 06:16:14 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,11 @@ int	rm_quote(t_cmd_parse *node, int i_tab, int qt)
 	j = 0;
 	i = 0;
 	if (node->cmd_tab[i_tab][0] == qt && nb_qt(node->cmd_tab[i_tab], qt) == 2)
-		node->cmd_tab[i_tab] = ft_strim(node->cmd_tab[i_tab], qt);
+	{
+		new = ft_strim(node->cmd_tab[i_tab], qt);
+		free(node->cmd_tab[i_tab]);
+		node->cmd_tab[i_tab] = ft_strdup(new);
+	}
 	else
 	{
 		new = need_malloc(node, i_tab);
@@ -61,8 +65,10 @@ int	rm_quote(t_cmd_parse *node, int i_tab, int qt)
 				new[i++] = node->cmd_tab[i_tab][j++];
 		}
 		new[i] = '\0';
+		free(node->cmd_tab[i_tab]);
 		node->cmd_tab[i_tab] = ft_strdup(new);
 	}
+	free(new);
 	if (qt == 39)
 		return (1);
 	return (0);

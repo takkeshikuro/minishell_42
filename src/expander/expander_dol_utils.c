@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander_dol_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 04:44:26 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/07/29 00:21:22 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/08/25 05:32:38 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,13 @@ void	copy_past(t_cmd_parse *cmd_node, int i, int j_dol, char *str_replace)
 	int		k;
 	int		len;
 	char	*tmp_str;
-	char	*str_after;
+	char	*s_after;
 
 	k = 0;
-	str_after = check_char_after(cmd_node, i, j_dol);
+	s_after = check_char_after(cmd_node, i, j_dol);
 	len = ft_strlen(str_replace);
-	if (str_after)
-		tmp_str = malloc(sizeof(char) * (j_dol + len + ft_strlen(str_after)) + 1);
+	if (s_after)
+		tmp_str = malloc(sizeof(char) * (j_dol + len + ft_strlen(s_after)) + 1);
 	else
 		tmp_str = malloc(sizeof(char) * (j_dol + len) + 1);
 	if (!tmp_str)
@@ -67,14 +67,16 @@ void	copy_past(t_cmd_parse *cmd_node, int i, int j_dol, char *str_replace)
 		tmp_str[k] = cmd_node->cmd_tab[i][k];
 		k++;
 	}
-	if (str_after)
+	if (s_after)
 		k = copy_bis(tmp_str, str_replace, k, 0);
 	else
 		k = copy_bis(tmp_str, str_replace, k, 1);
-	if (str_after)
-		copy_bis(tmp_str, str_after, k, 1);
+	if (s_after)
+		copy_bis(tmp_str, s_after, k, 1);
 	free(cmd_node->cmd_tab[i]);
 	cmd_node->cmd_tab[i] = ft_strdup(tmp_str);
+	free(s_after);
+	free(tmp_str);
 }
 
 char	*keep_good_str(char **env, int nb_env)
@@ -99,4 +101,33 @@ char	*keep_good_str(char **env, int nb_env)
 	if (!str_dol)
 		exit(1);
 	return (str_dol);
+}
+
+char	*go_itoa_replace(t_main *data, char *s)
+{
+	char	*ok;
+	char	*tmp_rv;
+	int		i;
+	int		j;
+	int		k;
+
+	i = 0;
+	j = 0;
+	tmp_rv = ft_itoa(data->return_value);
+	ok = malloc(sizeof(char) * ft_strlen(s) + 2);
+	if (!ok)
+		exit (1);
+	while (s[i] != '$')
+	{
+		ok[i] = s[i];
+		i++;
+	}
+	k = i + 2;
+	while (tmp_rv[j])
+		ok[i++] = tmp_rv[j++];
+	while (s[k])
+		ok[i++] = s[k++];
+	ok[i] = '\0';
+	free(tmp_rv);
+	return (ok);
 }
