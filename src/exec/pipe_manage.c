@@ -6,7 +6,7 @@
 /*   By: rmarecar <rmarecar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 15:26:12 by marecarraya       #+#    #+#             */
-/*   Updated: 2023/08/25 16:21:23 by rmarecar         ###   ########.fr       */
+/*   Updated: 2023/08/25 16:24:06 by rmarecar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,8 @@ void	exec(t_main *data, t_cmd_parse *node, char *cmd)
 	data->pid_last = fork();
 	if (data->pid_last == 0)
 		last_process(data, node, cmd, in);
-	close(fd[0]);
+	if (data->pipe_count)
+		close(fd[0]);
 }
 
 void	execute_cmd(t_main *data)
