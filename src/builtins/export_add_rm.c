@@ -6,7 +6,7 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 00:07:45 by keshikuro         #+#    #+#             */
-/*   Updated: 2023/08/25 01:21:19 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/08/25 23:09:47 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	show_env_exp(t_main *data)
 		i++;
 	}
 	data->return_value = 0;
-	return (0);
+	return (1);
 }
 
 void	add_to_bis(t_main *data, char *s)
