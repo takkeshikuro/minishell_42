@@ -6,7 +6,7 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 16:24:58 by keshikuro         #+#    #+#             */
-/*   Updated: 2023/08/08 17:44:26 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/08/25 22:40:41 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,16 @@ int	syntax_dig(t_main *data, char *s)
 	return (0);
 }
 
+int double_pipe(t_main *data, t_lexer *current)
+{
+	if (current->operateur == PIPE)
+	{
+		if (current->next->operateur == PIPE)
+			return (syntax_err(data, "near unexpected token `||'"));
+	}
+	return (0);
+}
+
 int	syntax_check(t_main *data, int size)
 {
 	t_lexer	*current;
@@ -112,8 +122,15 @@ int	syntax_check(t_main *data, int size)
 		if (current->operateur)
 		{
 			if (current->next && current->next->str)
+			{
 				if (syntax_slash(data, current->next->str))
 					return (1);
+			}
+			else if (current->next && current->next->operateur)
+			{
+				if (double_pipe(data, current))
+					return (1);
+			}
 		}
 		else if (current->str)
 			if (syntax_dig(data, current->str))
