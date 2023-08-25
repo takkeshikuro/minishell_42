@@ -66,6 +66,12 @@ void	builtin_exec(t_main *data, t_cmd_parse *node)
 		built_in_free(data);
 		exit (data->return_value);
 	}
+	if (!ft_strncmp(cmd, "cd", len) && len == 2)
+	{
+		built_cd(data, node);
+		built_in_free(data);
+		exit (data->return_value);
+	}
 	else if (!ft_strncmp(cmd, "env", len) && len == 3)
 	{
 		built_env(data, node);
@@ -99,6 +105,8 @@ int	first_builtins(t_main *data, t_cmd_parse *node)
 		len = ft_strlen(node->cmd_tab[0]);
 	if (!ft_strncmp(node->cmd_tab[0], "exit", len) && len == 4)
 	{
+		if (data->pipe_count)
+			return (0);
 		built_exit(data, node);
 		return (1);
 	}
@@ -110,6 +118,10 @@ int	first_builtins(t_main *data, t_cmd_parse *node)
 		return (built_export(data, node));
 	if (!ft_strncmp(node->cmd_tab[0], "cd", len) && node->next == NULL 
 		&& len == 2)
+	{
+		if (data->pipe_count)
+			return (0);
 		return (built_cd(data, node));
+	}
 	return (0);
 }
