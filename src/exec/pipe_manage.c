@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_manage.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
+/*   By: rmarecar <rmarecar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 15:26:12 by marecarraya       #+#    #+#             */
-/*   Updated: 2023/08/25 03:45:27 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/08/25 14:11:31 by rmarecar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ void	pipe_work(t_main *data, int in, int out, t_cmd_parse *node)
 		cmd = get_command(data->cmd_paths, node->cmd_tab[0]);
 		ft_execve(data, node, cmd);
 	}
+	if (in)
+		close(in);
 }
 
 void	last_process(t_main *data, t_cmd_parse *node, char *cmd, int in)
@@ -83,10 +85,13 @@ void	exec(t_main *data, t_cmd_parse *node, char *cmd)
 		}
 		node = node->next;
 		i++;
+		
 	}
 	data->pid_last = fork();
 	if (data->pid_last == 0)
 		last_process(data, node, cmd, in);
+	close(fd[0]);
+
 }
 
 void	execute_cmd(t_main *data)
