@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmarecar <rmarecar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 03:45:35 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/08/25 16:13:42 by rmarecar         ###   ########.fr       */
+/*   Updated: 2023/08/25 23:17:21 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 // return value apres un crtl-C (1 aulieu de 130)
 
 // pb si input = 'NEW=okok' -> ne doit pas etre dans env_bis/exp
+// a tester a l\ecole : echo $a
 
 void	handle_quote_n_expand(t_main *data)
 {

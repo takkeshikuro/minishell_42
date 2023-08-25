@@ -6,7 +6,7 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 07:53:22 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/08/22 01:36:43 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/08/26 00:26:45 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,11 @@ void	copy_good_bis(t_main *data, char **tab)
 char	**crt_exp(char **old_tab, char *s, int len)
 {
 	char	**tab;
-	char	*test;
 	int		i;
 	int		j;
 
 	i = 0;
 	j = 0;
-	test = ft_strjoin("declare -x ", s);
 	while (old_tab[i])
 		i++;
 	tab = malloc(sizeof(char *) * i);
@@ -72,13 +70,12 @@ char	**crt_exp(char **old_tab, char *s, int len)
 	i = 0;
 	while (old_tab[i])
 	{
-		if (!ft_strncmp(old_tab[i], test, len + 11))
+		if (!ft_strncmp(old_tab[i], s, len + 11) && old_tab[i][len + 11] == '=')
 			i++;
 		else
 			tab[j++] = ft_strdup(old_tab[i++]);
 	}
 	tab[j] = 0;
-	free(test);
 	return (tab);
 }
 
@@ -98,7 +95,7 @@ char	**crt_bis(char **old_tab, char *s, int len)
 	i = 0;
 	while (old_tab[i])
 	{
-		if (!ft_strncmp(old_tab[i], s, len))
+		if (!ft_strncmp(old_tab[i], s, len) && old_tab[i][len] == '=')
 			i++;
 		else
 			tab[j++] = ft_strdup(old_tab[i++]);
