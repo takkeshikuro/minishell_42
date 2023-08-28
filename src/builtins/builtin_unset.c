@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_unset.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
+/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 13:05:46 by keshikuro         #+#    #+#             */
-/*   Updated: 2023/08/26 00:32:12 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/08/28 08:38:32 by tmorikaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ void	same_for_env_exp(t_main *data, char *s, int len)
 	i = 0;
 	while (data->env_exp[i])
 	{
-		if (!ft_strncmp(data->env_exp[i], decla, len + 11) && 
-			data->env_exp[i][11 + len] == '=')
+		if (!ft_strncmp(data->env_exp[i], decla, len + 11)
+			&& data->env_exp[i][11 + len] == '=')
 		{
 			tmp_tab = crt_exp(data->env_exp, decla, len);
 			copy_good_exp(data, tmp_tab);
@@ -49,8 +49,8 @@ int	built_unset(t_main *data, t_cmd_parse *cmd_parse)
 		j = 0;
 		while (data->env_bis[j])
 		{
-			if (!ft_strncmp(data->env_bis[j], cmd_parse->cmd_tab[i], len) && 
-				data->env_bis[j][len] == '=')
+			if (!ft_strncmp(data->env_bis[j], cmd_parse->cmd_tab[i], len)
+				&& data->env_bis[j][len] == '=')
 			{
 				tmp_tab = crt_bis(data->env_bis, cmd_parse->cmd_tab[i], len);
 				copy_good_bis(data, tmp_tab);

@@ -1,31 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_pwd.c                                      :+:      :+:    :+:   */
+/*   utils_random2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/25 07:40:54 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/08/28 08:47:09 by tmorikaw         ###   ########.fr       */
+/*   Created: 2023/08/28 08:56:06 by tmorikaw          #+#    #+#             */
+/*   Updated: 2023/08/28 08:56:19 by tmorikaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	built_pwd(t_main *data, t_cmd_parse *cmd_parse)
+char	*just_alloc(int len, int j_dol, char *s_af)
 {
-	char	*s;
+	char	*ok;
 
-	(void)data;
-	(void)cmd_parse;
-	s = malloc(4096);
-	if (!s)
-		exit (1);
-	if (getcwd(s, 4096) == NULL)
-		error("getcwd() failed");
+	if (s_af)
+		ok = malloc(sizeof(char) * (j_dol + len + ft_strlen(s_af)) + 1);
 	else
-		ft_putendl_fd(s, 1);
-	free(s);
-	data->return_value = 0;
-	return (0);
+		ok = malloc(sizeof(char) * (j_dol + len) + 1);
+	if (!ok)
+		exit(1);
+	return (ok);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ope_checking.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
+/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 13:34:46 by keshikuro         #+#    #+#             */
-/*   Updated: 2023/08/22 01:59:52 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/08/28 08:37:59 by tmorikaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,25 +16,25 @@ int	check_l(t_main *data, t_lexer *crt)
 {
 	if (crt->next->operateur == RIGHT)
 		return (syntax_err(data, "near unexpected token `newline'"));
-	if (crt->next->operateur == LEFT && (!crt->next->next || 
-			crt->next->next->operateur != LEFT))
+	if (crt->next->operateur == LEFT && (!crt->next->next
+			|| crt->next->next->operateur != LEFT))
 		return (syntax_err(data, "near unexpected token `<'"));
 	if (crt->next->operateur == LEFT_LEFT)
 	{
-		if (!crt->next->next || (crt->next->next->operateur != LEFT && 
-				crt->next->next->operateur != LEFT_LEFT))
+		if (!crt->next->next || (crt->next->next->operateur != LEFT
+				&& crt->next->next->operateur != LEFT_LEFT))
 			return (syntax_err(data, "near unexpected token `<<'"));
-		else if (crt->next->next && (crt->next->next->operateur == LEFT || 
-				crt->next->next->operateur == LEFT_LEFT))
+		else if (crt->next->next && (crt->next->next->operateur == LEFT
+				|| crt->next->next->operateur == LEFT_LEFT))
 			return (syntax_err(data, "near unexpected token `<<<'"));
 	}
 	if (crt->next->operateur == RIGHT_RIGHT)
 	{
-		if (!crt->next->next || (crt->next->next->operateur != RIGHT && 
-				crt->next->next->operateur != RIGHT_RIGHT))
+		if (!crt->next->next || (crt->next->next->operateur != RIGHT
+				&& crt->next->next->operateur != RIGHT_RIGHT))
 			return (syntax_err(data, "near unexpected token `>'"));
-		else if (crt->next->next->operateur == RIGHT || 
-			crt->next->next->operateur == RIGHT_RIGHT)
+		else if (crt->next->next->operateur == RIGHT
+			|| crt->next->next->operateur == RIGHT_RIGHT)
 			return (syntax_err(data, "near unexpected token `>>'"));
 	}
 	return (0);
@@ -50,11 +50,11 @@ int	check_r(t_main *data, t_lexer *crt)
 		return (syntax_err(data, "near unexpected token `>>'"));
 	if (crt->next->operateur == LEFT_LEFT)
 	{
-		if (!crt->next->next || (crt->next->next->operateur != LEFT && 
-				crt->next->next->operateur != LEFT_LEFT))
+		if (!crt->next->next || (crt->next->next->operateur != LEFT
+				&& crt->next->next->operateur != LEFT_LEFT))
 			return (syntax_err(data, "near unexpected token `<<'"));
-		else if (crt->next->next->operateur == LEFT || 
-			crt->next->next->operateur == LEFT_LEFT)
+		else if (crt->next->next->operateur == LEFT
+			|| crt->next->next->operateur == LEFT_LEFT)
 			return (syntax_err(data, "near unexpected token `<<<'"));
 	}
 	return (0);
@@ -68,8 +68,8 @@ int	check_p_r(t_main *data, t_lexer *tmp)
 			return (syntax_err(data, "near unexpected token `newline'"));
 		if (tmp->next->next->operateur == PIPE)
 		{
-			if (tmp->next->next->next && 
-				tmp->next->next->next->operateur == PIPE)
+			if (tmp->next->next->next
+				&& tmp->next->next->next->operateur == PIPE)
 				return (syntax_err(data, "near unexpected token `||'"));
 			else
 				return (syntax_err(data, "near unexpected token `|'"));
@@ -89,8 +89,8 @@ int	check_ll(t_main *data, t_lexer *crt)
 	}
 	else if (crt->next->operateur == LEFT_LEFT)
 	{
-		if (!crt->next->next || (crt->next->next->operateur != LEFT && 
-				crt->next->next->operateur != LEFT_LEFT))
+		if (!crt->next->next || (crt->next->next->operateur != LEFT
+				&& crt->next->next->operateur != LEFT_LEFT))
 			return (syntax_err(data, "near unexpected token `<'"));
 		else if (crt->next->next->operateur == LEFT)
 			return (syntax_err(data, "near unexpected token `<<'"));

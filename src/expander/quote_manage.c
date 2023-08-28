@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quote_manage.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
+/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 06:31:03 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/08/25 06:16:14 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/08/28 09:03:56 by tmorikaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,21 @@ int	nb_qt(char *s, int quote)
 	return (ok);
 }
 
+char	*check_4_strim(t_cmd_parse *node, int i_tab, int qt)
+{
+	char	*new;
+
+	if (node->cmd_tab[i_tab][0] == qt && nb_qt(node->cmd_tab[i_tab], qt) == 2)
+	{
+		new = ft_strim(node->cmd_tab[i_tab], qt);
+		free(node->cmd_tab[i_tab]);
+		node->cmd_tab[i_tab] = ft_strdup(new);
+		return (new);
+	}
+	else
+		return (NULL);
+}
+
 int	rm_quote(t_cmd_parse *node, int i_tab, int qt)
 {
 	char	*new;
@@ -48,13 +63,8 @@ int	rm_quote(t_cmd_parse *node, int i_tab, int qt)
 
 	j = 0;
 	i = 0;
-	if (node->cmd_tab[i_tab][0] == qt && nb_qt(node->cmd_tab[i_tab], qt) == 2)
-	{
-		new = ft_strim(node->cmd_tab[i_tab], qt);
-		free(node->cmd_tab[i_tab]);
-		node->cmd_tab[i_tab] = ft_strdup(new);
-	}
-	else
+	new = check_4_strim(node, i_tab, qt);
+	if (!new)
 	{
 		new = need_malloc(node, i_tab);
 		while (node->cmd_tab[i_tab][j])
@@ -82,9 +92,9 @@ int	quote_manage(t_main *data, t_cmd_parse *node, int i)
 	while (node->cmd_tab[i][j])
 	{
 		if (node->cmd_tab[i][j] == 39)
-			return (rm_quote(node, i, 39)); // simple quote
+			return (rm_quote(node, i, 39));
 		else if (node->cmd_tab[i][j] == 34)
-			return (rm_quote(node, i, 34)); // double quote
+			return (rm_quote(node, i, 34));
 		j++;
 	}
 	return (0);

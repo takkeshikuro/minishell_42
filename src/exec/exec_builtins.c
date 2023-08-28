@@ -110,13 +110,13 @@ int	first_builtins(t_main *data, t_cmd_parse *node)
 		built_exit(data, node);
 		return (1);
 	}
-	if (!ft_strncmp(node->cmd_tab[0], "unset", len) && node->next == NULL 
+	if (!ft_strncmp(node->cmd_tab[0], "unset", len) && node->next == NULL
 		&& len == 5)
 		return (built_unset(data, node));
-	if (!ft_strncmp(node->cmd_tab[0], "export", len) && node->next == NULL 
+	if (!ft_strncmp(node->cmd_tab[0], "export", len) && node->next == NULL
 		&& len == 6)
 		return (built_export(data, node));
-	if (!ft_strncmp(node->cmd_tab[0], "cd", len) && node->next == NULL 
+	if (!ft_strncmp(node->cmd_tab[0], "cd", len) && node->next == NULL
 		&& len == 2)
 	{
 		if (data->pipe_count)

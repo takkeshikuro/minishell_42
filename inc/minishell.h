@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmarecar <rmarecar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 05:04:38 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/08/25 16:13:39 by rmarecar         ###   ########.fr       */
+/*   Updated: 2023/08/28 09:12:37 by tmorikaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@
 
 typedef struct s_here_doc
 {
-	int	fd[2];
-	int	pos;
-}				t_here_doc;
+	int					fd[2];
+	int					pos;
+}						t_here_doc;
 
 typedef enum s_operateurs
 {
@@ -97,194 +97,205 @@ typedef struct s_parser_data
 	struct s_main		*data;
 }						t_parser_data;
 
-void	free_lxr_lst(t_lexer *lst);
+void					free_lxr_lst(t_lexer *lst);
 
 /************************* MAIN *********************************/
-void	mini_loop(t_main *data, char **env);
-int		start_in_loop(t_main *data, char *input);
-void	handle_quote_n_expand(t_main *data);
-void	parsing(t_main *data, char **env);
+void					mini_loop(t_main *data, char **env);
+int						start_in_loop(t_main *data, char *input);
+void					handle_quote_n_expand(t_main *data);
+void					parsing(t_main *data, char **env);
 //utils
-void	reset_stuff(t_main *data);
-void	init_stuff(t_main *data);
+void					reset_stuff(t_main *data);
+void					init_stuff(t_main *data);
 // env stuff
-void	get_env(t_main *data, char **env);
-void	get_env_export(t_main *data);
-void	copy_env(t_main *data, char *decla);
-int		copy_name(t_main *data, char *tmp, int i);
+void					get_env(t_main *data, char **env);
+void					get_env_export(t_main *data);
+void					copy_env(t_main *data, char *decla);
+int						copy_name(t_main *data, char *tmp, int i);
 // signaux
-void	eot_handler(t_main *data);
-void	sig_handler(int sig);
-void	init_signals(void);
+void					eot_handler(t_main *data);
+void					sig_handler(int sig);
+void					init_signals(void);
 
 /************************** LEXER *******************************/
-int		go_lexer(t_main *data);
-t_operateurs	is_operateur(int c);
-int		add_operateur(char *str, int i, t_lexer **lexer_list);
-int		add_word(char *str, int i, t_lexer **lexer_list);
-int		add_to_list(char *str, t_operateurs operateur, 
-			t_lexer **lexer_list);
+int						go_lexer(t_main *data);
+t_operateurs			is_operateur(int c);
+int						add_operateur(char *str, int i, t_lexer **lexer_list);
+int						add_word(char *str, int i, t_lexer **lexer_list);
+int						add_to_list(char *str, t_operateurs operateur,
+							t_lexer **lexer_list);
 //utils
-void	rm_space(t_lexer *lst);
-int		count_doub_quote(char *str, int i);
-int		count_simp_quote(char *str, int i);
-int		different_add_w(char *s, int i, int nb_quote, int quote);
-int		add_word_support(char *str, int i);
+void					rm_space(t_lexer *lst);
+int						count_doub_quote(char *str, int i);
+int						count_simp_quote(char *str, int i);
+int						different_add_w(char *s, int i, int nb_quote,
+							int quote);
+int						add_word_support(char *str, int i);
 //listing
-t_lexer	*ft_lexernew(char *str, int operateur);
-void	ft_lexeradd_back(t_lexer **lst, t_lexer *new);
-void	lexer_del_first(t_lexer **lst);
-t_lexer	*lexerclear_one(t_lexer **lst);
-void	ft_lexerdelone(t_lexer **lexer_list, int id);
+t_lexer					*ft_lexernew(char *str, int operateur);
+void					ft_lexeradd_back(t_lexer **lst, t_lexer *new);
+void					lexer_del_first(t_lexer **lst);
+t_lexer					*lexerclear_one(t_lexer **lst);
+void					ft_lexerdelone(t_lexer **lexer_list, int id);
 
 /****************** PARSER & EXPANDER ***********************/
-int		go_parser(t_main *data);
+int						go_parser(t_main *data);
 t_cmd_parse				*init_cmd(t_parser_data *p_data, int nb_word);
 t_cmd_parse				*cmd_parse_new(char **tab, int num_redir,
-			t_lexer *redirection);
+							t_lexer *redirection);
 //parser ope/checking/redir
-int		small_check(t_main *data);
-int		ope_check(t_main *data);
-int		check_single(t_main *data, t_lexer *current);
-int		check_double(t_main *data, t_lexer *current);
-int		check_rr(t_main *data, t_lexer *crt);
-int		check_ll(t_main *data, t_lexer *crt);
-int		check_p_r(t_main *data, t_lexer *tmp);
-int		check_r(t_main *data, t_lexer *crt);
-int		check_l(t_main *data, t_lexer *crt);
-void	redirection(t_parser_data *p_data);
-void	add_redirection(t_lexer *tmp, t_parser_data *p_data);
+int						small_check(t_main *data);
+int						ope_check(t_main *data);
+int						check_single(t_main *data, t_lexer *current);
+int						check_double(t_main *data, t_lexer *current);
+int						check_rr(t_main *data, t_lexer *crt);
+int						check_ll(t_main *data, t_lexer *crt);
+int						check_p_r(t_main *data, t_lexer *tmp);
+int						check_r(t_main *data, t_lexer *crt);
+int						check_l(t_main *data, t_lexer *crt);
+void					redirection(t_parser_data *p_data);
+void					add_redirection(t_lexer *tmp, t_parser_data *p_data);
 //syntax_manage
-int		cmpchar(char c, char ok);
-int		cp_s(char *tmp, char *s, int i);
-int		syntax_dig_2(t_main *data, char *s, int i);
-int		syntax_dig(t_main *data, char *s);
-int		syntax_check(t_main *data, int size);
+int						cmpchar(char c, char ok);
+int						cp_s(char *tmp, char *s, int i);
+int						syntax_dig_two(t_main *data, char *s, int i);
+int						syntax_dig(t_main *data, char *s);
+int						double_pipe(t_main *data, t_lexer *current);
+int						syntax_check(t_main *data, int size);
 //parser utils random
-int		count_pipe(char *s);
-int		count_words(t_lexer *lexer_list);
-int		lexer_size(t_lexer *lst);
-t_parser_data	init_p_data(t_lexer *lexer_list, t_main *data);
-void	cmd_parseadd_back(t_cmd_parse **lst, t_cmd_parse *new);
+int						count_pipe(char *s);
+int						count_words(t_lexer *lexer_list);
+int						lexer_size(t_lexer *lst);
+t_parser_data			init_p_data(t_lexer *lexer_list, t_main *data);
+void					cmd_parseadd_back(t_cmd_parse **lst, t_cmd_parse *new);
 // quote_manage.c  && utils
-int		quote_manage(t_main *data, t_cmd_parse *node, int i);
-int		rm_quote(t_cmd_parse *node, int i_tab, int quote);
-int		nb_qt(char *s, int quote);
-char	*ft_strim(char const *s1, int quote);
-int		check_set(char c, int quote);
+int						quote_manage(t_main *data, t_cmd_parse *node, int i);
+int						rm_quote(t_cmd_parse *node, int i_tab, int quote);
+int						nb_qt(char *s, int quote);
+char					*ft_strim(char const *s1, int quote);
+int						check_set(char c, int quote);
 // expander
-void	expanding(t_main *data, t_cmd_parse *node, int i, int j);
-int		expand_dollard(t_main *data, t_cmd_parse *cmd_node,
-			int nb_env, int j);
-char	*go_find(char **env, char *s);
-int		rm_dollard(t_cmd_parse *cmd_node, int i, int j);
-int		check_env_variable(t_main *data, char *s, int j);
-int		check_env_bis(char **env, char *str_dol);
-char	*good_variable(char *s);
-void	copy_past(t_cmd_parse *cmd_node, int i, int j_dol, char *str_replace);
-char	*copy_without_dol(t_cmd_parse *node, int i, int j, char *s);
-char	*keep_good_str(char **env, int nb_env);
-char	*check_char_after(t_cmd_parse *node, int i, int j);
-char	*go_itoa_replace(t_main *data, char *s);
+void					expanding(t_main *data, t_cmd_parse *node, int i,
+							int j);
+int						expand_dollard(t_main *data, t_cmd_parse *cmd_node,
+							int nb_env, int j);
+char					*go_find(char **env, char *s);
+int						rm_dollard(t_cmd_parse *cmd_node, int i, int j);
+int						check_env_variable(t_main *data, char *s, int j);
+int						check_env_bis(char **env, char *str_dol);
+char					*good_variable(char *s);
+void					copy_past(t_cmd_parse *cmd_node, int i, int j_dol,
+							char *str_replace);
+char					*copy_without_dol(t_cmd_parse *node, int i, int j,
+							char *s);
+char					*keep_good_str(char **env, int nb_env);
+char					*check_char_after(t_cmd_parse *node, int i, int j);
+char					*go_itoa_replace(t_main *data, char *s);
 
 /*****************EXEC DIRECTORY***********************/
 // pipe_manage.c && utils
-void	execute_cmd(t_main *data);
-int		open_outfile(t_cmd_parse *node);
-int		open_infile(t_cmd_parse *node);
-int		contains_char(char *str, char c);
-char	*get_command(char **paths, char *cmd);
-int		lstsize(t_cmd_parse *lst);
-char	*find_path(char **envp);
-void	close_pipe(t_main *data, int count);
-int		open_append(t_cmd_parse *node);
-void	here_doc_manage(t_main *data, t_cmd_parse *node, int fd[2]);
+void					execute_cmd(t_main *data);
+int						open_outfile(t_cmd_parse *node);
+int						open_infile(t_cmd_parse *node);
+int						contains_char(char *str, char c);
+char					*get_command(char **paths, char *cmd);
+int						lstsize(t_cmd_parse *lst);
+char					*find_path(char **envp);
+void					close_pipe(t_main *data, int count);
+int						open_append(t_cmd_parse *node);
+void					here_doc_manage(t_main *data, t_cmd_parse *node,
+							int fd[2]);
 //execbuiltin
-void	builtin_exec(t_main *data, t_cmd_parse *node);
-int		first_builtins(t_main *data, t_cmd_parse *node);
+void					builtin_exec(t_main *data, t_cmd_parse *node);
+int						first_builtins(t_main *data, t_cmd_parse *node);
 //hd.c
-int		has_variable(char *input);
-int		ft_varname_len(char *str);
-char	*get_var_name(char *input);
-char	*get_var_content(t_main *data, char *var_name);
-void	here_doc_manage(t_main *data, t_cmd_parse *node, int fd[2]);
-int		here_doc_init(t_main *data, t_cmd_parse *node);
+int						has_variable(char *input);
+int						ft_varname_len(char *str);
+char					*get_var_name(char *input);
+char					*get_var_content(t_main *data, char *var_name);
+void					here_doc_manage(t_main *data, t_cmd_parse *node,
+							int fd[2]);
+int						here_doc_init(t_main *data, t_cmd_parse *node);
 
-void	no_command(t_main *data, t_cmd_parse *node);
-void	pipe_init(t_main *data, t_cmd_parse *node);
+void					no_command(t_main *data, t_cmd_parse *node);
+void					pipe_init(t_main *data, t_cmd_parse *node);
 
-void	redir_pipe(t_main *data, t_cmd_parse *node, int *in, int *out);
-void	last_redir(t_main *data, t_cmd_parse *node, int *in, int *out);
-void	ft_execve(t_main *data, t_cmd_parse *node, char *cmd);
+void					redir_pipe(t_main *data, t_cmd_parse *node, int *in,
+							int *out);
+void					last_redir(t_main *data, t_cmd_parse *node, int *in,
+							int *out);
+void					ft_execve(t_main *data, t_cmd_parse *node, char *cmd);
 
-void	close_free_hd(t_main *data, t_cmd_parse *node, char *input, int fd, int check);
-void	write_hd(t_main *data, char *input, int fd[2]);
+void					close_free_hd(t_main *data, t_cmd_parse *node,
+							char *input, int fd, int check);
+void					write_hd(t_main *data, char *input, int fd[2]);
 //exec_end.c
-void	free_process(t_main *data);
-void	wait_exec(t_main *data);
-void	built_in_free(t_main *data);
-int		here_doc_var(t_main *data, char *input, int i, int fd[2]);
+void					free_process(t_main *data);
+void					wait_exec(t_main *data);
+void					built_in_free(t_main *data);
+int						here_doc_var(t_main *data, char *input, int i,
+							int fd[2]);
 
 /*********************** BUILTINS *********************************************/
-int		built_env(t_main *data, t_cmd_parse *cmd_parse);
-int		built_pwd(t_main *data, t_cmd_parse *cmd_parse);
-int		built_echo(t_main *data, t_cmd_parse *cmd_parse);
-int		built_cd(t_main *data, t_cmd_parse *cmd_parse);
-int		built_unset(t_main *data, t_cmd_parse *cmd_parse);
-int		built_exit(t_main *data, t_cmd_parse *cmd_parse);
-int		built_export(t_main *data, t_cmd_parse *cmd_parse);
+int						built_env(t_main *data, t_cmd_parse *cmd_parse);
+int						built_pwd(t_main *data, t_cmd_parse *cmd_parse);
+int						built_echo(t_main *data, t_cmd_parse *cmd_parse);
+int						built_cd(t_main *data, t_cmd_parse *cmd_parse);
+int						built_unset(t_main *data, t_cmd_parse *cmd_parse);
+int						built_exit(t_main *data, t_cmd_parse *cmd_parse);
+int						built_export(t_main *data, t_cmd_parse *cmd_parse);
 ///// utils unset
-void	copy_good_exp(t_main *data, char **tab);
-void	copy_good_bis(t_main *data, char **tab);
-char	**crt_exp(char **old_tab, char *s, int len);
-char	**crt_bis(char **old_tab, char *s, int len);
+void					copy_good_exp(t_main *data, char **tab);
+void					copy_good_bis(t_main *data, char **tab);
+char					**crt_exp(char **old_tab, char *s, int len);
+char					**crt_bis(char **old_tab, char *s, int len);
 ///// export & utils
-void	export_support(t_main *data, char *s);
-void	add_total_stuff(t_main *data, char *s);
-int		simple_check(char *s);
-int		check_v_exist_bis(t_main *data, char *s);
-int		check_v_exist_exp(t_main *data, char *s);
-void	rm_variable_bis(t_main *data, int supp);
-void	rm_variable_exp(t_main *data, int supp);
-void	add_v_to_envexp(t_main *data, char *s);
-void	add_to_bis(t_main *data, char *s);
-int		show_env_exp(t_main *data);
-int		cp_string_quoted(char *s1, char *s2);
-char	*cp_string_name(char *s);
-int		check_valid_identifier(char c);
-int		equal_env(char *s);
-int		print_error_export(char *s, int ok);
+void					export_support(t_main *data, char *s);
+void					add_total_stuff(t_main *data, char *s);
+int						simple_check(char *s);
+int						check_v_exist_bis(t_main *data, char *s);
+int						check_v_exist_exp(t_main *data, char *s);
+void					rm_variable_bis(t_main *data, int supp);
+void					rm_variable_exp(t_main *data, int supp);
+void					add_v_to_envexp(t_main *data, char *s);
+void					add_to_bis(t_main *data, char *s);
+int						show_env_exp(t_main *data);
+int						cp_string_quoted(char *s1, char *s2);
+char					*cp_string_name(char *s);
+int						check_valid_identifier(char c);
+int						equal_env(char *s);
+int						print_error_export(char *s, int ok);
 ///// cd & utils
-void	change_envexp(t_main *data, char *s_new);
-void	switch_path_exp(t_main *data, char *s_old, char *s_new);
-char	*add_quote(char *s);
-char	*copy_declarex(t_main *data, char *s, int i);
-char	*just_copy(t_main *data, char *s, int i);
-
+void					change_envexp(t_main *data, char *s_new);
+void					switch_path_exp(t_main *data, char *s_old, char *s_new);
+char					*add_quote(char *s);
+char					*copy_declarex(t_main *data, char *s, int i);
+char					*just_copy(t_main *data, char *s, int i);
 
 //////////////////////////////////free_stuff.c
-void	free_tab(char **tab);
-void	free_kill(t_main *data);
+void					free_tab(char **tab);
+void					free_kill(t_main *data);
 //void					free_cmd_list(t_main *data);
-void	free_lxr_lst(t_lexer *lst);
-void	free_cmd_tab(t_main *data);
-void	free_cmd_lst(t_cmd_parse *lst);
+void					free_lxr_lst(t_lexer *lst);
+void					free_cmd_tab(t_main *data);
+void					free_cmd_lst(t_cmd_parse *lst);
 
 ////////////////////////////////////error.c
-int		error(char *s);
-void	void_error(char *s);
-int		syntax_err(t_main *data, char *s);
-int		is_dir_error(t_main *data, char *s, int ok);
+int						error(char *s);
+void					void_error(char *s);
+int						syntax_err(t_main *data, char *s);
+int						is_dir_error(t_main *data, char *s, int ok);
 
 //utils_random
-int		check_space(char *s);
-int		pb_quote(const char *str, int sep);
-int		is_space(char c);
-int		ft_nbstr(char const *str, char sep);
+int						check_space(char *s);
+int						pb_quote(const char *str, int sep);
+int						is_space(char c);
+int						ft_nbstr(char const *str, char sep);
+char					*just_alloc(int len, int j_dol, char *s_af);
 
 // a supp
 void	pr(t_lexer *lexer_list);              // for lexer
 void	prrr(t_cmd_parse *cmd_parse, int ok); //for parser
-void	pr_redir(t_lexer *lexer_list);
+void					pr_redir(t_lexer *lexer_list);
 
 #endif

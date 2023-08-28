@@ -6,7 +6,7 @@
 /*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 15:15:22 by keshikuro         #+#    #+#             */
-/*   Updated: 2023/07/29 00:42:42 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/08/28 08:38:56 by tmorikaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	echo_print(char **tab, int ok)
 
 int	built_echo(t_main *data, t_cmd_parse *cmd_parse)
 {
-	int i;
+	int	i;
 
 	i = 1;
 	if (!ft_strncmp(cmd_parse->cmd_tab[1], "-n", 2))

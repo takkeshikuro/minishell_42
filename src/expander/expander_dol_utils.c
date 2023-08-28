@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander_dol_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
+/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 04:44:26 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/08/25 05:32:38 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/08/28 09:00:26 by tmorikaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,7 @@ void	copy_past(t_cmd_parse *cmd_node, int i, int j_dol, char *str_replace)
 	k = 0;
 	s_after = check_char_after(cmd_node, i, j_dol);
 	len = ft_strlen(str_replace);
-	if (s_after)
-		tmp_str = malloc(sizeof(char) * (j_dol + len + ft_strlen(s_after)) + 1);
-	else
-		tmp_str = malloc(sizeof(char) * (j_dol + len) + 1);
-	if (!tmp_str)
-		exit(1);
+	tmp_str = just_alloc(len, j_dol, s_after);
 	while (k < j_dol)
 	{
 		tmp_str[k] = cmd_node->cmd_tab[i][k];

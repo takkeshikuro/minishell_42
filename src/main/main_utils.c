@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
+/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 16:29:32 by keshikuro         #+#    #+#             */
-/*   Updated: 2023/08/25 03:09:55 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/08/28 08:48:21 by tmorikaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,12 @@ void	reset_stuff(t_main *data)
 	init_signals();
 }
 
-void	pr(t_lexer *lexer_list)			// show lexer list
+void	pr(t_lexer *lexer_list)
 {
-	t_lexer * tmp;
-	int i = 0;
+	t_lexer	*tmp;
+	int		i;
 
+	i = 0;
 	fprintf(stderr, "[CHECK LEXER] ");
 	if (!lexer_list)
 	{
@@ -69,11 +70,12 @@ void	pr(t_lexer *lexer_list)			// show lexer list
 	fprintf(stderr, "\n");
 }
 
-void	pr_redir(t_lexer *lexer_list) // show redirection list
+void	pr_redir(t_lexer *lexer_list)
 {
-	t_lexer * tmp;
-	int i = 0;
+	t_lexer		*tmp;
+	int			i;
 
+	i = 0;
 	fprintf(stderr, "[CHECK REDIR]");
 	if (!lexer_list)
 	{
@@ -94,10 +96,10 @@ void	pr_redir(t_lexer *lexer_list) // show redirection list
 	fprintf(stderr, "\n");
 }
 
-void prrr(t_cmd_parse *cmd_parse, int ok)  // show final list
+void	prrr(t_cmd_parse *cmd_parse, int ok)
 {
-	t_cmd_parse *tmp;
-	int i;
+	t_cmd_parse	*tmp;
+	int			i;
 
 	tmp = cmd_parse;
 	fprintf(stderr, "[FINAL LIST]");

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
+/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 02:01:20 by keshikuro         #+#    #+#             */
-/*   Updated: 2023/08/22 02:01:25 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/08/28 08:47:48 by tmorikaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	add_word_support(char *str, int i)
 int	different_add_w(char *s, int i, int nb_quote, int quote)
 {
 	int	j;
-	int ok;
+	int	ok;
 
 	j = 0;
 	ok = 1;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_ope.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
+/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 13:32:15 by keshikuro         #+#    #+#             */
-/*   Updated: 2023/08/25 22:06:18 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/08/28 09:06:36 by tmorikaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	ope_check(t_main *data)
 	{
 		if (current->next && current->next->operateur == PIPE)
 			return (syntax_err(data, "near unexpected token `||'"));
-		else 
+		else
 			return (syntax_err(data, "near unexpected token `|'"));
 	}
 	while (current)
