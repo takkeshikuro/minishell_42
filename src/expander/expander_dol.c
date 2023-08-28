@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander_dol.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
+/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 23:48:00 by keshikuro         #+#    #+#             */
-/*   Updated: 2023/08/25 06:09:17 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/08/28 13:53:38 by tmorikaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ int	expand_dollard(t_main *data, t_cmd_parse *node, int i, int j)
 	}
 }
 
+
 int	return_value(t_main *data, t_cmd_parse *node, int i, int j_dol)
 {
 	char	*str_replace;
@@ -77,7 +78,12 @@ int	expanding_bis(t_main *data, t_cmd_parse *node, int i, int j)
 
 	nb_env = check_env_variable(data, node->cmd_tab[i], j);
 	if (nb_env >= 0)
-		return (expand_dollard(data, node, i, j));
+	{
+		if (nb_env == 999)
+			return (expand_dol_qt(data, node, i, j));
+		else
+			return (expand_dollard(data, node, i, j));
+	}
 	else if (nb_env == -1)
 		return (rm_dollard(node, i, j));
 	else if (nb_env == -2)

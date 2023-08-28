@@ -6,7 +6,7 @@
 /*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 03:45:35 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/08/28 09:11:14 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/08/28 13:55:08 by tmorikaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	mini_loop(t_main *data, char **env)
 		input = readline("[42] $> ");
 		if (!input)
 			eot_handler(data);
-		if (check_space(input) && pb_quote(input, 34) && pb_quote(input, 39))
+		if (check_space(input) && !pb_quote(input, 34))
 		{
 			if (input[0] != '\0')
 			{
@@ -74,7 +74,8 @@ void	mini_loop(t_main *data, char **env)
 				reset_stuff(data);
 			}
 		}
-		add_history(input);
+		if (input[0] != '\0')
+			add_history(input);
 		free(input);
 	}
 	if (data->tab_input_blank)

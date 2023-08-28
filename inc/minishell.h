@@ -6,7 +6,7 @@
 /*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 05:04:38 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/08/28 09:12:37 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/08/28 13:54:33 by tmorikaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,6 +191,12 @@ char					*copy_without_dol(t_cmd_parse *node, int i, int j,
 char					*keep_good_str(char **env, int nb_env);
 char					*check_char_after(t_cmd_parse *node, int i, int j);
 char					*go_itoa_replace(t_main *data, char *s);
+int						expand_dol_qt(t_main *data, t_cmd_parse *node, int i,
+							int j);
+int						check_env_variable_qt(t_main *data, char *s, int j);
+int						check_env_bis_qt(char **env, char *str_dol);
+char					*keep_good_str_qt(char **env, int nb_env);
+char					*add_qt(char *s);
 
 /*****************EXEC DIRECTORY***********************/
 // pipe_manage.c && utils

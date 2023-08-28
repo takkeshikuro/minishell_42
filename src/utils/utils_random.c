@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_random.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
+/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 05:38:24 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/08/08 17:17:56 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/08/28 12:44:17 by tmorikaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,23 +28,45 @@ int	check_space(char *s)
 int	pb_quote(const char *str, int sep)
 {
 	int	i;
-	int	nb_quote;
+	int ok;
+	int comp;
+	int sep1;
+	int sep2;
 
 	i = 0;
-	nb_quote = 0;
+	ok = 0;
+	comp = 0;
+	sep1 = 34;
+	sep2 = 39;
 	while (str[i])
 	{
-		if (str[i] == sep)
-			nb_quote += 1;
+		if (str[i] == sep1)
+		{
+			while (str[ok])
+			{
+				if (str[ok++] == sep1)
+					comp++;
+			}
+			if (comp % 2 == 0)
+				return (0);
+			else
+				return (error("should close quote."));
+		}
+		else if (str[i] == sep2)
+		{
+			while (str[ok])
+			{
+				if (str[ok++] == sep2)
+					comp++;
+			}
+			if (comp % 2 == 0)
+				return (0);
+			else
+				return (error("should close quote."));
+		}
 		i++;
 	}
-	if (nb_quote % 2 == 0)
-		return (1);
-	else
-	{
-		printf("minishell: should close quote\n");
-		return (0);
-	}
+	return (0);
 }
 
 int	is_space(char c)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rm_dol_n_env.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
+/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 02:57:58 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/06/16 17:33:24 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/08/28 13:26:54 by tmorikaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,15 +39,44 @@ char	*copy_without_dol(t_cmd_parse *node, int i, int j, char *s)
 	return (s);
 }
 
+int check_qt(char *s)
+{
+	int i;
+
+	i =0;
+	while (s[i])
+	{
+		if (s[i + 1] == '\0' || s[i + 1] == 32)
+		{
+			if (s[i] == 39)
+				return (1);
+		}
+		i++;
+	}
+	return (0);
+}
+
 int	check_env_bis(char **env, char *str_dol)
 {
 	int	i;
+	int ok;
 
 	i = 0;
+	ok = check_qt(str_dol);
+	if (!ok)
+	{
+		while (env[i])
+		{
+			if (!ft_strncmp(env[i], str_dol, ft_strlen(str_dol)))
+				return (i);
+			i++;
+		}
+		return (-1);
+	}
 	while (env[i])
 	{
-		if (!ft_strncmp(env[i], str_dol, ft_strlen(str_dol)))
-			return (i);
+		if (!ft_strncmp(env[i], str_dol, ft_strlen(str_dol) - 1))
+			return (999);
 		i++;
 	}
 	return (-1);
