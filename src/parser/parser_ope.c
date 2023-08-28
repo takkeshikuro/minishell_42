@@ -6,7 +6,7 @@
 /*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 13:32:15 by keshikuro         #+#    #+#             */
-/*   Updated: 2023/08/28 09:06:36 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/08/28 09:50:03 by tmorikaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,13 @@ int	small_check(t_main *data)
 	{
 		if (size == 1 && !tmp->operateur)
 		{
-			if (!ft_strncmp(tmp->str, "!", 1) || !ft_strncmp(tmp->str, ":", 1))
+			if ((!ft_strncmp(tmp->str, "!", 1) || !ft_strncmp(tmp->str, ":", 1))
+				&& ft_strlen(tmp->str) == 1)
 				return (1);
+			else if (!ft_strncmp(tmp->str, ".", 1) && ft_strlen(tmp->str) == 1)
+				return (error(".: usage: . filename [arguments]"));
+			else if (!ft_strncmp(tmp->str, "..", 2) && ft_strlen(tmp->str) == 2)
+				return (error("..: command not found"));
 		}
 		tmp = tmp->next;
 	}
