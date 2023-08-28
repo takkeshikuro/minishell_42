@@ -6,7 +6,7 @@
 /*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 23:48:00 by keshikuro         #+#    #+#             */
-/*   Updated: 2023/08/28 13:53:38 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/08/28 14:50:21 by tmorikaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,14 @@
 int	rm_dollard(t_cmd_parse *cmd_node, int i, int j)
 {
 	int		size_dol;
-	char	*new;
+	char	*new_s;
 	int		diff;
 	int		tmp_j;
 
 	size_dol = 0;
 	tmp_j = j;
-	while (cmd_node->cmd_tab[i][j] && cmd_node->cmd_tab[i][j++] != 32)
+	while (cmd_node->cmd_tab[i][j] && cmd_node->cmd_tab[i][j] != 32
+		&& cmd_node->cmd_tab[i][j++] != 39)
 		size_dol++;
 	diff = ft_strlen(cmd_node->cmd_tab[i]) - size_dol;
 	if (!diff)
@@ -30,13 +31,13 @@ int	rm_dollard(t_cmd_parse *cmd_node, int i, int j)
 		cmd_node->cmd_tab[i] = ft_strdup("");
 		return (0);
 	}
-	new = malloc(sizeof(char) * diff + 1);
-	if (!new)
+	new_s = malloc(sizeof(char) * diff + 1);
+	if (!new_s)
 		exit(1);
-	new = copy_without_dol(cmd_node, i, tmp_j, new);
+	new_s = copy_without_dol(cmd_node, i, tmp_j, new_s);
 	free(cmd_node->cmd_tab[i]);
-	cmd_node->cmd_tab[i] = ft_substr(new, 0, diff);
-	free(new);
+	cmd_node->cmd_tab[i] = ft_substr(new_s, 0, diff);
+	free(new_s);
 	return (0);
 }
 
@@ -56,7 +57,6 @@ int	expand_dollard(t_main *data, t_cmd_parse *node, int i, int j)
 		return (ok);
 	}
 }
-
 
 int	return_value(t_main *data, t_cmd_parse *node, int i, int j_dol)
 {

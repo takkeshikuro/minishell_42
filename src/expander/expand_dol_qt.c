@@ -6,7 +6,7 @@
 /*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 13:56:49 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/08/28 13:56:50 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/08/28 14:39:45 by tmorikaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ char	*add_qt(char *s)
 		new[j++] = s[i++];
 	new[j++] = '\'';
 	new[j] = '\0';
-	free(s);
 	return (new);
 }
 
@@ -62,11 +61,13 @@ char	*keep_good_str_qt(char **env, int nb_env)
 int	check_env_bis_qt(char **env, char *str_dol)
 {
 	int	i;
+	int len;
 
 	i = 0;
+	len = ft_strlen(str_dol);
 	while (env[i])
 	{
-		if (!ft_strncmp(env[i], str_dol, ft_strlen(str_dol) - 1))
+		if (!ft_strncmp(env[i], str_dol, len - 1) && env[i][len - 1] == '=')
 			return (i);
 		i++;
 	}
@@ -107,6 +108,7 @@ int	expand_dol_qt(t_main *data, t_cmd_parse *node, int i, int j)
 		final = add_qt(str_replace);
 		copy_past(node, i, j, final);
 		ok = ft_strlen(str_replace);
+		free(str_replace);
 		free(final);
 		return (ok);
 	}

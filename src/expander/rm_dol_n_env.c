@@ -6,7 +6,7 @@
 /*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 02:57:58 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/08/28 13:26:54 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/08/28 14:46:04 by tmorikaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ char	*copy_without_dol(t_cmd_parse *node, int i, int j, char *s)
 		s[k] = node->cmd_tab[i][k];
 		k++;
 	}
-	while (node->cmd_tab[i][j] && node->cmd_tab[i][j] != 32)
+	while (node->cmd_tab[i][j] && node->cmd_tab[i][j] != 32
+		&& node->cmd_tab[i][j] != 39)
 		j++;
 	if (!node->cmd_tab[i][j])
 	{
@@ -59,15 +60,17 @@ int check_qt(char *s)
 int	check_env_bis(char **env, char *str_dol)
 {
 	int	i;
-	int ok;
+	int	ok;
+	int	len;
 
 	i = 0;
+	len = ft_strlen(str_dol);
 	ok = check_qt(str_dol);
 	if (!ok)
 	{
 		while (env[i])
 		{
-			if (!ft_strncmp(env[i], str_dol, ft_strlen(str_dol)))
+			if (!ft_strncmp(env[i], str_dol, len) && env[i][len] == '=')
 				return (i);
 			i++;
 		}
@@ -75,7 +78,7 @@ int	check_env_bis(char **env, char *str_dol)
 	}
 	while (env[i])
 	{
-		if (!ft_strncmp(env[i], str_dol, ft_strlen(str_dol) - 1))
+		if (!ft_strncmp(env[i], str_dol, len - 1) && env[i][len - 1] == '=')
 			return (999);
 		i++;
 	}
@@ -100,7 +103,10 @@ int	check_env_variable(t_main *data, char *s, int j)
 		i++;
 		size++;
 	}
-	str_dol = ft_substr(s, j + 1, (size - 1));
+	if (size == 1)
+		str_dol = ft_substr(s, j + 1, size);
+	else
+		str_dol = ft_substr(s, j + 1, (size - 1));
 	result = check_env_bis(data->env_bis, str_dol);
 	free(str_dol);
 	return (result);
