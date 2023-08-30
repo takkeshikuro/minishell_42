@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 05:04:38 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/08/28 13:54:33 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/08/30 01:49:24 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -298,6 +298,8 @@ int						pb_quote(const char *str, int sep);
 int						is_space(char c);
 int						ft_nbstr(char const *str, char sep);
 char					*just_alloc(int len, int j_dol, char *s_af);
+void					echo_move(t_cmd_parse *node);
+void					check_echo_tab(t_main *data);
 
 // a supp
 void	pr(t_lexer *lexer_list);              // for lexer

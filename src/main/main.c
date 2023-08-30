@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 03:45:35 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/08/28 14:25:53 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/08/30 02:03:00 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,7 @@
 
 // add += 1 a SHLVL (env)
 // return value apres un crtl-C (1 aulieu de 130)
-
 // pb si input = 'NEW=okok' -> ne doit pas etre dans env_bis/exp
-// a tester a l\ecole : echo $a
 
 void	handle_quote_n_expand(t_main *data)
 {
@@ -52,6 +50,8 @@ int	start_in_loop(t_main *data, char *input)
 	}
 //	prrr(data->cmd_parse, 1);
 	handle_quote_n_expand(data);
+//	prrr(data->cmd_parse, 0);
+	check_echo_tab(data);
 //	prrr(data->cmd_parse, 0);
 	return (0);
 }
