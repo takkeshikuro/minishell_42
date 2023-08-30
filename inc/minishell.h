@@ -6,7 +6,7 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 05:04:38 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/08/30 12:42:19 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/08/30 14:20:11 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@
 // copy_past() in expander_dol_utils
 // add_word() in lexer
 // init_cmd() in parser
+
+//int global_v;
 
 typedef struct s_here_doc
 {
@@ -96,8 +98,6 @@ typedef struct s_parser_data
 	int					num_redir;
 	struct s_main		*data;
 }						t_parser_data;
-
-void					free_lxr_lst(t_lexer *lst);
 
 /************************* MAIN *********************************/
 void					mini_loop(t_main *data);
@@ -282,7 +282,7 @@ char					*just_copy(t_main *data, char *s, int i);
 void					free_tab(char **tab);
 void					free_kill(t_main *data);
 //void					free_cmd_list(t_main *data);
-void					free_lxr_lst(t_lexer *lst);
+void	free_lxr_lst(t_lexer *lst);
 void					free_cmd_tab(t_main *data);
 void					free_cmd_lst(t_cmd_parse *lst);
 

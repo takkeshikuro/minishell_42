@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 16:29:32 by keshikuro         #+#    #+#             */
-/*   Updated: 2023/08/28 08:48:21 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/08/30 14:21:58 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,11 @@ void	reset_stuff(t_main *data)
 {
 	if (data->input_line)
 		free(data->input_line);
-	if (data->lexer_list)
-		free_lxr_lst(data->lexer_list);
+//	if (data->lexer_list)
+//		free_lxr_lst(data->lexer_list);
 	data->lexer_list = NULL;
 	if (data->syntaxe_check == 0)
 	{
-		if (data->cmd_parse->redirection)
-		{
-			free_lxr_lst(data->cmd_parse->redirection);
-			data->cmd_parse->redirection = NULL;
-		}
 		if (data->cmd_parse)
 			free_cmd_tab(data);
 		if (data->cmd_parse)

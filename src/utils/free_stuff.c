@@ -6,7 +6,7 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 06:03:08 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/08/25 03:40:46 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/08/30 14:20:04 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,10 @@ void	free_cmd_lst(t_cmd_parse *lst)
 	{
 		lst = tmp->next;
 		if (tmp)
+		{
+			free_lxr_lst(tmp->redirection);
 			free(tmp);
+		}
 		tmp = lst;
 	}
 	free(lst);

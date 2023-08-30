@@ -6,7 +6,7 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 03:45:35 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/08/30 12:42:28 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/08/30 14:06:55 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ void	mini_loop(t_main *data)
 		input = readline("[42] $> ");
 		if (!input)
 			eot_handler(data);
+	//	if (global_v == 1)
+	//		data->return_value = 130;
 		if (check_space(input) && !pb_quote(data, input, 34, 39))
 		{
 			if (input[0] != '\0')
