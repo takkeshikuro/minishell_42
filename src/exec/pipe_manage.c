@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_manage.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
+/*   By: rmarecar <rmarecar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 15:26:12 by marecarraya       #+#    #+#             */
-/*   Updated: 2023/08/30 03:15:58 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/08/30 15:55:16 by rmarecar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,6 @@ void	pipe_work(t_main *data, int fd[2], t_cmd_parse *node, int old_fd[2])
 
 void	last_process(t_main *data, t_cmd_parse *node, char *cmd, int fd[2])
 {
-//	int	out;
-//	int	pid;
-
 	last_redir(data, node, &fd[0], &fd[1]);
 	if (fd[0] && node->hd_check == 0)
 	{
@@ -64,6 +61,7 @@ void	last_process(t_main *data, t_cmd_parse *node, char *cmd, int fd[2])
 	cmd = get_command(data->cmd_paths, node->cmd_tab[0]);
 	if (cmd == NULL)
 		no_command(data, node);
+	signal(SIGQUIT, SIG_DFL);
 	execve(cmd, node->cmd_tab, data->env_bis);
 	exit (1);
 }
@@ -71,10 +69,10 @@ void	last_process(t_main *data, t_cmd_parse *node, char *cmd, int fd[2])
 void	exec(t_main *data, t_cmd_parse *node, char *cmd)
 {
 	int		i;
-//	int		pid;
 	int		fd[2];
 	int		old_fd[2];
 	
+	fd[0] = 0;
 	old_fd[0] = -1;
 	old_fd[1] = -1;
 	data->hd_pos = 0;
@@ -109,13 +107,9 @@ void	exec(t_main *data, t_cmd_parse *node, char *cmd)
 void	execute_cmd(t_main *data)
 {
 	t_cmd_parse	*node;
-//	int			i;
 	char		*cmd;
-//	int			len;
-//	int			status;
 
 	cmd = NULL;
-//	i = 0;
 	node = data->cmd_parse;
 	data->pipe_count = lstsize(node) - 1;
 	if (first_builtins(data, node))

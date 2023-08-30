@@ -25,35 +25,49 @@ int	init_loop(t_cmd_parse *node, char *input, int fd[2])
 	return (1);
 }
 
-int	*return_hd(int fd[2])
+t_here_doc	*return_hd(t_here_doc *here_doc)
 {
-	static int	fd_hd[2];
+	static t_here_doc	*hd;
+	if (here_doc)
+		hd = here_doc;
+	return (hd);
+}
 
-	if (fd)
-	{
-		fd_hd[0] = fd[0];
-		fd_hd[1] = fd[1];
-	}
-	return (fd_hd);
+int	return_hd_count(int hd_count)
+{
+	static int	hdc;
+
+	if (hd_count != -1)
+		hdc = hd_count;
+	return (hdc);
 }
 
 void	sig_hd(int signal)
 {
-	int	*fd;
+	t_here_doc	*hd;
+	int			i;
+	int			hdc;
 
-	(void)signal;
-	fd = return_hd(NULL);
-	close(fd[1]);
-	close(fd[0]);
-	exit (42);
+	if (signal == SIGINT)
+	{
+		i = 0;
+		hd = return_hd(NULL);
+		hdc = return_hd_count(-1);
+		while (i < hdc)
+		{
+			if (hd[i].pos == 0)
+				break ;
+			close(hd[i].fd[0]);
+			close(hd[i].fd[1]);
+			i++;
+		}
+		exit (42);
+	}
 }
 
 void	here_doc_manage(t_main *data, t_cmd_parse *node, int fd[2])
 {
 	char	*input;
-//	int		i;
-//	char	*var_name;
-//	char	*var_content;
 	int		j;
 
 	j = 0;
@@ -61,12 +75,11 @@ void	here_doc_manage(t_main *data, t_cmd_parse *node, int fd[2])
 	close(fd[0]);
 	while (1)
 	{
-//		i = 0;
 		input = readline(">");
 		if (!input)
-			close_free_hd(data, node, input, fd[1], j);
+			close_free_hd(data, node, input, j);
 		if (!init_loop(node, input, fd))
-			close_free_hd(data, node, input, fd[1], -42);
+			close_free_hd(data, node, input, -42);
 		write_hd(data, input, fd);
 		j++;
 	}
@@ -79,15 +92,16 @@ int	here_doc_init(t_main *data, t_cmd_parse *node)
 	int			pid;
 	t_cmd_parse	*nodebis;
 	int			status;
-//	int			*hd_fd;
 
 	nodebis = node;
 	i = 0;
+	return_hd(data->here_doc);
+	return_hd_count(data->hd_count);
 	signal(SIGINT, SIG_IGN);
 	while (i < data->hd_count)
 	{
 		pipe(data->here_doc[i].fd);
-//		hd_fd = return_hd(data->here_doc[i].fd);
+		data->here_doc[i].pos = 1;
 		pid = fork();
 		if (pid == 0)
 			here_doc_manage(data, nodebis, data->here_doc[i].fd);
@@ -104,8 +118,6 @@ int	here_doc_init(t_main *data, t_cmd_parse *node)
 			return (42);
 		}
 		close(data->here_doc[i].fd[1]);
-		if (!nodebis->cmd_tab[0])
-			close(data->here_doc[i].fd[0]);
 		i++;
 		nodebis = nodebis->next;
 	}

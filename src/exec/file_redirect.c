@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   file_redirect.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rmarecar <rmarecar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 19:58:15 by rmarecar          #+#    #+#             */
-/*   Updated: 2023/08/28 08:43:27 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/08/30 15:57:16 by rmarecar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ void	last_redir(t_main *data, t_cmd_parse *node, int *in, int *out)
 		if (node->redirection->operateur == LEFT_LEFT)
 		{
 			node->hd_check = 1;
+			close(*in);
 			dup2(data->here_doc[data->hd_pos].fd[0], 0);
 			close(data->here_doc[data->hd_pos].fd[0]);
 		}

@@ -3,18 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc_utils2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
+/*   By: rmarecar <rmarecar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 13:39:03 by rmarecar          #+#    #+#             */
-/*   Updated: 2023/08/30 03:18:48 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/08/30 15:45:04 by rmarecar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	close_free_hd(t_main *data, t_cmd_parse *node, char *input, int fd, int check)
+void	close_free_hd(t_main *data, t_cmd_parse *node, char *input, int check)
 {
-	(void)data; //pour les flags
+	int	i;
+
+	i = 0;
 	if (check != -42)
 	{
 		fprintf(stderr, "bash: warning: here-document at line %d ", check);
@@ -22,8 +24,14 @@ void	close_free_hd(t_main *data, t_cmd_parse *node, char *input, int fd, int che
 		fprintf(stderr, "(wanted `%s')\n", node->redirection->str);
 	}
 	free(input);
-	//reset_stuff(data);
-	close(fd);
+	while (i < data->hd_count)
+	{
+		if (data->here_doc[i].pos == 0)
+			break ;
+		close(data->here_doc[i].fd[0]);
+		close(data->here_doc[i].fd[1]);
+		i++;
+	}
 	exit (1);
 }
 
