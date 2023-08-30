@@ -6,7 +6,7 @@
 /*   By: rmarecar <rmarecar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 19:57:05 by rmarecar          #+#    #+#             */
-/*   Updated: 2023/08/30 15:50:34 by rmarecar         ###   ########.fr       */
+/*   Updated: 2023/08/30 16:18:16 by rmarecar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,22 +28,33 @@ void	no_command(t_main *data, t_cmd_parse *node)
 	reset_stuff(data);
 	while (i < data->hd_count)
 	{
-		fprintf(stderr, "closing for process %d\n", i);
 		close(data->here_doc[i].fd[0]);
 		close(data->here_doc[i].fd[1]);
 		i++;
 	}
-	fprintf(stderr, "\n\n");
-
 	exit(127);
+}
+
+void	hdc_init(t_main *data)
+{
+	int	i;
+
+	i = 0;
+	if (data->hd_count)
+	{
+		data->here_doc = malloc(sizeof(t_here_doc) * data->hd_count);
+		while (i < data->hd_count)
+		{
+			data->here_doc[i].pos = 0;
+			i++;
+		}
+	}
 }
 
 void	pipe_init(t_main *data, t_cmd_parse *node)
 {
 	t_cmd_parse	*tmp;
-	int			i;
 
-	i = 0;
 	data->cmd_paths = NULL;
 	tmp = node;
 	data->path = find_path(data->env_bis);
@@ -59,15 +70,7 @@ void	pipe_init(t_main *data, t_cmd_parse *node)
 		}
 		tmp = tmp->next;
 	}
-	if (data->hd_count)
-	{
-		data->here_doc = malloc(sizeof(t_here_doc) * data->hd_count);
-		while (i < data->hd_count)
-		{
-			data->here_doc[i].pos = 0;
-			i++;
-		}
-	}
+	hdc_init(data);
 }
 
 void	ft_execve(t_main *data, t_cmd_parse *node, char *cmd)

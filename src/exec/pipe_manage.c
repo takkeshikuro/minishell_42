@@ -6,7 +6,7 @@
 /*   By: rmarecar <rmarecar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 15:26:12 by marecarraya       #+#    #+#             */
-/*   Updated: 2023/08/30 15:55:16 by rmarecar         ###   ########.fr       */
+/*   Updated: 2023/08/30 16:30:20 by rmarecar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ void	exec(t_main *data, t_cmd_parse *node, char *cmd)
 	int		old_fd[2];
 	
 	fd[0] = 0;
+	fd[1] = 0;
 	old_fd[0] = -1;
 	old_fd[1] = -1;
 	data->hd_pos = 0;

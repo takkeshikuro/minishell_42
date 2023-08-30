@@ -6,7 +6,7 @@
 /*   By: rmarecar <rmarecar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 19:58:15 by rmarecar          #+#    #+#             */
-/*   Updated: 2023/08/30 15:57:16 by rmarecar         ###   ########.fr       */
+/*   Updated: 2023/08/30 16:47:11 by rmarecar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@ void	redir_pipe(t_main *data, t_cmd_parse *node, int *in, int *out)
 	while (node->redirection)
 	{
 		if (node->redirection->operateur == RIGHT)
-			*out = open_outfile(node);
+			*out = open_outfile(node, *out);
 		if (node->redirection->operateur == LEFT)
-			*in = open_infile(node);
+			*in = open_infile(node, *in);
 		if (node->redirection->operateur == RIGHT_RIGHT)
-			*out = open_append(node);
+			*out = open_append(node, *out);
 		if (node->redirection->operateur == LEFT_LEFT)
 		{
 			node->hd_check = 1;
@@ -35,6 +35,14 @@ void	redir_pipe(t_main *data, t_cmd_parse *node, int *in, int *out)
 		node->redirection = node->redirection->next;
 	}
 	node->redirection = tmp;
+}
+
+void	last_redir_hd(t_main *data, t_cmd_parse *node, int fd)
+{
+	node->hd_check = 1;
+	close(fd);
+	dup2(data->here_doc[data->hd_pos].fd[0], 0);
+	close(data->here_doc[data->hd_pos].fd[0]);
 }
 
 void	last_redir(t_main *data, t_cmd_parse *node, int *in, int *out)
@@ -47,24 +55,24 @@ void	last_redir(t_main *data, t_cmd_parse *node, int *in, int *out)
 	{
 		if (node->redirection->operateur == RIGHT)
 		{
-			*out = open_outfile(node);
+			*out = open_outfile(node, *out);
 			dup2(*out, 1);
 			close(*out);
 		}
 		if (node->redirection->operateur == LEFT)
-			*in = open_infile(node);
+		{
+			*in = open_infile(node, *in);
+		}
 		if (node->redirection->operateur == RIGHT_RIGHT)
 		{
-			*out = open_append(node);
+			*out = open_append(node, *out);
 			dup2(*out, 1);
 			close(*out);
 		}
 		if (node->redirection->operateur == LEFT_LEFT)
 		{
-			node->hd_check = 1;
-			close(*in);
-			dup2(data->here_doc[data->hd_pos].fd[0], 0);
-			close(data->here_doc[data->hd_pos].fd[0]);
+			if (node->hd_check != 1)
+				last_redir_hd(data, node, *in);
 		}
 		node->redirection = node->redirection->next;
 	}
