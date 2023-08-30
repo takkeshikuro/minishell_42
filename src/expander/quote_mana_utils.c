@@ -6,7 +6,7 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 22:30:04 by keshikuro         #+#    #+#             */
-/*   Updated: 2023/06/04 16:04:33 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/08/30 03:12:32 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 
 int	check_set(char c, int quote)
 {
-	int	i;
-
-	i = 0;
 	if (c == quote)
 		return (1);
 	return (0);

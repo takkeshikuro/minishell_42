@@ -6,7 +6,7 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 08:56:06 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/08/30 02:01:21 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/08/30 03:25:40 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	*just_alloc(int len, int j_dol, char *s_af)
 	return (ok);
 }
 
-void	built_move(t_cmd_parse *node, int ok)
+void	built_move(t_cmd_parse *node, size_t ok)
 {
 	char	**tab;
 

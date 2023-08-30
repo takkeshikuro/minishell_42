@@ -6,7 +6,7 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 05:04:38 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/08/30 01:49:24 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/08/30 03:20:20 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ typedef struct s_parser_data
 void					free_lxr_lst(t_lexer *lst);
 
 /************************* MAIN *********************************/
-void					mini_loop(t_main *data, char **env);
+void					mini_loop(t_main *data);
 int						start_in_loop(t_main *data, char *input);
 void					handle_quote_n_expand(t_main *data);
 void					parsing(t_main *data, char **env);

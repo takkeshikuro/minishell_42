@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_random.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 05:38:24 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/08/28 12:44:17 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/08/30 03:24:51 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int	pb_quote(const char *str, int sep)
 	comp = 0;
 	sep1 = 34;
 	sep2 = 39;
+	(void)sep;
 	while (str[i])
 	{
 		if (str[i] == sep1)

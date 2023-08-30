@@ -6,7 +6,7 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 15:15:22 by keshikuro         #+#    #+#             */
-/*   Updated: 2023/08/30 02:56:57 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/08/30 03:04:20 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,12 @@ int	option_check(char *s)
 		if (s[i] == '\0')
 			return (0);
 	}
+	return (0);
 }
 
 void	echo_print(char **tab, int ok)
 {
 	int	i;
-	int	check_option;
 
 	i = 1;
 	while (tab[i])

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_dol_qt.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 13:56:49 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/08/28 14:39:45 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/08/30 03:10:33 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ char	*keep_good_str_qt(char **env, int nb_env)
 int	check_env_bis_qt(char **env, char *str_dol)
 {
 	int	i;
-	int len;
+	int	len;
 
 	i = 0;
 	len = ft_strlen(str_dol);
@@ -112,4 +112,5 @@ int	expand_dol_qt(t_main *data, t_cmd_parse *node, int i, int j)
 		free(final);
 		return (ok);
 	}
+	return (1);
 }

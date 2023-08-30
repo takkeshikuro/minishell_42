@@ -6,7 +6,7 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 23:55:37 by keshikuro         #+#    #+#             */
-/*   Updated: 2023/08/22 00:22:02 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/08/30 03:22:05 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,14 +62,13 @@ int	go_parser(t_main *data)
 {
 	t_cmd_parse		*node;
 	t_parser_data	parser_data;
-	int				nb;
 
 	if (small_check(data) || ope_check(data))
 		return (0);
 	while (data->lexer_list)
 	{
 		parser_data = init_p_data(data->lexer_list, data);
-		node = init_cmd(&parser_data, nb);
+		node = init_cmd(&parser_data, 0);
 		if (!node)
 			exit(1);
 		if (!data->cmd_parse)

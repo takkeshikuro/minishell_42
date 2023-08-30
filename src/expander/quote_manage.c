@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quote_manage.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 06:31:03 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/08/28 13:05:10 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/08/30 03:13:04 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ int	quote_manage(t_main *data, t_cmd_parse *node, int i)
 	int			j;
 
 	j = 0;
+	(void)data;
 	while (node->cmd_tab[i][j])
 	{
 		if (node->cmd_tab[i][j] == 39)

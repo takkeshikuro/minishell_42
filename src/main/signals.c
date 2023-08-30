@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 08:28:59 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/08/28 08:39:30 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/08/30 03:20:50 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	eot_handler(t_main *data)
 
 void	sig_handler(int sig)
 {
-	int	*ret;
+//	int	*ret;
 
 	if (sig == SIGINT)
 	{

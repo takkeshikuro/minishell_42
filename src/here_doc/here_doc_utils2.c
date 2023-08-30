@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc_utils2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmarecar <rmarecar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 13:39:03 by rmarecar          #+#    #+#             */
-/*   Updated: 2023/08/24 20:08:34 by rmarecar         ###   ########.fr       */
+/*   Updated: 2023/08/30 03:18:48 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	close_free_hd(t_main *data, t_cmd_parse *node, char *input, int fd, int check)
 {
+	(void)data; //pour les flags
 	if (check != -42)
 	{
 		fprintf(stderr, "bash: warning: here-document at line %d ", check);

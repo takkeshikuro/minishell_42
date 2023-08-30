@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmarecar <rmarecar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 10:38:28 by rmarecar          #+#    #+#             */
-/*   Updated: 2023/08/22 13:16:03 by rmarecar         ###   ########.fr       */
+/*   Updated: 2023/08/30 03:17:40 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ char	*get_var_name(char *input)
 char	*get_var_content(t_main *data, char *var_name)
 {
 	int		i;
-	char	*content;
+//	char	*content;
 	char	**envp;
 	char	**envp_exp;
 	int		len;

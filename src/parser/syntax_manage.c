@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_manage.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 16:24:58 by keshikuro         #+#    #+#             */
-/*   Updated: 2023/08/28 09:10:29 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/08/30 03:23:59 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ int	syntax_slash(t_main *data, char *s)
 int	syntax_dig(t_main *data, char *s)
 {
 	int		i;
-	int		j;
 
 	i = 0;
 	if (cmpchar(s[0], '\'') || cmpchar(s[0], '"'))
@@ -87,9 +86,8 @@ int	syntax_c2(t_main *data, t_lexer *current)
 int	syntax_check(t_main *data, int size)
 {
 	t_lexer	*current;
-	int		i;
 
-	i = 0;
+	(void)size;
 	current = data->lexer_list;
 	if (current->str)
 		if (syntax_slash(data, current->str))

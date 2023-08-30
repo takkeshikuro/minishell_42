@@ -6,7 +6,7 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 03:45:35 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/08/30 02:03:00 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/08/30 03:20:12 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	start_in_loop(t_main *data, char *input)
 	return (0);
 }
 
-void	mini_loop(t_main *data, char **env)
+void	mini_loop(t_main *data)
 {
 	char	*input;
 
@@ -95,6 +95,6 @@ int	main(int ac, char **av, char **env)
 	init_stuff(&data);
 	get_env(&data, env);
 	get_env_export(&data);
-	mini_loop(&data, env);
+	mini_loop(&data);
 	return (0);
 }

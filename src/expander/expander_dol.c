@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander_dol.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 23:48:00 by keshikuro         #+#    #+#             */
-/*   Updated: 2023/08/28 14:50:21 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/08/30 03:12:01 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,14 @@ int	expand_dollard(t_main *data, t_cmd_parse *node, int i, int j)
 		free(str_replace);
 		return (ok);
 	}
+	return (1);
 }
 
 int	return_value(t_main *data, t_cmd_parse *node, int i, int j_dol)
 {
 	char	*str_replace;
 
+	(void)j_dol;
 	if (ft_strlen(node->cmd_tab[i]) == 2)
 		str_replace = ft_itoa(data->return_value);
 	else
@@ -90,6 +92,7 @@ int	expanding_bis(t_main *data, t_cmd_parse *node, int i, int j)
 		return (1);
 	else if (nb_env == -3)
 		return (return_value(data, node, i, j));
+	return (0);
 }
 
 void	expanding(t_main *data, t_cmd_parse *node, int i, int j)

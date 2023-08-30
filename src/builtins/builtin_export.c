@@ -6,7 +6,7 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 13:05:43 by keshikuro         #+#    #+#             */
-/*   Updated: 2023/08/25 23:07:37 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/08/30 03:06:26 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,6 @@ void	export_support(t_main *data, char *s)
 int	built_export(t_main *data, t_cmd_parse *cmd_parse)
 {
 	int		i;
-	int		j;
-	char	*tmp;
 
 	i = 1;
 	if (!cmd_parse->cmd_tab[1] || cmd_parse->cmd_tab[1][0] == '\0')
