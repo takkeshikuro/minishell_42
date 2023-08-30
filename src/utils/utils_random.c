@@ -6,7 +6,7 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 05:38:24 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/08/30 12:27:10 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/08/30 12:46:50 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	pb_quote_dig(t_main *data, char *s, int sep)
 	else
 	{
 		data->return_value = 2;
-		return (error("should close quote."));
+		return (error(data, "should close quote.", 2));
 	}
 }
 

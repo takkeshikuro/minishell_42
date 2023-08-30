@@ -6,7 +6,7 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 13:05:38 by keshikuro         #+#    #+#             */
-/*   Updated: 2023/08/25 01:51:29 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/08/30 12:47:20 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	change_envbis(t_main *data)
 
 	i = 0;
 	if (getcwd(s_new, sizeof(s_new)) == NULL)
-		error("getcwd() failed");
+		error(data, "getcwd() failed", 1);
 	while (data->env_bis[i])
 	{
 		if (!ft_strncmp(data->env_bis[i], "PWD", 3))

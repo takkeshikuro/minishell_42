@@ -6,7 +6,7 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 06:02:15 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/08/30 12:40:27 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/08/30 12:47:46 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int	error(t_main *data, char *s, int rv)
 		data->return_value = 2;
 	else if (rv == 127)
 		data->return_value = 127;
+	else
+		data->return_value = rv;
 	return (1);
 }
 
