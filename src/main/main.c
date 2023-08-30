@@ -6,7 +6,7 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 03:45:35 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/08/30 03:20:12 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/08/30 12:42:28 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,18 +39,16 @@ int	start_in_loop(t_main *data, char *input)
 {
 	data->input_line = malloc(sizeof(char) * (ft_strlen(input) + 1));
 	if (!data->input_line)
-		error("malloc failed");
+		error_main("malloc failed");
 	ft_strlcpy(data->input_line, input, ft_strlen(input));
 	if (!go_lexer(data))
-		error("lexing failed.");
+		error_main("lexing failed.");
 	if (!go_parser(data))
 	{
 		data->syntaxe_check = 1;
 		return (1);
 	}
-//	prrr(data->cmd_parse, 1);
 	handle_quote_n_expand(data);
-//	prrr(data->cmd_parse, 0);
 	check_echo_tab(data);
 //	prrr(data->cmd_parse, 0);
 	return (0);
@@ -65,7 +63,7 @@ void	mini_loop(t_main *data)
 		input = readline("[42] $> ");
 		if (!input)
 			eot_handler(data);
-		if (check_space(input) && !pb_quote(input, 34))
+		if (check_space(input) && !pb_quote(data, input, 34, 39))
 		{
 			if (input[0] != '\0')
 			{
@@ -89,9 +87,9 @@ int	main(int ac, char **av, char **env)
 
 	(void)av;
 	if (ac != 1)
-		return (error("run ./minishell without arg"));
+		return (error_main("run ./minishell without arg"));
 	if (!env[0])
-		return (error("env is missing"));
+		return (error_main("env is missing"));
 	init_stuff(&data);
 	get_env(&data, env);
 	get_env_export(&data);

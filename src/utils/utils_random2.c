@@ -6,11 +6,18 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 08:56:06 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/08/30 03:25:40 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/08/30 12:23:38 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+int	cmpchar(char c, char ok)
+{
+	if (c == ok)
+		return (1);
+	return (0);
+}
 
 char	*just_alloc(int len, int j_dol, char *s_af)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_ope.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 13:32:15 by keshikuro         #+#    #+#             */
-/*   Updated: 2023/08/28 09:50:03 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/08/30 12:36:58 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,15 @@ int	ope_check(t_main *data)
 	return (0);
 }
 
+int	small_case(t_main *data, char *s)
+{
+	if (!ft_strncmp(s, "!", 1))
+		data->return_value = 1;
+	else if (!ft_strncmp(s, ":", 1))
+		data->return_value = 0;
+	return (1);
+}
+
 int	small_check(t_main *data)
 {
 	int				size;
@@ -95,11 +104,11 @@ int	small_check(t_main *data)
 		{
 			if ((!ft_strncmp(tmp->str, "!", 1) || !ft_strncmp(tmp->str, ":", 1))
 				&& ft_strlen(tmp->str) == 1)
-				return (1);
+				return (small_case(data, tmp->str));
 			else if (!ft_strncmp(tmp->str, ".", 1) && ft_strlen(tmp->str) == 1)
-				return (error(".: usage: . filename [arguments]"));
+				return (error(data, ".: usage: . filename [arguments]", 2));
 			else if (!ft_strncmp(tmp->str, "..", 2) && ft_strlen(tmp->str) == 2)
-				return (error("..: command not found"));
+				return (error(data, "..: command not found", 127));
 		}
 		tmp = tmp->next;
 	}

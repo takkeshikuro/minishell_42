@@ -6,7 +6,7 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 05:04:38 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/08/30 03:20:20 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/08/30 12:42:19 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -287,14 +287,15 @@ void					free_cmd_tab(t_main *data);
 void					free_cmd_lst(t_cmd_parse *lst);
 
 ////////////////////////////////////error.c
-int						error(char *s);
+int						error(t_main *data, char *s, int rv);
 void					void_error(char *s);
 int						syntax_err(t_main *data, char *s);
 int						is_dir_error(t_main *data, char *s, int ok);
+int						error_main(char *s);
 
 //utils_random
 int						check_space(char *s);
-int						pb_quote(const char *str, int sep);
+int						pb_quote(t_main *data, char *str, int sep1, int sep2);
 int						is_space(char c);
 int						ft_nbstr(char const *str, char sep);
 char					*just_alloc(int len, int j_dol, char *s_af);

@@ -6,7 +6,7 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 05:38:24 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/08/30 03:24:51 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/08/30 12:27:10 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,46 +25,38 @@ int	check_space(char *s)
 		return (1);
 }
 
-int	pb_quote(const char *str, int sep)
+int	pb_quote_dig(t_main *data, char *s, int sep)
 {
-	int	i;
-	int ok;
-	int comp;
-	int sep1;
-	int sep2;
+	int	ok;
+	int	comp;
 
-	i = 0;
 	ok = 0;
 	comp = 0;
-	sep1 = 34;
-	sep2 = 39;
-	(void)sep;
+	while (s[ok])
+	{
+		if (s[ok++] == sep)
+			comp++;
+	}
+	if (comp % 2 == 0)
+		return (0);
+	else
+	{
+		data->return_value = 2;
+		return (error("should close quote."));
+	}
+}
+
+int	pb_quote(t_main *data, char *str, int sep1, int sep2)
+{
+	int	i;
+
+	i = 0;
 	while (str[i])
 	{
 		if (str[i] == sep1)
-		{
-			while (str[ok])
-			{
-				if (str[ok++] == sep1)
-					comp++;
-			}
-			if (comp % 2 == 0)
-				return (0);
-			else
-				return (error("should close quote."));
-		}
+			return (pb_quote_dig(data, str, sep1));
 		else if (str[i] == sep2)
-		{
-			while (str[ok])
-			{
-				if (str[ok++] == sep2)
-					comp++;
-			}
-			if (comp % 2 == 0)
-				return (0);
-			else
-				return (error("should close quote."));
-		}
+			return (pb_quote_dig(data, str, sep2));
 		i++;
 	}
 	return (0);
@@ -97,11 +89,4 @@ int	ft_nbstr(char const *str, char sep)
 			i++;
 	}
 	return (nbword);
-}
-
-int	cmpchar(char c, char ok)
-{
-	if (c == ok)
-		return (1);
-	return (0);
 }

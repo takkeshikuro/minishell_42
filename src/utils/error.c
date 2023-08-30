@@ -3,18 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 06:02:15 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/08/28 09:49:31 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/08/30 12:40:27 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	error(char *s)
+int	error(t_main *data, char *s, int rv)
 {
 	printf("%s\n", s);
+	if (rv == 2)
+		data->return_value = 2;
+	else if (rv == 127)
+		data->return_value = 127;
+	return (1);
+}
+
+int	error_main(char *s)
+{
+	ft_putendl_fd(s, 1);
 	return (1);
 }
 
@@ -38,7 +48,6 @@ int	is_dir_error(t_main *data, char *s, int ok)
 		data->return_value = 126;
 		ft_putstr_fd(": Is a directory\n", 1);
 	}
-	free(s);
 	return (1);
 }
 

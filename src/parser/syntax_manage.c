@@ -6,7 +6,7 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 16:24:58 by keshikuro         #+#    #+#             */
-/*   Updated: 2023/08/30 03:23:59 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/08/30 12:11:09 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,27 +15,27 @@
 int	syntax_slash(t_main *data, char *s)
 {
 	int		i;
-	int		k;
-	int		j;
-	char	*tmp;
-	int		ok;
 
 	i = 0;
-	while (s[i])
+	if (s[i] == '/')
 	{
-		if (cmpchar(s[i], '/') && !cmpchar(s[i - 1], '.'))
-		{
-			j = i;
-			k = 0;
-			while (s[j] && s[j++] != ' ')
-				k++;
-			tmp = malloc(sizeof(char) * k + 1);
-			if (!tmp)
-				exit (1);
-			ok = cp_s(tmp, s, i);
-			return (is_dir_error(data, tmp, ok));
-		}
 		i++;
+		while (s[i] == '/')
+			i++;
+		if (s[i] == '\0')
+			return (is_dir_error(data, s, 0));
+		if (!ft_strncmp(s + i, "bin", 3))
+			return (0);
+		else
+			return (is_dir_error(data, s, 1));
+	}
+	if (s[i] == '.' && s[i + 1] == '/')
+	{
+		i++;
+		while (s[i] == '/')
+			i++;
+		if (s[i] == '\0')
+			return (is_dir_error(data, s, 0));
 	}
 	return (0);
 }
@@ -90,8 +90,10 @@ int	syntax_check(t_main *data, int size)
 	(void)size;
 	current = data->lexer_list;
 	if (current->str)
+	{
 		if (syntax_slash(data, current->str))
 			return (1);
+	}
 	while (current)
 	{
 		if (current->operateur)
