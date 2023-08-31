@@ -6,7 +6,7 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 03:45:35 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/08/31 04:53:44 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/08/31 05:35:58 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ int	main(int ac, char **av, char **env)
 	if (!env[0])
 		return (error_main("env is missing"));
 	init_stuff(&data);
+	print_intro();
 	get_env(&data, env);
 	get_env_export(&data);
 	mini_loop(&data);

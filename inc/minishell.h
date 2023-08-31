@@ -6,7 +6,7 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 05:04:38 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/08/31 04:53:35 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/08/31 05:37:03 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -294,6 +294,7 @@ int						ft_nbstr(char const *str, char sep);
 char					*just_alloc(int len, int j_dol, char *s_af);
 void					echo_move(t_cmd_parse *node);
 void					check_echo_tab(t_main *data);
+void					print_intro(void);
 
 // a supp
 void	pr(t_lexer *lexer_list);              // for lexer
