@@ -39,7 +39,7 @@ clean:
 	@echo "$(GREEN)♻️ ${B_GREEN} .....TRASHING ALL OBJECTS..... $(GREEN)♻️ "
 	@rm -f $(OBJS_T)
 	@$(MAKE) -C $(LIBFT) clean
-	@sleep 0.5
+#	@sleep 0.5
 	@echo "$(B_RED)Done."
 
 fclean: clean

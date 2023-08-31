@@ -6,7 +6,7 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 03:45:35 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/08/31 04:12:59 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/08/31 04:53:44 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,11 @@ int	start_in_loop(t_main *data, char *input)
 	ft_strlcpy(data->input_line, input, ft_strlen(input));
 	if (!go_lexer(data))
 		error_main("lexing failed.");
-//	pr(data->lexer_list);
 	if (!go_parser(data))
 	{
 		data->syntaxe_check = 1;
 		return (1);
 	}
-	//prrr(data->cmd_parse, 1);
 	handle_quote_n_expand(data);
 	check_echo_tab(data);
 //	prrr(data->cmd_parse, 0);
@@ -65,8 +63,6 @@ void	mini_loop(t_main *data)
 		input = readline("[42] $> ");
 		if (!input)
 			eot_handler(data);
-	//	if (global_v == 1)
-	//		data->return_value = 130;
 		if (check_space(input) && !pb_quote(data, input, 34, 39))
 		{
 			if (input[0] != '\0')

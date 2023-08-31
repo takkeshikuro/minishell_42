@@ -6,10 +6,9 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 13:56:49 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/08/30 03:10:33 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/08/31 04:47:24 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "../../inc/minishell.h"
 
@@ -88,7 +87,7 @@ int	check_env_variable_qt(t_main *data, char *s, int j)
 		i++;
 		size++;
 	}
-	str_dol = ft_substr(s, j + 1, (size - 1));
+	str_dol = ft_substr(s, j + 1, size);
 	result = check_env_bis_qt(data->env_bis, str_dol);
 	free(str_dol);
 	return (result);

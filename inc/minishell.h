@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmarecar <rmarecar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 05:04:38 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/08/30 16:35:26 by rmarecar         ###   ########.fr       */
+/*   Updated: 2023/08/31 04:53:35 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,6 @@
 # include <sys/uio.h>
 # include <sys/wait.h>
 # include <unistd.h>
-
-// a normer :
-// copy_past() in expander_dol_utils
-// add_word() in lexer
-// init_cmd() in parser
-
-//int global_v;
 
 typedef struct s_here_doc
 {

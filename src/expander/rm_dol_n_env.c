@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rm_dol_n_env.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 02:57:58 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/08/28 14:46:04 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/08/31 04:41:23 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ int	check_env_variable(t_main *data, char *s, int j)
 	if (size == 1)
 		str_dol = ft_substr(s, j + 1, size);
 	else
-		str_dol = ft_substr(s, j + 1, (size - 1));
+		str_dol = ft_substr(s, j + 1, size);
 	result = check_env_bis(data->env_bis, str_dol);
 	free(str_dol);
 	return (result);
