@@ -6,7 +6,7 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 16:29:32 by keshikuro         #+#    #+#             */
-/*   Updated: 2023/08/30 14:21:58 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/08/31 02:53:12 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	pr(t_lexer *lexer_list)
 	{
 		fprintf(stderr, "[node %d: ", i);
 		if (tmp->str)
-			fprintf(stderr, "%s]", tmp->str);
+			fprintf(stderr, "(%s)]", tmp->str);
 		else
 			fprintf(stderr, "%d]", tmp->i);
 		i++;

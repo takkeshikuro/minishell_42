@@ -6,7 +6,7 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 04:07:31 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/08/22 02:01:35 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/08/31 03:11:59 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	add_word(char *str, int i, t_lexer **lexer_list)
 			return (free(tmp), -1);
 		return (j);
 	}
-	tmp = ft_substr(str, i, (j - 1));
+	tmp = ft_substr(str, i, j);
 	if (!add_to_list(tmp, 0, lexer_list))
 		return (free(tmp), -1);
 	return (j);

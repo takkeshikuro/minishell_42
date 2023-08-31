@@ -107,7 +107,7 @@ int	first_builtins(t_main *data, t_cmd_parse *node)
 	{
 		if (data->pipe_count)
 			return (0);
-		built_exit(data, node);
+		data->return_value = built_exit(data, node);
 		return (1);
 	}
 	if (!ft_strncmp(node->cmd_tab[0], "unset", len) && node->next == NULL

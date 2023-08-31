@@ -6,7 +6,7 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 03:45:35 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/08/30 14:06:55 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/08/31 04:12:59 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,13 @@ int	start_in_loop(t_main *data, char *input)
 	ft_strlcpy(data->input_line, input, ft_strlen(input));
 	if (!go_lexer(data))
 		error_main("lexing failed.");
+//	pr(data->lexer_list);
 	if (!go_parser(data))
 	{
 		data->syntaxe_check = 1;
 		return (1);
 	}
+	//prrr(data->cmd_parse, 1);
 	handle_quote_n_expand(data);
 	check_echo_tab(data);
 //	prrr(data->cmd_parse, 0);

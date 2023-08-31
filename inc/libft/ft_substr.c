@@ -6,7 +6,7 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 21:56:35 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/07/19 02:33:49 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/08/31 03:08:50 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	*ft_substr(const char *s, unsigned int start, size_t len)
 	if (!str)
 		return (NULL);
 	if (len != 0)
-		ft_strlcpy(str, s + start, len + 1);
+		ft_strlcpy(str, s + start, len);
 	else
 		*str = 0;
 	return (str);
