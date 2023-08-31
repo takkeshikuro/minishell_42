@@ -14,14 +14,27 @@
 
 int	init_loop(t_cmd_parse *node, char *input, int fd[2])
 {
-	int	size;
+	int		i;
+	int		size;
+	t_lexer	*tmpr;
 
+	i = 0;
+	tmpr = node->redirection;
+	while (node->redirection)
+	{
+		if (node->redirection->operateur == LEFT_LEFT)
+			i++;
+		if (node->redirection->operateur == LEFT_LEFT && i == node->hdc)
+			break ;
+		node->redirection = node->redirection->next;
+	}
 	size = ft_strlen(input);
 	if (!ft_strncmp(input, node->redirection->str, size) && size)
 	{
 		close(fd[1]);
 		return (0);
 	}
+	node->redirection = tmpr;
 	return (1);
 }
 
@@ -86,6 +99,48 @@ void	here_doc_manage(t_main *data, t_cmd_parse *node, int fd[2])
 	exit(1);
 }
 
+void	first_hdsig(int signal)
+{
+	if (signal == SIGINT)
+		exit (42);
+}
+
+int	first_hds(t_cmd_parse *node)
+{
+	int		pid;
+	int		i;
+	char	*input;
+	int		status;
+	t_lexer	*tmpr;
+
+	tmpr = node->redirection;
+	i = 1;
+	while (i < node->hdc)
+	{
+		pid = fork();
+		if (pid == 0)
+		{
+			signal(SIGINT, first_hdsig);
+			while (1)
+			{
+				input = readline(">");
+				if (!input)
+					exit(1);
+				if (!ft_strncmp(input, "EOF", 3))
+					exit(1);
+			}
+		}
+		waitpid(pid, &status, 0);
+		if (WEXITSTATUS(status) == 42)
+		{
+			node->redirection = tmpr;
+			return (42);
+		}
+		i++;
+	}
+	return (0);
+}
+
 int	here_doc_init(t_main *data, t_cmd_parse *node)
 {
 	int			i;
@@ -100,6 +155,11 @@ int	here_doc_init(t_main *data, t_cmd_parse *node)
 	signal(SIGINT, SIG_IGN);
 	while (i < data->hd_count)
 	{
+		if (nodebis->hdc > 1)
+		{
+			if (first_hds(nodebis) == 42)
+				return (42);
+		}
 		pipe(data->here_doc[i].fd);
 		data->here_doc[i].pos = 1;
 		pid = fork();

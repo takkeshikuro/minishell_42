@@ -6,7 +6,7 @@
 /*   By: rmarecar <rmarecar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 19:57:05 by rmarecar          #+#    #+#             */
-/*   Updated: 2023/08/30 16:18:16 by rmarecar         ###   ########.fr       */
+/*   Updated: 2023/08/31 12:35:24 by rmarecar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,8 @@ void	hdc_init(t_main *data)
 void	pipe_init(t_main *data, t_cmd_parse *node)
 {
 	t_cmd_parse	*tmp;
-
+	t_lexer		*tmpr;
+	
 	data->cmd_paths = NULL;
 	tmp = node;
 	data->path = find_path(data->env_bis);
@@ -63,9 +64,17 @@ void	pipe_init(t_main *data, t_cmd_parse *node)
 	data->here_doc = NULL;
 	while (tmp)
 	{
+		tmp->hdc = 0;
 		if (tmp->redirection)
 		{
-			if (tmp->redirection->operateur == LEFT_LEFT)
+			tmpr = tmp->redirection;
+			while (tmpr)
+			{
+				if (tmpr->operateur == LEFT_LEFT)
+					tmp->hdc++;
+				tmpr = tmpr->next;
+			}
+			if (tmp->hdc)
 				data->hd_count++;
 		}
 		tmp = tmp->next;
