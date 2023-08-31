@@ -105,37 +105,59 @@ void	first_hdsig(int signal)
 		exit (42);
 }
 
+void	first_hd_manage(char *str)
+{
+	char	*input;
+
+	signal(SIGINT, first_hdsig);
+	while (1)
+	{
+		input = readline(">");
+		if (!input)
+		{
+			free(input);
+			printf("bash: warning: here-document at line 1");
+			printf("deliminited by end-of-file");
+			printf("(wanted `%s')\n", str);
+			exit(1);
+		}
+		if (!ft_strncmp(input, str, ft_strlen(str)))
+		{
+			free(input);
+			exit(1);
+		}
+		free(input);
+	}
+}
+
 int	first_hds(t_cmd_parse *node)
 {
 	int		pid;
 	int		i;
-	char	*input;
 	int		status;
 	t_lexer	*tmpr;
+	char	*str;
 
 	tmpr = node->redirection;
 	i = 1;
 	while (i < node->hdc)
 	{
 		pid = fork();
-		if (pid == 0)
+		while (tmpr)
 		{
-			signal(SIGINT, first_hdsig);
-			while (1)
+			if (tmpr->operateur == LEFT_LEFT)
 			{
-				input = readline(">");
-				if (!input)
-					exit(1);
-				if (!ft_strncmp(input, "EOF", 3))
-					exit(1);
+				str = tmpr->str;
+				tmpr = tmpr->next;
+				break ;
 			}
+			tmpr = tmpr->next;
 		}
+		if (pid == 0)
+			first_hd_manage(str);
 		waitpid(pid, &status, 0);
 		if (WEXITSTATUS(status) == 42)
-		{
-			node->redirection = tmpr;
 			return (42);
-		}
 		i++;
 	}
 	return (0);
