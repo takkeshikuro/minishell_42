@@ -6,7 +6,7 @@
 /*   By: rmarecar <rmarecar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 15:26:12 by marecarraya       #+#    #+#             */
-/*   Updated: 2023/09/01 17:13:25 by rmarecar         ###   ########.fr       */
+/*   Updated: 2023/09/01 20:37:32 by rmarecar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ int	open_outfile(t_main *data, t_cmd_parse *node, int old_fd)
 	if (out == -1)
 	{
 		perror(node->redirection->str);
+		if (old_fd != -1 && old_fd)
+			close(old_fd);
 		free_tab(data->cmd_paths);
 		free_tab(data->env_bis);
 		free_tab(data->env_exp);
@@ -41,6 +43,8 @@ int	open_infile(t_main *data, t_cmd_parse *node, int old_fd)
 	if (in == -1)
 	{
 		perror(node->redirection->str);
+		if (old_fd != -1 && old_fd)
+			close(old_fd);
 		free_tab(data->cmd_paths);
 		free_tab(data->env_bis);
 		free_tab(data->env_exp);

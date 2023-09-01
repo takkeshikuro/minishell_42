@@ -6,7 +6,7 @@
 /*   By: rmarecar <rmarecar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 10:38:28 by rmarecar          #+#    #+#             */
-/*   Updated: 2023/09/01 17:23:11 by rmarecar         ###   ########.fr       */
+/*   Updated: 2023/09/01 19:36:07 by rmarecar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ char	*get_var_name(t_main *data, char *input)
 char	*get_var_content(t_main *data, char *var_name)
 {
 	int		i;
-//	char	*content;
 	char	**envp;
 	char	**envp_exp;
 	int		len;

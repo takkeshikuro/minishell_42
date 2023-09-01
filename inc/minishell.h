@@ -6,7 +6,7 @@
 /*   By: rmarecar <rmarecar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 05:04:38 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/09/01 17:23:42 by rmarecar         ###   ########.fr       */
+/*   Updated: 2023/09/01 20:37:19 by rmarecar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -216,6 +216,12 @@ char					*get_var_content(t_main *data, char *var_name);
 void					here_doc_manage(t_main *data, t_cmd_parse *node,
 							int fd[2]);
 int						here_doc_init(t_main *data, t_cmd_parse *node);
+t_here_doc				*return_hd(t_here_doc *here_doc);
+int						return_hd_count(int hd_count);
+void					sig_hd(int signal);
+char					*skip_tmpr(t_lexer *tmpr);
+int						wait_hds(t_main *data, int i);
+
 
 void					no_command(t_main *data, t_cmd_parse *node);
 void					pipe_init(t_main *data, t_cmd_parse *node);
@@ -235,6 +241,9 @@ void					wait_exec(t_main *data);
 void					built_in_free(t_main *data);
 int						here_doc_var(t_main *data, char *input, int i,
 							int fd[2]);
+
+void					init_ex(t_main *data, int fd[2], int old_fd[2], int *i);
+void					last_process(t_main *data, t_cmd_parse *node, char *cmd, int fd[2]);
 
 /*********************** BUILTINS *********************************************/
 int						built_env(t_main *data, t_cmd_parse *cmd_parse);

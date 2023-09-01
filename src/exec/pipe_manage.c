@@ -6,11 +6,31 @@
 /*   By: rmarecar <rmarecar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 15:26:12 by marecarraya       #+#    #+#             */
-/*   Updated: 2023/09/01 17:20:44 by rmarecar         ###   ########.fr       */
+/*   Updated: 2023/09/01 19:31:55 by rmarecar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+void	ft_dup2close(int fd[2], int check)
+{
+	if (!check)
+	{
+		if (fd[1] != 1)
+		{
+			close(fd[0]);
+			dup2(fd[1], 1);
+			close(fd[1]);
+		}
+		return ;
+	}
+	else
+	{
+		if (fd[0] != -1)
+			close(fd[0]);
+		return ;
+	}
+}
 
 void	pipe_work(t_main *data, int fd[2], t_cmd_parse *node, int old_fd[2])
 {
@@ -28,46 +48,29 @@ void	pipe_work(t_main *data, int fd[2], t_cmd_parse *node, int old_fd[2])
 			dup2(old_fd[0], 0);
 			close(old_fd[0]);
 		}
-		if (fd[1] != 1)
-		{
-			close(fd[0]);
-			dup2(fd[1], 1);
-			close(fd[1]);
-		}
+		ft_dup2close(fd, 0);
 		builtin_exec(data, node);
 		cmd = get_command(data->cmd_paths, node->cmd_tab[0]);
 		if (cmd == NULL)
 		{
-			if (old_fd[0] != -1)
-				close(old_fd[0]);
+			ft_dup2close(old_fd, 1);
 			close(fd[0]);
 		}
 		ft_execve(data, node, cmd);
 	}
-	if (old_fd[0] != -1)
-		close(old_fd[0]);
+	ft_dup2close(old_fd, 1);
 }
 
-void	last_process(t_main *data, t_cmd_parse *node, char *cmd, int fd[2])
+void	exec2(t_main *data, t_cmd_parse *node, char *cmd, int fd[2])
 {
-	last_redir(data, node, &fd[0], &fd[1]);
-	if (fd[0] && node->hd_check == 0)
+	data->pid_last = fork();
+	if (data->pid_last == 0)
+		last_process(data, node, cmd, fd);
+	if (data->pipe_count)
 	{
 		close(fd[1]);
-		dup2(fd[0], 0);
 		close(fd[0]);
 	}
-	builtin_exec(data, node);
-	cmd = get_command(data->cmd_paths, node->cmd_tab[0]);
-	if (cmd == NULL)
-		no_command(data, node);
-	signal(SIGQUIT, SIG_DFL);
-	execve(cmd, node->cmd_tab, data->env_bis);
-	free_tab(data->cmd_paths);
-	free_tab(data->env_bis);
-	free_tab(data->env_exp);
-	reset_stuff(data);
-	exit (1);
 }
 
 void	exec(t_main *data, t_cmd_parse *node, char *cmd)
@@ -75,13 +78,8 @@ void	exec(t_main *data, t_cmd_parse *node, char *cmd)
 	int		i;
 	int		fd[2];
 	int		old_fd[2];
-	
-	fd[0] = 0;
-	fd[1] = 0;
-	old_fd[0] = -1;
-	old_fd[1] = -1;
-	data->hd_pos = 0;
-	i = 0;
+
+	init_ex(data, fd, old_fd, &i);
 	while (i < data->pipe_count)
 	{
 		pipe(fd);
@@ -99,14 +97,7 @@ void	exec(t_main *data, t_cmd_parse *node, char *cmd)
 		node = node->next;
 		i++;
 	}
-	data->pid_last = fork();
-	if (data->pid_last == 0)
-		last_process(data, node, cmd, fd);
-	if (data->pipe_count)
-	{
-		close(fd[1]);
-		close(fd[0]);
-	}
+	exec2(data, node, cmd, fd);
 }
 
 void	execute_cmd(t_main *data)

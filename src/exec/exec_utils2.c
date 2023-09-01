@@ -6,7 +6,7 @@
 /*   By: rmarecar <rmarecar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 19:57:05 by rmarecar          #+#    #+#             */
-/*   Updated: 2023/09/01 17:21:16 by rmarecar         ###   ########.fr       */
+/*   Updated: 2023/09/01 19:10:46 by rmarecar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,17 +53,22 @@ void	hdc_init(t_main *data)
 	}
 }
 
-void	pipe_init(t_main *data, t_cmd_parse *node)
+void	first_pinit(t_main *data)
 {
-	t_cmd_parse	*tmp;
-	t_lexer		*tmpr;
-	
 	data->cmd_paths = NULL;
-	tmp = node;
 	data->path = find_path(data->env_bis);
 	data->cmd_paths = ft_split(data->path, ':');
 	data->hd_count = 0;
 	data->here_doc = NULL;
+}
+
+void	pipe_init(t_main *data, t_cmd_parse *node)
+{
+	t_cmd_parse	*tmp;
+	t_lexer		*tmpr;
+
+	first_pinit(data);
+	tmp = node;
 	while (tmp)
 	{
 		tmp->hdc = 0;

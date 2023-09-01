@@ -6,7 +6,7 @@
 /*   By: rmarecar <rmarecar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 13:39:03 by rmarecar          #+#    #+#             */
-/*   Updated: 2023/09/01 17:01:39 by rmarecar         ###   ########.fr       */
+/*   Updated: 2023/09/01 20:01:22 by rmarecar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,20 @@ void	write_hd(t_main *data, char *input, int fd[2])
 	}
 	write(fd[1], "\n", 1);
 	free(input);
+}
+
+char	*skip_tmpr(t_lexer *tmpr)
+{
+	char	*str;
+
+	while (tmpr)
+	{
+		if (tmpr->operateur == LEFT_LEFT)
+		{
+			str = tmpr->str;
+			return (str);
+		}
+		tmpr = tmpr->next;
+	}
+	return (NULL);
 }

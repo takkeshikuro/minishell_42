@@ -6,7 +6,7 @@
 /*   By: rmarecar <rmarecar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 19:58:15 by rmarecar          #+#    #+#             */
-/*   Updated: 2023/09/01 17:13:43 by rmarecar         ###   ########.fr       */
+/*   Updated: 2023/09/01 20:37:09 by rmarecar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,21 @@ void	last_redir_hd(t_main *data, t_cmd_parse *node, int fd)
 	close(data->here_doc[data->hd_pos].fd[0]);
 }
 
+void	last_redir2(t_main *data, t_cmd_parse *node, int *in, int *out)
+{
+	if (node->redirection->operateur == RIGHT_RIGHT)
+	{
+		*out = open_append(data, node, *out);
+		dup2(*out, 1);
+		close(*out);
+	}
+	if (node->redirection->operateur == LEFT_LEFT)
+	{
+		if (node->hd_check != 1)
+			last_redir_hd(data, node, *in);
+	}
+}
+
 void	last_redir(t_main *data, t_cmd_parse *node, int *in, int *out)
 {
 	t_lexer	*tmp;
@@ -63,17 +78,7 @@ void	last_redir(t_main *data, t_cmd_parse *node, int *in, int *out)
 		{
 			*in = open_infile(data, node, *in);
 		}
-		if (node->redirection->operateur == RIGHT_RIGHT)
-		{
-			*out = open_append(data, node, *out);
-			dup2(*out, 1);
-			close(*out);
-		}
-		if (node->redirection->operateur == LEFT_LEFT)
-		{
-			if (node->hd_check != 1)
-				last_redir_hd(data, node, *in);
-		}
+		last_redir2(data, node, in, out);
 		node->redirection = node->redirection->next;
 	}
 	node->redirection = tmp;

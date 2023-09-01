@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_random2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
+/*   By: rmarecar <rmarecar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 08:56:06 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/08/30 12:23:38 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/09/01 20:05:31 by rmarecar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	built_found(char *s)
 	if (!ft_strncmp(s, "echo", 4) || !ft_strncmp(s, "exit", 4))
 		return (4);
 	else if (!ft_strncmp(s, "export", 6))
-		return (6); 
+		return (6);
 	else if (!ft_strncmp(s, "cd", 2))
 		return (2);
 	else if (!ft_strncmp(s, "unset", 5))

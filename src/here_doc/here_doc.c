@@ -39,46 +39,6 @@ int	init_loop(t_cmd_parse *node, char *input, int fd[2])
 	return (1);
 }
 
-t_here_doc	*return_hd(t_here_doc *here_doc)
-{
-	static t_here_doc	*hd;
-	if (here_doc)
-		hd = here_doc;
-	return (hd);
-}
-
-int	return_hd_count(int hd_count)
-{
-	static int	hdc;
-
-	if (hd_count != -1)
-		hdc = hd_count;
-	return (hdc);
-}
-
-void	sig_hd(int signal)
-{
-	t_here_doc	*hd;
-	int			i;
-	int			hdc;
-
-	if (signal == SIGINT)
-	{
-		i = 0;
-		hd = return_hd(NULL);
-		hdc = return_hd_count(-1);
-		while (i < hdc)
-		{
-			if (hd[i].pos == 0)
-				break ;
-			close(hd[i].fd[0]);
-			close(hd[i].fd[1]);
-			i++;
-		}
-		exit (42);
-	}
-}
-
 void	here_doc_manage(t_main *data, t_cmd_parse *node, int fd[2])
 {
 	char	*input;
@@ -99,38 +59,32 @@ void	here_doc_manage(t_main *data, t_cmd_parse *node, int fd[2])
 	}
 }
 
-void	first_hdsig(int signal)
-{
-	if (signal == SIGINT)
-		exit (42);
-}
-
-void	first_hd_manage(char *str)
+void	first_hd_manage(t_main *data, t_cmd_parse *node, char *str)
 {
 	char	*input;
 
-	signal(SIGINT, first_hdsig);
+	signal(SIGINT, sig_hd);
 	while (1)
 	{
 		input = readline(">");
 		if (!input)
 		{
-			free(input);
 			printf("bash: warning: here-document at line 1");
 			printf("deliminited by end-of-file");
 			printf("(wanted `%s')\n", str);
+			close_free_hd(data, node, input, -42);
 			exit(1);
 		}
 		if (!ft_strncmp(input, str, ft_strlen(str)))
 		{
-			free(input);
+			close_free_hd(data, node, input, -42);
 			exit(1);
 		}
 		free(input);
 	}
 }
 
-int	first_hds(t_cmd_parse *node)
+int	first_hds(t_main *data, t_cmd_parse *node)
 {
 	int		pid;
 	int		i;
@@ -142,22 +96,14 @@ int	first_hds(t_cmd_parse *node)
 	i = 1;
 	while (i < node->hdc)
 	{
+		str = skip_tmpr(tmpr);
 		pid = fork();
-		while (tmpr)
-		{
-			if (tmpr->operateur == LEFT_LEFT)
-			{
-				str = tmpr->str;
-				tmpr = tmpr->next;
-				break ;
-			}
-			tmpr = tmpr->next;
-		}
 		if (pid == 0)
-			first_hd_manage(str);
+			first_hd_manage(data, node, str);
 		waitpid(pid, &status, 0);
 		if (WEXITSTATUS(status) == 42)
 			return (42);
+		tmpr = tmpr->next;
 		i++;
 	}
 	return (0);
@@ -168,7 +114,6 @@ int	here_doc_init(t_main *data, t_cmd_parse *node)
 	int			i;
 	int			pid;
 	t_cmd_parse	*nodebis;
-	int			status;
 
 	nodebis = node;
 	i = 0;
@@ -181,7 +126,7 @@ int	here_doc_init(t_main *data, t_cmd_parse *node)
 			nodebis = nodebis->next;
 		if (nodebis->hdc > 1)
 		{
-			if (first_hds(nodebis) == 42)
+			if (first_hds(data, nodebis) == 42)
 				return (42);
 		}
 		pipe(data->here_doc[i].fd);
@@ -189,18 +134,8 @@ int	here_doc_init(t_main *data, t_cmd_parse *node)
 		pid = fork();
 		if (pid == 0)
 			here_doc_manage(data, nodebis, data->here_doc[i].fd);
-		waitpid(-1, &status, 0);
-		if (WEXITSTATUS(status) == 42)
-		{
-			while (i >= 0)
-			{
-				close(data->here_doc[i].fd[0]);
-				close(data->here_doc[i].fd[1]);
-				i--;
-			}
-			signal(SIGINT, sig_handler);
+		if (wait_hds(data, i) == 42)
 			return (42);
-		}
 		close(data->here_doc[i].fd[1]);
 		i++;
 		nodebis = nodebis->next;
