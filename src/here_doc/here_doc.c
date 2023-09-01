@@ -32,6 +32,7 @@ int	init_loop(t_cmd_parse *node, char *input, int fd[2])
 	if (!ft_strncmp(input, node->redirection->str, size) && size)
 	{
 		close(fd[1]);
+		node->redirection = tmpr;
 		return (0);
 	}
 	node->redirection = tmpr;
@@ -176,6 +177,8 @@ int	here_doc_init(t_main *data, t_cmd_parse *node)
 	signal(SIGINT, SIG_IGN);
 	while (i < data->hd_count)
 	{
+		if (nodebis->hdc == 0)
+			nodebis = nodebis->next;
 		if (nodebis->hdc > 1)
 		{
 			if (first_hds(nodebis) == 42)
