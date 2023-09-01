@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_end.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
+/*   By: rmarecar <rmarecar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 13:06:52 by rmarecar          #+#    #+#             */
-/*   Updated: 2023/08/25 03:42:34 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/09/01 17:21:52 by rmarecar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,5 +53,7 @@ void	built_in_free(t_main *data)
 	free_tab(data->cmd_paths);
 	free_tab(data->env_bis);
 	free_tab(data->env_exp);
+	if (data->here_doc)
+		free(data->here_doc);
 	reset_stuff(data);
 }

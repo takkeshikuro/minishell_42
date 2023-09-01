@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
+/*   By: rmarecar <rmarecar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 10:38:28 by rmarecar          #+#    #+#             */
-/*   Updated: 2023/08/30 03:17:40 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/09/01 17:23:11 by rmarecar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	ft_varname_len(char *str)
 	return (len - 1);
 }
 
-char	*get_var_name(char *input)
+char	*get_var_name(t_main *data, char *input)
 {
 	int		i;
 	int		len;
@@ -48,6 +48,10 @@ char	*get_var_name(char *input)
 	if (!name)
 	{
 		fprintf(stderr, "ERROR MALLOC : GET VAR NAME (here_doc manage)");
+		free_tab(data->cmd_paths);
+		free_tab(data->env_bis);
+		free_tab(data->env_exp);
+		reset_stuff(data);
 		exit (1);
 	}
 	len = 0;
@@ -95,7 +99,7 @@ int	here_doc_var(t_main *data, char *input, int i, int fd[2])
 	char	*var_content;
 	int		len;
 
-	var_name = get_var_name(input + i);
+	var_name = get_var_name(data, input + i);
 	var_content = get_var_content(data, var_name);
 	if (var_content != NULL)
 		write(fd[1], var_content, ft_strlen(var_content));

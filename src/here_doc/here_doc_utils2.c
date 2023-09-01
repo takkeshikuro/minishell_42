@@ -6,7 +6,7 @@
 /*   By: rmarecar <rmarecar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 13:39:03 by rmarecar          #+#    #+#             */
-/*   Updated: 2023/08/30 15:45:04 by rmarecar         ###   ########.fr       */
+/*   Updated: 2023/09/01 17:01:39 by rmarecar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,11 @@ void	close_free_hd(t_main *data, t_cmd_parse *node, char *input, int check)
 		close(data->here_doc[i].fd[1]);
 		i++;
 	}
+	free(data->here_doc);
+	free_tab(data->cmd_paths);
+	free_tab(data->env_bis);
+	free_tab(data->env_exp);
+	reset_stuff(data);
 	exit (1);
 }
 

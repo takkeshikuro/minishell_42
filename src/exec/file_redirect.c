@@ -6,7 +6,7 @@
 /*   By: rmarecar <rmarecar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 19:58:15 by rmarecar          #+#    #+#             */
-/*   Updated: 2023/08/30 16:47:11 by rmarecar         ###   ########.fr       */
+/*   Updated: 2023/09/01 17:13:43 by rmarecar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@ void	redir_pipe(t_main *data, t_cmd_parse *node, int *in, int *out)
 	while (node->redirection)
 	{
 		if (node->redirection->operateur == RIGHT)
-			*out = open_outfile(node, *out);
+			*out = open_outfile(data, node, *out);
 		if (node->redirection->operateur == LEFT)
-			*in = open_infile(node, *in);
+			*in = open_infile(data, node, *in);
 		if (node->redirection->operateur == RIGHT_RIGHT)
-			*out = open_append(node, *out);
+			*out = open_append(data, node, *out);
 		if (node->redirection->operateur == LEFT_LEFT)
 		{
 			node->hd_check = 1;
@@ -55,17 +55,17 @@ void	last_redir(t_main *data, t_cmd_parse *node, int *in, int *out)
 	{
 		if (node->redirection->operateur == RIGHT)
 		{
-			*out = open_outfile(node, *out);
+			*out = open_outfile(data, node, *out);
 			dup2(*out, 1);
 			close(*out);
 		}
 		if (node->redirection->operateur == LEFT)
 		{
-			*in = open_infile(node, *in);
+			*in = open_infile(data, node, *in);
 		}
 		if (node->redirection->operateur == RIGHT_RIGHT)
 		{
-			*out = open_append(node, *out);
+			*out = open_append(data, node, *out);
 			dup2(*out, 1);
 			close(*out);
 		}

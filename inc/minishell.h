@@ -6,7 +6,7 @@
 /*   By: rmarecar <rmarecar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 05:04:38 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/08/31 12:08:09 by rmarecar         ###   ########.fr       */
+/*   Updated: 2023/09/01 17:23:42 by rmarecar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,14 +195,14 @@ char					*add_qt(char *s);
 /*****************EXEC DIRECTORY***********************/
 // pipe_manage.c && utils
 void					execute_cmd(t_main *data);
-int						open_outfile(t_cmd_parse *node, int old_fd);
-int						open_infile(t_cmd_parse *node, int old_fd);
+int						open_outfile(t_main *data, t_cmd_parse *node, int old_fd);
+int						open_infile(t_main *data, t_cmd_parse *node, int old_fd);
 int						contains_char(char *str, char c);
 char					*get_command(char **paths, char *cmd);
 int						lstsize(t_cmd_parse *lst);
 char					*find_path(char **envp);
 void					close_pipe(t_main *data, int count);
-int						open_append(t_cmd_parse *node, int old_fd);
+int						open_append(t_main *data, t_cmd_parse *node, int old_fd);
 void					here_doc_manage(t_main *data, t_cmd_parse *node,
 							int fd[2]);
 //execbuiltin
@@ -211,7 +211,7 @@ int						first_builtins(t_main *data, t_cmd_parse *node);
 //hd.c
 int						has_variable(char *input);
 int						ft_varname_len(char *str);
-char					*get_var_name(char *input);
+char					*get_var_name(t_main*data, char *input);
 char					*get_var_content(t_main *data, char *var_name);
 void					here_doc_manage(t_main *data, t_cmd_parse *node,
 							int fd[2]);

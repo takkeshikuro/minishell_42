@@ -96,7 +96,6 @@ void	here_doc_manage(t_main *data, t_cmd_parse *node, int fd[2])
 		write_hd(data, input, fd);
 		j++;
 	}
-	exit(1);
 }
 
 void	first_hdsig(int signal)

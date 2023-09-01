@@ -6,13 +6,13 @@
 /*   By: rmarecar <rmarecar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 15:26:12 by marecarraya       #+#    #+#             */
-/*   Updated: 2023/08/30 17:00:00 by rmarecar         ###   ########.fr       */
+/*   Updated: 2023/09/01 17:13:25 by rmarecar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	open_outfile(t_cmd_parse *node, int old_fd)
+int	open_outfile(t_main *data, t_cmd_parse *node, int old_fd)
 {
 	int	out;
 
@@ -22,12 +22,16 @@ int	open_outfile(t_cmd_parse *node, int old_fd)
 	if (out == -1)
 	{
 		perror(node->redirection->str);
+		free_tab(data->cmd_paths);
+		free_tab(data->env_bis);
+		free_tab(data->env_exp);
+		reset_stuff(data);
 		exit(1);
 	}
 	return (out);
 }
 
-int	open_infile(t_cmd_parse *node, int old_fd)
+int	open_infile(t_main *data, t_cmd_parse *node, int old_fd)
 {
 	int	in;
 
@@ -37,12 +41,16 @@ int	open_infile(t_cmd_parse *node, int old_fd)
 	if (in == -1)
 	{
 		perror(node->redirection->str);
+		free_tab(data->cmd_paths);
+		free_tab(data->env_bis);
+		free_tab(data->env_exp);
+		reset_stuff(data);
 		exit(1);
 	}
 	return (in);
 }
 
-int	open_append(t_cmd_parse *node, int old_fd)
+int	open_append(t_main *data, t_cmd_parse *node, int old_fd)
 {
 	int	out;
 
@@ -52,6 +60,10 @@ int	open_append(t_cmd_parse *node, int old_fd)
 	if (out == -1)
 	{
 		perror(node->redirection->str);
+		free_tab(data->cmd_paths);
+		free_tab(data->env_bis);
+		free_tab(data->env_exp);
+		reset_stuff(data);
 		exit(1);
 	}
 	return (out);

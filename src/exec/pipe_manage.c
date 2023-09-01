@@ -6,7 +6,7 @@
 /*   By: rmarecar <rmarecar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 15:26:12 by marecarraya       #+#    #+#             */
-/*   Updated: 2023/08/30 16:59:14 by rmarecar         ###   ########.fr       */
+/*   Updated: 2023/09/01 17:20:44 by rmarecar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,10 @@ void	last_process(t_main *data, t_cmd_parse *node, char *cmd, int fd[2])
 		no_command(data, node);
 	signal(SIGQUIT, SIG_DFL);
 	execve(cmd, node->cmd_tab, data->env_bis);
+	free_tab(data->cmd_paths);
+	free_tab(data->env_bis);
+	free_tab(data->env_exp);
+	reset_stuff(data);
 	exit (1);
 }
 

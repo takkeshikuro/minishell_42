@@ -6,7 +6,7 @@
 /*   By: rmarecar <rmarecar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 19:57:05 by rmarecar          #+#    #+#             */
-/*   Updated: 2023/08/31 12:35:24 by rmarecar         ###   ########.fr       */
+/*   Updated: 2023/09/01 17:21:16 by rmarecar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ void	no_command(t_main *data, t_cmd_parse *node)
 		close(data->here_doc[i].fd[1]);
 		i++;
 	}
+	if (data->here_doc)
+		free(data->here_doc);
 	exit(127);
 }
 
@@ -88,5 +90,9 @@ void	ft_execve(t_main *data, t_cmd_parse *node, char *cmd)
 		no_command(data, node);
 	signal(SIGQUIT, SIG_DFL);
 	execve(cmd, node->cmd_tab, data->env_bis);
+	free_tab(data->cmd_paths);
+	free_tab(data->env_bis);
+	free_tab(data->env_exp);
+	reset_stuff(data);
 	exit(1);
 }
