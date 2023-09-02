@@ -6,7 +6,7 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 16:29:32 by keshikuro         #+#    #+#             */
-/*   Updated: 2023/08/31 02:53:12 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/09/02 22:36:19 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ void	reset_stuff(t_main *data)
 {
 	if (data->input_line)
 		free(data->input_line);
-//	if (data->lexer_list)
-//		free_lxr_lst(data->lexer_list);
+	if (data->lexer_list)
+		free_lxr_lst(data->lexer_list);
 	data->lexer_list = NULL;
 	if (data->syntaxe_check == 0)
 	{
@@ -35,6 +35,7 @@ void	reset_stuff(t_main *data)
 		if (data->cmd_parse)
 			free_cmd_lst(data->cmd_parse);
 	}
+	data->syntaxe_check = 0;
 	data->cmd_parse = NULL;
 	init_signals();
 }

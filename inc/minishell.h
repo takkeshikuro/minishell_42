@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmarecar <rmarecar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 05:04:38 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/09/01 20:37:19 by rmarecar         ###   ########.fr       */
+/*   Updated: 2023/09/02 23:48:51 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,8 @@ typedef struct s_parser_data
 	int					num_redir;
 	struct s_main		*data;
 }						t_parser_data;
+
+
 
 /************************* MAIN *********************************/
 void					mini_loop(t_main *data);
@@ -285,7 +287,7 @@ char					*just_copy(t_main *data, char *s, int i);
 void					free_tab(char **tab);
 void					free_kill(t_main *data);
 //void					free_cmd_list(t_main *data);
-void	free_lxr_lst(t_lexer *lst);
+void					free_lxr_lst(t_lexer *lst);
 void					free_cmd_tab(t_main *data);
 void					free_cmd_lst(t_cmd_parse *lst);
 
@@ -305,6 +307,8 @@ char					*just_alloc(int len, int j_dol, char *s_af);
 void					echo_move(t_cmd_parse *node);
 void					check_echo_tab(t_main *data);
 void					print_intro(void);
+
+void	print_no_command(t_main *data, char *s);
 
 // a supp
 void	pr(t_lexer *lexer_list);              // for lexer

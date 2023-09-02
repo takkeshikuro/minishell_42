@@ -6,7 +6,7 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 06:03:08 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/08/30 14:20:04 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/09/02 23:26:20 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ void	free_tab(char **tab)
 	i = 0;
 	while (tab[j])
 		j++;
+	if (j == i)
+		return ;
 	while (i <= j)
 		free(tab[i++]);
 	free(tab);
@@ -29,10 +31,9 @@ void	free_tab(char **tab)
 void	free_kill(t_main *data)
 {
 	free_tab(data->env_bis);
-	if (data->cmd_parse->cmd_tab)
-		free_tab(data->cmd_parse->cmd_tab);
-	if (data->input_line[0])
-		free(data->input_line);
+	data->env_bis = NULL;
+	free_tab(data->env_exp);
+	data->env_exp = NULL;
 }
 
 void	free_cmd_tab(t_main *data)

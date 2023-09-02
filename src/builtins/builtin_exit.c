@@ -6,7 +6,7 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 13:05:40 by keshikuro         #+#    #+#             */
-/*   Updated: 2023/08/31 04:29:25 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/09/02 22:43:13 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	exit_arg_manage(char **cmd_tab, int i)
 			ft_putstr_fd("bash: exit: ", 1);
 			ft_putstr_fd(cmd_tab[1], 1);
 			ft_putendl_fd(": numeric argument required", 1);
-			return (-1);
+			return (2);
 		}
 		i++;
 	}
@@ -59,13 +59,10 @@ int	built_exit(t_main *data, t_cmd_parse *cmd_parse)
 			data->return_value = 127;
 			return (1);
 		}
-		if (ok == -1)
-			data->return_value = 2;
 		else
 			data->return_value = ok;
 	}
+	reset_stuff(data);
 	free_kill(data);
 	exit (data->return_value);
 }
-
-//free stuff avant l.appel dans first_builtins() dans exec_built.c

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmarecar <rmarecar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 19:57:05 by rmarecar          #+#    #+#             */
-/*   Updated: 2023/09/01 19:10:46 by rmarecar         ###   ########.fr       */
+/*   Updated: 2023/09/03 00:42:29 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,7 @@ void	no_command(t_main *data, t_cmd_parse *node)
 
 	i = 0;
 	if (node->cmd_tab[0])
-	{
-		write(2, node->cmd_tab[0], ft_strlen(node->cmd_tab[0]));
-		write(2, ": command not found\n", 20);
-	}
+		print_no_command(data, node->cmd_tab[0]);
 	free_tab(data->cmd_paths);
 	free_tab(data->env_bis);
 	free_tab(data->env_exp);
