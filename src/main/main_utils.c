@@ -12,6 +12,15 @@
 
 #include "../../inc/minishell.h"
 
+int	*rv_adress(int *rv)
+{
+	static int *rv_adress;
+
+	if (rv)
+		rv_adress = rv;
+	return (rv_adress);
+}
+
 void	init_stuff(t_main *data)
 {
 	data->lexer_list = NULL;
@@ -19,6 +28,7 @@ void	init_stuff(t_main *data)
 	data->hidetab = NULL;
 	data->return_value = 0;
 	data->syntaxe_check = 0;
+	rv_adress(&(data->return_value));
 	init_signals();
 }
 

@@ -97,6 +97,7 @@ typedef struct s_parser_data
 
 
 /************************* MAIN *********************************/
+int						*rv_adress(int *rv);
 void					mini_loop(t_main *data);
 int						start_in_loop(t_main *data, char *input);
 void					handle_quote_n_expand(t_main *data);

@@ -22,8 +22,12 @@ void	eot_handler(t_main *data)
 
 void	sig_handler(int sig)
 {
+	int	*rv;
+
+	rv = rv_adress(NULL);
 	if (sig == SIGINT)
 	{
+		*rv = 130;
 		printf("\n");
 		rl_on_new_line();
 		rl_replace_line("", 0);
