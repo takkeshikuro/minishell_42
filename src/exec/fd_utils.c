@@ -22,13 +22,10 @@ int	open_outfile(t_main *data, t_cmd_parse *node, int old_fd)
 	if (out == -1)
 	{
 		perror(node->redirection->str);
-		if (old_fd != -1 && old_fd)
-			close(old_fd);
 		free_tab(data->cmd_paths);
 		free_tab(data->env_bis);
 		free_tab(data->env_exp);
-		reset_stuff(data);
-		exit(1);
+		return (-2);
 	}
 	return (out);
 }
@@ -43,13 +40,10 @@ int	open_infile(t_main *data, t_cmd_parse *node, int old_fd)
 	if (in == -1)
 	{
 		perror(node->redirection->str);
-		if (old_fd != -1 && old_fd)
-			close(old_fd);
 		free_tab(data->cmd_paths);
 		free_tab(data->env_bis);
 		free_tab(data->env_exp);
-		reset_stuff(data);
-		exit(1);
+		return (-2);
 	}
 	return (in);
 }
@@ -67,8 +61,7 @@ int	open_append(t_main *data, t_cmd_parse *node, int old_fd)
 		free_tab(data->cmd_paths);
 		free_tab(data->env_bis);
 		free_tab(data->env_exp);
-		reset_stuff(data);
-		exit(1);
+		return (-2);
 	}
 	return (out);
 }

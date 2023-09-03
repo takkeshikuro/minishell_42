@@ -12,7 +12,15 @@
 
 #include "../../inc/minishell.h"
 
-void	redir_pipe(t_main *data, t_cmd_parse *node, int *in, int *out)
+int	close_error(int in, int out)
+{
+	if (in > 0)
+		close (in);
+	if (out > 1)
+		close (out);
+	return (-2);
+}
+int	redir_pipe(t_main *data, t_cmd_parse *node, int *in, int *out)
 {
 	t_lexer	*tmp;
 
@@ -32,9 +40,15 @@ void	redir_pipe(t_main *data, t_cmd_parse *node, int *in, int *out)
 			dup2(data->here_doc[data->hd_pos].fd[0], 0);
 			close(data->here_doc[data->hd_pos].fd[0]);
 		}
+		if (*out == -2 || *in == -2)
+		{
+			node->redirection = tmp;
+			return (close_error(*in, *out));
+		}
 		node->redirection = node->redirection->next;
 	}
 	node->redirection = tmp;
+	return (0);
 }
 
 void	last_redir_hd(t_main *data, t_cmd_parse *node, int fd)
@@ -45,7 +59,7 @@ void	last_redir_hd(t_main *data, t_cmd_parse *node, int fd)
 	close(data->here_doc[data->hd_pos].fd[0]);
 }
 
-void	last_redir2(t_main *data, t_cmd_parse *node, int *in, int *out)
+int	last_redir2(t_main *data, t_cmd_parse *node, int *in, int *out)
 {
 	if (node->redirection->operateur == RIGHT_RIGHT)
 	{
@@ -58,9 +72,12 @@ void	last_redir2(t_main *data, t_cmd_parse *node, int *in, int *out)
 		if (node->hd_check != 1)
 			last_redir_hd(data, node, *in);
 	}
+	if (*out == -2 || *in == -2)
+		return (close_error(*in, *out));
+	return (0);
 }
 
-void	last_redir(t_main *data, t_cmd_parse *node, int *in, int *out)
+int	last_redir(t_main *data, t_cmd_parse *node, int *in, int *out)
 {
 	t_lexer	*tmp;
 
@@ -78,8 +95,13 @@ void	last_redir(t_main *data, t_cmd_parse *node, int *in, int *out)
 		{
 			*in = open_infile(data, node, *in);
 		}
-		last_redir2(data, node, in, out);
+		if (last_redir2(data, node, in, out) == -2)
+		{
+			node->redirection = tmp;
+			return (-2);
+		}
 		node->redirection = node->redirection->next;
 	}
 	node->redirection = tmp;
+	return (0);
 }

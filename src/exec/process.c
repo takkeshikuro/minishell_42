@@ -24,7 +24,14 @@ void	init_ex(t_main *data, int fd[2], int old_fd[2], int *i)
 
 void	last_process(t_main *data, t_cmd_parse *node, char *cmd, int fd[2])
 {
-	last_redir(data, node, &fd[0], &fd[1]);
+	if (last_redir(data, node, &fd[0], &fd[1]) == -2)
+	{
+		if (fd[0] > 1)
+			close (fd[0]);
+		if (fd[1] > 1)
+			close(fd[1]);
+		exit (1);
+	}
 	if (fd[0] && node->hd_check == 0)
 	{
 		close(fd[1]);
