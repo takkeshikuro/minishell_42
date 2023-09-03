@@ -6,7 +6,7 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 02:57:58 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/08/31 04:41:23 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/09/03 02:37:41 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,11 @@ char	*copy_without_dol(t_cmd_parse *node, int i, int j, char *s)
 	return (s);
 }
 
-int check_qt(char *s)
+int	check_qt(char *s)
 {
-	int i;
+	int	i;
 
-	i =0;
+	i = 0;
 	while (s[i])
 	{
 		if (s[i + 1] == '\0' || s[i + 1] == 32)
@@ -57,16 +57,16 @@ int check_qt(char *s)
 	return (0);
 }
 
-int	check_env_bis(char **env, char *str_dol)
+int	check_env_bis(char **env, char **hide, char *str_dol)
 {
 	int	i;
-	int	ok;
 	int	len;
 
 	i = 0;
 	len = ft_strlen(str_dol);
-	ok = check_qt(str_dol);
-	if (!ok)
+	if (check_hidetab(hide, str_dol) >= 0)
+		return (888);
+	if (!check_qt(str_dol))
 	{
 		while (env[i])
 		{
@@ -107,7 +107,7 @@ int	check_env_variable(t_main *data, char *s, int j)
 		str_dol = ft_substr(s, j + 1, size);
 	else
 		str_dol = ft_substr(s, j + 1, size);
-	result = check_env_bis(data->env_bis, str_dol);
+	result = check_env_bis(data->env_bis, data->hidetab, str_dol);
 	free(str_dol);
 	return (result);
 }

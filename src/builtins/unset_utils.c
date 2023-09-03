@@ -6,7 +6,7 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 07:53:22 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/08/26 00:26:45 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/09/03 04:06:26 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,8 @@ char	**crt_bis(char **old_tab, char *s, int len)
 	j = 0;
 	while (old_tab[i])
 		i++;
+	if (i == 1)
+		return (NULL);
 	tab = malloc(sizeof(char *) * i);
 	if (!tab)
 		exit(0);

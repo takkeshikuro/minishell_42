@@ -6,7 +6,7 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 16:29:32 by keshikuro         #+#    #+#             */
-/*   Updated: 2023/09/02 22:36:19 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/09/03 01:52:06 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	init_stuff(t_main *data)
 {
 	data->lexer_list = NULL;
 	data->cmd_parse = NULL;
+	data->hidetab = NULL;
 	data->return_value = 0;
 	data->syntaxe_check = 0;
 	init_signals();

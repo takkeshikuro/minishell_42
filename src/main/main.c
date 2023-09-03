@@ -6,7 +6,7 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 03:45:35 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/09/02 23:06:35 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/09/03 04:18:10 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 // add += 1 a SHLVL (env)
 // return value apres un crtl-C (1 aulieu de 130)
-// pb si input = 'NEW=okok' -> ne doit pas etre dans env_bis/exp
 
 void	handle_quote_n_expand(t_main *data)
 {
@@ -50,7 +49,6 @@ int	start_in_loop(t_main *data, char *input)
 	}
 	handle_quote_n_expand(data);
 	check_echo_tab(data);
-//	prrr(data->cmd_parse, 0);
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 23:48:00 by keshikuro         #+#    #+#             */
-/*   Updated: 2023/08/31 04:37:40 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/09/03 02:36:21 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,8 @@ int	expanding_bis(t_main *data, t_cmd_parse *node, int i, int j)
 	{
 		if (nb_env == 999)
 			return (expand_dol_qt(data, node, i, j));
+		else if (nb_env == 888)
+			return (expand_from_hidetab(data, node, i, j));
 		else
 			return (expand_dollard(data, node, i, j));
 	}

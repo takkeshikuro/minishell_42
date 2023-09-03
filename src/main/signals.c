@@ -6,7 +6,7 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 08:28:59 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/09/02 22:48:38 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/09/03 04:17:19 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	eot_handler(t_main *data)
 {
 	printf("Quit minishell by crtl-D\n");
 	free_kill(data);
+	clear_history();
 	exit(0);
 }
 

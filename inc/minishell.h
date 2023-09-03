@@ -6,7 +6,7 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 05:04:38 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/09/02 23:48:51 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/09/03 04:15:10 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ typedef struct s_main
 	struct s_cmd_parse	*cmd_parse;
 	char				**env_bis;
 	char				**env_exp;
+	char				**hidetab;
 	int					return_value;
 	int					hd_count;
 	int					hd_pos;
@@ -178,7 +179,7 @@ int						expand_dollard(t_main *data, t_cmd_parse *cmd_node,
 char					*go_find(char **env, char *s);
 int						rm_dollard(t_cmd_parse *cmd_node, int i, int j);
 int						check_env_variable(t_main *data, char *s, int j);
-int						check_env_bis(char **env, char *str_dol);
+int						check_env_bis(char **env, char **hide, char *str_dol);
 char					*good_variable(char *s);
 void					copy_past(t_cmd_parse *cmd_node, int i, int j_dol,
 							char *str_replace);
@@ -224,7 +225,6 @@ void					sig_hd(int signal);
 char					*skip_tmpr(t_lexer *tmpr);
 int						wait_hds(t_main *data, int i);
 
-
 void					no_command(t_main *data, t_cmd_parse *node);
 void					pipe_init(t_main *data, t_cmd_parse *node);
 
@@ -245,7 +245,8 @@ int						here_doc_var(t_main *data, char *input, int i,
 							int fd[2]);
 
 void					init_ex(t_main *data, int fd[2], int old_fd[2], int *i);
-void					last_process(t_main *data, t_cmd_parse *node, char *cmd, int fd[2]);
+void					last_process(t_main *data, t_cmd_parse *node,
+							char *cmd, int fd[2]);
 
 /*********************** BUILTINS *********************************************/
 int						built_env(t_main *data, t_cmd_parse *cmd_parse);
@@ -307,8 +308,15 @@ char					*just_alloc(int len, int j_dol, char *s_af);
 void					echo_move(t_cmd_parse *node);
 void					check_echo_tab(t_main *data);
 void					print_intro(void);
-
-void	print_no_command(t_main *data, char *s);
+void					print_no_command(t_main *data, char *s);
+// hidetab
+void					add_v_to_hidetab(t_main *data, char *s);
+int						check_ht(t_main *data, char *s, int j);
+int						expand_from_hidetab(t_main *data, t_cmd_parse *node,
+							int i, int j);
+int						check_hidetab(char **tab, char *s);
+void					same_for_hidetab(t_main *data, char *s, int len);
+void					copy_good_hidetab(t_main *data, char **tab);
 
 // a supp
 void	pr(t_lexer *lexer_list);              // for lexer

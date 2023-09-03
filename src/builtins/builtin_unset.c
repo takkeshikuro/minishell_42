@@ -6,7 +6,7 @@
 /*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 13:05:46 by keshikuro         #+#    #+#             */
-/*   Updated: 2023/08/30 01:24:07 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/09/03 04:11:49 by keshikuro        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +35,24 @@ void	same_for_env_exp(t_main *data, char *s, int len)
 	return ;
 }
 
+int	unset_dig(t_main *data, char *s, int len)
+{
+	char	**tmp_tab;
+
+	tmp_tab = crt_bis(data->env_bis, s, len);
+	copy_good_bis(data, tmp_tab);
+	data->return_value = 0;
+	return (1);
+}
+
 int	built_unset(t_main *data, t_cmd_parse *cmd_parse)
 {
 	int		i;
 	int		j;
 	int		len;
-	char	**tmp_tab;
 
 	i = 1;
-	while (cmd_parse->cmd_tab[i])
+	if (cmd_parse->cmd_tab[i])
 	{
 		len = ft_strlen(cmd_parse->cmd_tab[i]);
 		j = 0;
@@ -51,14 +60,12 @@ int	built_unset(t_main *data, t_cmd_parse *cmd_parse)
 		{
 			if (!ft_strncmp(data->env_bis[j], cmd_parse->cmd_tab[i], len)
 				&& data->env_bis[j][len] == '=')
-			{
-				tmp_tab = crt_bis(data->env_bis, cmd_parse->cmd_tab[i], len);
-				copy_good_bis(data, tmp_tab);
-				break ;
-			}
+				return (unset_dig(data, cmd_parse->cmd_tab[i], len));
 			j++;
 		}
-		same_for_env_exp(data, cmd_parse->cmd_tab[i++], len);
+		same_for_env_exp(data, cmd_parse->cmd_tab[i], len);
+		same_for_hidetab(data, cmd_parse->cmd_tab[i], len);
+		i++;
 	}
 	data->return_value = 0;
 	return (1);

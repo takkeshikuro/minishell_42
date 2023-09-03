@@ -22,7 +22,7 @@ void	builtin_exec_3(t_main *data, t_cmd_parse *node, char *cmd, int len)
 	}
 	if (contains_char(cmd, '=') && cmd[0] != '=')
 	{
-		add_v_to_envexp(data, cmd);
+		add_v_to_hidetab(data, cmd);
 		built_in_free(data);
 		exit(data->return_value);
 	}
@@ -87,7 +87,7 @@ int	first_builtins2(t_main *data, t_cmd_parse *node, int len)
 	if (data->pipe_count == 0 && contains_char(node->cmd_tab[0], '=')
 		&& node->cmd_tab[0][0] != '=')
 	{
-		add_v_to_envexp(data, node->cmd_tab[0]);
+		add_v_to_hidetab(data, node->cmd_tab[0]);
 		return (1);
 	}
 	if (!ft_strncmp(node->cmd_tab[0], "unset", len) && node->next == NULL
