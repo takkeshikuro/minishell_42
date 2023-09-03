@@ -44,8 +44,10 @@ void	pipe_work(t_main *data, int fd[2], t_cmd_parse *node, int old_fd[2])
 	{
 		if (redir_pipe(data, node, &old_fd[0], &fd[1]) == -2)
 		{
-			close (fd[0]);
-			close(fd[1]);
+			if (fd[0] > 1)
+				close (fd[0]);
+			if (fd[1] > 1)
+				close(fd[1]);
 			reset_stuff(data);
 			exit (1);
 		}

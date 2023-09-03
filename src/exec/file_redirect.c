@@ -20,6 +20,7 @@ int	close_error(int in, int out)
 		close (out);
 	return (-2);
 }
+
 int	redir_pipe(t_main *data, t_cmd_parse *node, int *in, int *out)
 {
 	t_lexer	*tmp;
@@ -88,8 +89,11 @@ int	last_redir(t_main *data, t_cmd_parse *node, int *in, int *out)
 		if (node->redirection->operateur == RIGHT)
 		{
 			*out = open_outfile(data, node, *out);
-			dup2(*out, 1);
-			close(*out);
+			if (*out > 1)
+			{
+				dup2(*out, 1);
+				close(*out);
+			}
 		}
 		if (node->redirection->operateur == LEFT)
 		{
