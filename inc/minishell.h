@@ -118,9 +118,12 @@ void					init_signals(void);
 /************************** LEXER *******************************/
 int						go_lexer(t_main *data);
 t_operateurs			is_operateur(int c);
-int						add_operateur(t_main *data, char *str, int i, t_lexer **lexer_list);
-int						add_word(t_main  *data, char *str, int i, t_lexer **lexer_list);
-int						add_to_list(t_main *data, char *str, t_operateurs operateur,
+int						add_operateur(t_main *data, char *str, int i,
+							t_lexer **lexer_list);
+int						add_word(t_main *data, char *str, int i,
+							t_lexer **lexer_list);
+int						add_to_list(t_main *data, char *str,
+							t_operateurs operateur,
 							t_lexer **lst);
 //utils
 void					rm_space(t_lexer *lst);
@@ -138,7 +141,8 @@ void					ft_lexerdelone(t_lexer **lexer_list, int id);
 
 /****************** PARSER & EXPANDER ***********************/
 int						go_parser(t_main *data);
-t_cmd_parse				*init_cmd(t_main *data, t_parser_data *p_data, int nb_word);
+t_cmd_parse				*init_cmd(t_main *data, t_parser_data *p_data,
+							int nb_word);
 t_cmd_parse				*cmd_parse_new(t_main *data, char **tab, int num_redir,
 							t_lexer *r);
 //parser ope/checking/redir
@@ -152,7 +156,8 @@ int						check_p_r(t_main *data, t_lexer *tmp);
 int						check_r(t_main *data, t_lexer *crt);
 int						check_l(t_main *data, t_lexer *crt);
 void					redirection(t_main *data, t_parser_data *p_data);
-void					add_redirection(t_main *data, t_lexer *tmp, t_parser_data *p_data);
+void					add_redirection(t_main *data, t_lexer *tmp,
+							t_parser_data *p_data);
 //syntax_manage
 int						cmpchar(char c, char ok);
 int						cp_s(char *tmp, char *s, int i);
@@ -168,7 +173,8 @@ t_parser_data			init_p_data(t_lexer *lexer_list, t_main *data);
 void					cmd_parseadd_back(t_cmd_parse **lst, t_cmd_parse *new);
 // quote_manage.c  && utils
 int						quote_manage(t_main *data, t_cmd_parse *node, int i);
-int						rm_quote(t_main *data, t_cmd_parse *node, int i_tab, int quote);
+int						rm_quote(t_main *data, t_cmd_parse *node, int i_tab,
+							int quote);
 int						nb_qt(char *s, int quote);
 char					*ft_strim(t_main *data, char const *s1, int quote);
 int						check_set(char c, int quote);
@@ -178,7 +184,8 @@ void					expanding(t_main *data, t_cmd_parse *node, int i,
 int						expand_dollard(t_main *data, t_cmd_parse *cmd_node,
 							int nb_env, int j);
 char					*go_find(char **env, char *s);
-int						rm_dollard(t_main *data, t_cmd_parse *cmd_node, int i, int j);
+int						rm_dollard(t_main *data, t_cmd_parse *cmd_node,
+							int i, int j);
 int						check_env_variable(t_main *data, char *s, int j);
 int						check_env_bis(char **env, char **hide, char *str_dol);
 char					*good_variable(char *s);
@@ -275,8 +282,10 @@ int						built_export(t_main *data, t_cmd_parse *cmd_parse);
 ///// utils unset
 void					copy_good_exp(t_main *data, char **tab);
 void					copy_good_bis(t_main *data, char **tab);
-char					**crt_exp(t_main *data, char **old_tab, char *s, int len);
-char					**crt_bis(t_main *data, char **old_tab, char *s, int len);
+char					**crt_exp(t_main *data, char **old_tab, char *s,
+							int len);
+char					**crt_bis(t_main *data, char **old_tab, char *s,
+							int len);
 ///// export & utils
 void					export_support(t_main *data, char *s);
 void					add_total_stuff(t_main *data, char *s);
@@ -341,11 +350,9 @@ int						var_check(t_main *data, t_lexer *lst);
 int						var_found(t_main *data, char *s, int len);
 int						add_w_dig(char *str, int i, int j);
 void					error_mallc(t_main *data);
-int						copy_past_return(char * s_after, char *tmp_str);
-
-// a supp
-void	pr(t_lexer *lexer_list);              // for lexer
-void	prrr(t_cmd_parse *cmd_parse, int ok); //for parser
+int						copy_past_return(char *s_after, char *tmp_str);
+void					pr(t_lexer *lexer_list);
 void					pr_redir(t_lexer *lexer_list);
+void					prrr(t_cmd_parse *cmd_parse, int ok);
 
 #endif

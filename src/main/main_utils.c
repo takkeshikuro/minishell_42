@@ -14,7 +14,7 @@
 
 int	*rv_adress(int *rv)
 {
-	static int *rv_adress;
+	static int	*rv_adress;
 
 	if (rv)
 		rv_adress = rv;

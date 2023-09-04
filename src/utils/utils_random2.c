@@ -55,7 +55,7 @@ int	built_found(char *s)
 	else if (!ft_strncmp(s, "unset", 5))
 		return (5);
 	else
-		return (0);
+		return (-10);
 }
 
 void	check_echo_tab(t_main *data)

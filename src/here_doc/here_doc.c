@@ -15,7 +15,7 @@
 int	init_loop(t_cmd_parse *node, char *input, int fd[2])
 {
 	int		i;
-	int		size;
+	size_t	size;
 	t_lexer	*tmpr;
 
 	i = 0;
@@ -28,8 +28,9 @@ int	init_loop(t_cmd_parse *node, char *input, int fd[2])
 			break ;
 		node->redirection = node->redirection->next;
 	}
-	size = ft_strlen(input);
-	if (!ft_strncmp(input, node->redirection->str, size) && size)
+	size = ft_strlen(node->redirection->str);
+	if (!ft_strncmp(input, node->redirection->str, size)
+		&& size == ft_strlen (input))
 	{
 		close(fd[1]);
 		node->redirection = tmpr;
@@ -62,7 +63,9 @@ void	here_doc_manage(t_main *data, t_cmd_parse *node, int fd[2])
 void	first_hd_manage(t_main *data, t_cmd_parse *node, char *str)
 {
 	char	*input;
+	size_t	len;
 
+	len = ft_strlen(str);
 	signal(SIGINT, sig_hd);
 	while (1)
 	{
@@ -75,7 +78,7 @@ void	first_hd_manage(t_main *data, t_cmd_parse *node, char *str)
 			close_free_hd(data, node, input, -42);
 			exit(1);
 		}
-		if (!ft_strncmp(input, str, ft_strlen(str)))
+		if (!ft_strncmp(input, str, len) && len == ft_strlen(input))
 		{
 			close_free_hd(data, node, input, -42);
 			exit(1);

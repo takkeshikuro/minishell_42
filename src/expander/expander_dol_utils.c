@@ -21,9 +21,11 @@ char	*check_char_after(t_cmd_parse *node, int i, int j_dol)
 	{
 		if (node->cmd_tab[i][j_dol + 1] == '\0')
 			return (NULL);
+		else if (node->cmd_tab[i][j_dol + 1] == '$')
+			break ;
 		j_dol++;
 	}
-	start = j_dol;
+	start = j_dol + 1;
 	while (node->cmd_tab[i][j_dol])
 		j_dol++;
 	tmp_str = ft_substr(node->cmd_tab[i], start, (j_dol - start));

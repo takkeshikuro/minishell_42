@@ -106,6 +106,8 @@ void	expanding(t_main *data, t_cmd_parse *node, int i, int j)
 	{
 		if (node->cmd_tab[i][j] == '$')
 		{
+			if (!node->cmd_tab[i][j + 1])
+				return ;
 			dol = j;
 			while (node->cmd_tab[i][dol] == '$')
 				dol++;
