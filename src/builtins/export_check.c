@@ -26,7 +26,7 @@ int	check_v_exist_exp(t_main *data, char *s)
 		k = 0;
 		name = malloc(sizeof(char) * ft_strlen(data->env_exp[i]) - j + 1);
 		if (!name)
-			exit (1);
+			error_mallc(data);
 		while (data->env_exp[i][j] && data->env_exp[i][j] != '=')
 			name[k++] = data->env_exp[i][j++];
 		name[k] = '\0';

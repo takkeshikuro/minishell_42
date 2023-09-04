@@ -22,7 +22,7 @@ void	add_bis(t_main *data, char *s)
 		i++;
 	new_tab = malloc(sizeof(char *) * (i + 2));
 	if (!new_tab)
-		exit (1);
+		error_mallc(data);
 	i = 0;
 	while (data->hidetab[i])
 	{
@@ -41,7 +41,7 @@ void	add_v_to_hidetab(t_main *data, char *s)
 	{
 		data->hidetab = malloc(sizeof(char *) * 2);
 		if (!data->hidetab)
-			exit (1);
+			error_mallc(data);
 		data->hidetab[0] = ft_strdup(s);
 		data->hidetab[1] = 0;
 		return ;

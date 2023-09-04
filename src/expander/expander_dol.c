@@ -12,7 +12,7 @@
 
 #include "../../inc/minishell.h"
 
-int	rm_dollard(t_cmd_parse *cmd_node, int i, int j)
+int	rm_dollard(t_main *data, t_cmd_parse *cmd_node, int i, int j)
 {
 	int		size_dol;
 	char	*new_s;
@@ -33,7 +33,7 @@ int	rm_dollard(t_cmd_parse *cmd_node, int i, int j)
 	}
 	new_s = malloc(sizeof(char) * diff + 1);
 	if (!new_s)
-		exit(1);
+		error_mallc(data);
 	new_s = copy_without_dol(cmd_node, i, tmp_j, new_s);
 	free(cmd_node->cmd_tab[i]);
 	cmd_node->cmd_tab[i] = ft_substr(new_s, 0, diff);
@@ -89,7 +89,7 @@ int	expanding_bis(t_main *data, t_cmd_parse *node, int i, int j)
 			return (expand_dollard(data, node, i, j));
 	}
 	else if (nb_env == -1)
-		return (rm_dollard(node, i, j));
+		return (rm_dollard(data, node, i, j));
 	else if (nb_env == -2)
 		return (1);
 	else if (nb_env == -3)

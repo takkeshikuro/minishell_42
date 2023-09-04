@@ -12,7 +12,7 @@
 
 #include "../../inc/minishell.h"
 
-void	add_redirection(t_lexer *tmp, t_parser_data *p_data)
+void	add_redirection(t_main *data, t_lexer *tmp, t_parser_data *p_data)
 {
 	char		*str_file;
 	t_lexer		*new;
@@ -22,7 +22,7 @@ void	add_redirection(t_lexer *tmp, t_parser_data *p_data)
 	str_file = ft_strdup(tmp->next->str);
 	id = tmp->i;
 	id_next = tmp->next->i;
-	new = ft_lexernew(str_file, tmp->operateur);
+	new = ft_lexernew(data, str_file, tmp->operateur);
 	if (!new)
 		exit (1);
 	if (!p_data->redirection)
@@ -34,7 +34,7 @@ void	add_redirection(t_lexer *tmp, t_parser_data *p_data)
 	p_data->num_redir++;
 }
 
-void	redirection(t_parser_data *p_data)
+void	redirection(t_main *data, t_parser_data *p_data)
 {
 	t_lexer	*tmp;
 
@@ -48,7 +48,7 @@ void	redirection(t_parser_data *p_data)
 		if (tmp->operateur == PIPE)
 			return ;
 		else
-			add_redirection(tmp, p_data);
+			add_redirection(data, tmp, p_data);
 	}
-	redirection(p_data);
+	redirection(data, p_data);
 }

@@ -12,7 +12,7 @@
 
 #include "../../inc/minishell.h"
 
-char	*need_malloc(t_cmd_parse *node, int i)
+char	*need_malloc(t_main *data, t_cmd_parse *node, int i)
 {
 	int		size;
 	char	*str;
@@ -20,7 +20,7 @@ char	*need_malloc(t_cmd_parse *node, int i)
 	size = ft_strlen(node->cmd_tab[i]);
 	str = malloc(sizeof(char) * size + 1);
 	if (!str)
-		exit (1);
+		error_mallc(data);
 	return (str);
 }
 
@@ -40,13 +40,13 @@ int	nb_qt(char *s, int quote)
 	return (ok);
 }
 
-char	*check_4_strim(t_cmd_parse *node, int i_tab, int qt)
+char	*check_4_strim(t_main *data, t_cmd_parse *node, int i_tab, int qt)
 {
 	char	*new;
 
 	if (node->cmd_tab[i_tab][0] == qt && nb_qt(node->cmd_tab[i_tab], qt) == 2)
 	{
-		new = ft_strim(node->cmd_tab[i_tab], qt);
+		new = ft_strim(data, node->cmd_tab[i_tab], qt);
 		free(node->cmd_tab[i_tab]);
 		node->cmd_tab[i_tab] = ft_strdup(new);
 		return (new);
@@ -55,7 +55,7 @@ char	*check_4_strim(t_cmd_parse *node, int i_tab, int qt)
 		return (NULL);
 }
 
-int	rm_quote(t_cmd_parse *node, int i_tab, int qt)
+int	rm_quote(t_main *data, t_cmd_parse *node, int i_tab, int qt)
 {
 	char	*new;
 	int		j;
@@ -63,10 +63,10 @@ int	rm_quote(t_cmd_parse *node, int i_tab, int qt)
 
 	j = 0;
 	i = 0;
-	new = check_4_strim(node, i_tab, qt);
+	new = check_4_strim(data, node, i_tab, qt);
 	if (!new)
 	{
-		new = need_malloc(node, i_tab);
+		new = need_malloc(data, node, i_tab);
 		while (node->cmd_tab[i_tab][j])
 		{
 			if (node->cmd_tab[i_tab][j] == qt)
@@ -92,10 +92,12 @@ int	quote_manage(t_main *data, t_cmd_parse *node, int i)
 	(void)data;
 	while (node->cmd_tab[i][j])
 	{
+		if (node->redirection)
+			check_qt_redir(data, node->redirection);
 		if (node->cmd_tab[i][j] == 39)
-			return (rm_quote(node, i, 39));
+			return (rm_quote(data, node, i, 39));
 		else if (node->cmd_tab[i][j] == 34)
-			return (rm_quote(node, i, 34));
+			return (rm_quote(data, node, i, 34));
 		j++;
 	}
 	return (0);

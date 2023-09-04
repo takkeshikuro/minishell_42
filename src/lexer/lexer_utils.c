@@ -15,10 +15,12 @@
 int	ff_qt(char *str, int i, int j, int qt)
 {
 	j++;
-	if (str[i + j] == qt)
-		return (add_w_dig(str, i, j++));
 	while (str[i + j] != qt && str[i + j])
+	{
 		j++;
+		if (str[i + j] == qt && str[i + j + 1] == qt)
+			j = (add_w_dig(str, i, j++));
+	}
 	j++;
 	return (j);
 }

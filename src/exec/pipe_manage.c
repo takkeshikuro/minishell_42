@@ -43,14 +43,7 @@ void	pipe_work(t_main *data, int fd[2], t_cmd_parse *node, int old_fd[2])
 	if (pid == 0)
 	{
 		if (redir_pipe(data, node, &old_fd[0], &fd[1]) == -2)
-		{
-			if (fd[0] > 1)
-				close (fd[0]);
-			if (fd[1] > 1)
-				close(fd[1]);
-			reset_stuff(data);
-			exit (1);
-		}
+			exit_error_redir(data, fd);
 		if (old_fd[0] != -1 && node->hd_check == 0)
 		{
 			dup2(old_fd[0], 0);
@@ -58,12 +51,11 @@ void	pipe_work(t_main *data, int fd[2], t_cmd_parse *node, int old_fd[2])
 		}
 		ft_dup2close(fd, 0);
 		builtin_exec(data, node);
-		cmd = get_command(data->cmd_paths, node->cmd_tab[0]);
+		cmd = get_command(data, data->cmd_paths, node->cmd_tab[0]);
 		if (cmd == NULL)
-		{
 			ft_dup2close(old_fd, 1);
+		if (cmd == NULL)
 			close(fd[0]);
-		}
 		ft_execve(data, node, cmd);
 	}
 	ft_dup2close(old_fd, 1);
@@ -119,7 +111,7 @@ void	execute_cmd(t_main *data)
 	if (first_builtins(data, node))
 		return ;
 	pipe_init(data, node);
-	if (here_doc_init(data, node) == 42)
+	if (here_doc_init(data, node, 0) == 42)
 	{
 		free_tab(data->cmd_paths);
 		free(data->here_doc);

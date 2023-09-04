@@ -25,7 +25,7 @@ void	same_for_env_exp(t_main *data, char *s, int len)
 		if (!ft_strncmp(data->env_exp[i], decla, len + 11)
 			&& data->env_exp[i][11 + len] == '=')
 		{
-			tmp_tab = crt_exp(data->env_exp, decla, len);
+			tmp_tab = crt_exp(data, data->env_exp, decla, len);
 			copy_good_exp(data, tmp_tab);
 			break ;
 		}
@@ -39,7 +39,7 @@ int	unset_dig(t_main *data, char *s, int len)
 {
 	char	**tmp_tab;
 
-	tmp_tab = crt_bis(data->env_bis, s, len);
+	tmp_tab = crt_bis(data, data->env_bis, s, len);
 	copy_good_bis(data, tmp_tab);
 	data->return_value = 0;
 	return (1);

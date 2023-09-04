@@ -41,7 +41,7 @@ int	contains_char(char *str, char c)
 	return (0);
 }
 
-char	*get_command(char **paths, char *cmd)
+char	*get_command(t_main *data, char **paths, char *cmd)
 {
 	char	*command;
 	char	*tmp;
@@ -52,6 +52,8 @@ char	*get_command(char **paths, char *cmd)
 	{
 		if (access(cmd, X_OK) == 0)
 			return (cmd);
+		if (access(cmd, X_OK))
+			exit_access(data, cmd);
 		return (NULL);
 	}
 	while (*paths)

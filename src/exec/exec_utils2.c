@@ -42,6 +42,8 @@ void	hdc_init(t_main *data)
 	if (data->hd_count)
 	{
 		data->here_doc = malloc(sizeof(t_here_doc) * data->hd_count);
+		if (!data->here_doc)
+			error_mallc(data);
 		while (i < data->hd_count)
 		{
 			data->here_doc[i].pos = 0;

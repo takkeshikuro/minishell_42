@@ -52,7 +52,7 @@ void	copy_env(t_main *data, char *decla)
 		size = ft_strlen(data->env_bis[i]);
 		tmp = malloc(sizeof(char) * (size + 2) + 1);
 		if (!tmp)
-			exit (1);
+			error_mallc(data);
 		j += copy_name(data, tmp, i);
 		tmp[j] = '\0';
 		data->env_exp[i] = ft_strjoin(decla, tmp);
@@ -73,7 +73,7 @@ void	get_env_export(t_main *data)
 		i++;
 	data->env_exp = (char **)malloc(sizeof(char *) * (i + 1));
 	if (!data->env_exp)
-		exit (1);
+		error_mallc(data);
 	i = 0;
 	copy_env(data, decla);
 }
@@ -87,7 +87,7 @@ void	get_env(t_main *data, char **env)
 		i++;
 	data->env_bis = (char **)malloc(sizeof(char *) * (i + 1));
 	if (!data->env_bis)
-		exit (1);
+		error_mallc(data);
 	i = 0;
 	while (env[i])
 	{

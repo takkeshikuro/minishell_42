@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
+/*   By: rmarecar <rmarecar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 06:02:15 by tmorikaw          #+#    #+#             */
-/*   Updated: 2023/09/04 06:46:18 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/09/04 15:20:42 by rmarecar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,11 @@ int	ft_perror(char *s)
 	(void)s;
 	ft_putendl_fd(" Is a directory", 2);
 	return (1);
+}
+
+void	error_mallc(t_main *data)
+{
+	free_kill(data);
+	reset_stuff(data);
+	exit (1);
 }

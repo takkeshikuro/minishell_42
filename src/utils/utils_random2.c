@@ -28,7 +28,7 @@ char	*just_alloc(int len, int j_dol, char *s_af)
 	else
 		ok = malloc(sizeof(char) * (j_dol + len) + 1);
 	if (!ok)
-		exit(1);
+		return (NULL);
 	return (ok);
 }
 

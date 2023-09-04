@@ -22,16 +22,30 @@ void	init_ex(t_main *data, int fd[2], int old_fd[2], int *i)
 	*i = 0;
 }
 
+int	last_redir(t_main *data, t_cmd_parse *node, int *in, int *out)
+{
+	t_lexer	*tmp;
+
+	node->hd_check = 0;
+	tmp = node->redirection;
+	while (node->redirection)
+	{
+		last_redir0(data, node, in, out);
+		if (last_redir2(data, node, in, out) == -2)
+		{
+			node->redirection = tmp;
+			return (-2);
+		}
+		node->redirection = node->redirection->next;
+	}
+	node->redirection = tmp;
+	return (0);
+}
+
 void	last_process(t_main *data, t_cmd_parse *node, char *cmd, int fd[2])
 {
 	if (last_redir(data, node, &fd[0], &fd[1]) == -2)
-	{
-		if (fd[0] > 1)
-			close (fd[0]);
-		if (fd[1] > 1)
-			close(fd[1]);
-		exit (1);
-	}
+		exit_error_redir(data, fd);
 	if (fd[0] && node->hd_check == 0)
 	{
 		close(fd[1]);
@@ -39,7 +53,7 @@ void	last_process(t_main *data, t_cmd_parse *node, char *cmd, int fd[2])
 		close(fd[0]);
 	}
 	builtin_exec(data, node);
-	cmd = get_command(data->cmd_paths, node->cmd_tab[0]);
+	cmd = get_command(data, data->cmd_paths, node->cmd_tab[0]);
 	if (cmd == NULL)
 		no_command(data, node);
 	signal(SIGQUIT, SIG_DFL);

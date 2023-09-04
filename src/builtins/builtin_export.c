@@ -44,10 +44,10 @@ void	add_total_stuff(t_main *data, char *s)
 	i = 0;
 	s_quoted = malloc(sizeof(char) * ft_strlen(s) + 3);
 	if (!s_quoted)
-		exit (1);
+		error_mallc(data);
 	i = cp_string_quoted(s, s_quoted);
 	s_quoted[i] = '\0';
-	s_check = cp_string_name(s);
+	s_check = cp_string_name(data, s);
 	if (check_v_exist_bis(data, s_check) >= 0)
 		rm_variable_bis(data, check_v_exist_bis(data, s_check));
 	if (check_v_exist_exp(data, s_check) >= 0)

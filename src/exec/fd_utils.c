@@ -65,3 +65,12 @@ int	open_append(t_main *data, t_cmd_parse *node, int old_fd)
 	}
 	return (out);
 }
+
+void	exit_access(t_main *data, char *cmd)
+{
+	perror(cmd);
+	free_process(data);
+	reset_stuff(data);
+	free_kill(data);
+	exit (127);
+}

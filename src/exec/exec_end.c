@@ -48,6 +48,16 @@ void	wait_exec(t_main *data)
 		data->return_value = WEXITSTATUS(status);
 }
 
+void	exit_error_redir(t_main *data, int fd[2])
+{
+	if (fd[0] > 1)
+		close (fd[0]);
+	if (fd[1] > 1)
+		close(fd[1]);
+	reset_stuff(data);
+	exit (1);
+}
+
 void	built_in_free(t_main *data)
 {
 	free_tab(data->cmd_paths);
@@ -56,4 +66,13 @@ void	built_in_free(t_main *data)
 	if (data->here_doc)
 		free(data->here_doc);
 	reset_stuff(data);
+}
+
+int	close_error(int in, int out)
+{
+	if (in > 0)
+		close (in);
+	if (out > 1)
+		close (out);
+	return (-2);
 }

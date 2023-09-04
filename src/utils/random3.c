@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   random3.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
+/*   By: rmarecar <rmarecar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 05:36:36 by keshikuro         #+#    #+#             */
-/*   Updated: 2023/09/04 06:58:05 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/09/04 15:20:26 by rmarecar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,4 +102,11 @@ int	add_w_dig(char *str, int i, int j)
 			j++;
 	}
 	return (j);
+}
+
+int	copy_past_return(char *s_after, char *tmp_str)
+{
+	free(s_after);
+	free(tmp_str);
+	return (0);
 }

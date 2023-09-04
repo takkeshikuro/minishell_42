@@ -12,9 +12,6 @@
 
 #include "../../inc/minishell.h"
 
-// add += 1 a SHLVL (env)
-// verifier les msg erreur exact du exit
-
 void	handle_quote_n_expand(t_main *data)
 {
 	t_cmd_parse	*node;
@@ -38,7 +35,7 @@ int	start_in_loop(t_main *data, char *input)
 {
 	data->input_line = malloc(sizeof(char) * (ft_strlen(input) + 1));
 	if (!data->input_line)
-		error_main("malloc failed");
+		error_mallc(data);
 	ft_strlcpy(data->input_line, input, ft_strlen(input));
 	if (!go_lexer(data))
 		error_main("lexing failed.");
@@ -89,7 +86,7 @@ int	main(int ac, char **av, char **env)
 	if (!env[0])
 		return (error_main("env is missing"));
 	init_stuff(&data);
-	print_intro();
+	//print_intro();
 	get_env(&data, env);
 	get_env_export(&data);
 	mini_loop(&data);

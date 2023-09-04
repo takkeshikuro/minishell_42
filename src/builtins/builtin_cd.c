@@ -42,12 +42,12 @@ void	switch_path_bis(t_main *data, char *s_old, char *s_new)
 		i++;
 	tmptab = (char **)malloc(sizeof(char *) * (i + 1));
 	if (!tmptab)
-		exit (1);
+		error_mallc(data);
 	tmptab = for_tmptab(data, tmptab, s_new, s_old);
 	free_tab(data->env_bis);
 	data->env_bis = (char **)malloc(sizeof(char *) * (i + 1));
 	if (!data->env_bis)
-		exit (1);
+		error_mallc(data);
 	i = 0;
 	while (tmptab[i])
 	{
@@ -76,7 +76,7 @@ void	change_envbis(t_main *data)
 	}
 	s_old = malloc(sizeof(char) * ft_strlen(data->env_bis[i]) + 1);
 	if (!s_old)
-		exit(1);
+		error_mallc(data);
 	s_old = just_copy(data, s_old, i);
 	switch_path_bis(data, s_old, s_new);
 	free(s_old);

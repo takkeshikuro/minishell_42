@@ -12,24 +12,24 @@
 
 #include "../../inc/minishell.h"
 
-t_cmd_parse	*cmd_parse_new(char **tab, int num_redir, t_lexer *redirection)
+t_cmd_parse	*cmd_parse_new(t_main *data, char **tab, int num_redir, t_lexer *r)
 {
 	t_cmd_parse	*new;
 
 	new = (t_cmd_parse *)malloc(sizeof(t_cmd_parse));
 	if (!new)
-		exit(1);
+		error_mallc(data);
 	new->cmd_tab = tab;
 	new->next = NULL;
 	new->prev = NULL;
 	new->builtin = NULL;
-	new->redirection = redirection;
+	new->redirection = r;
 	new->num_redirection = num_redir;
 	new->hd_file_name = NULL;
 	return (new);
 }
 
-t_cmd_parse	*init_cmd(t_parser_data *p_data, int nb_word)
+t_cmd_parse	*init_cmd(t_main *data, t_parser_data *p_data, int nb_word)
 {
 	char		**tab;
 	t_lexer		*current;
@@ -37,11 +37,11 @@ t_cmd_parse	*init_cmd(t_parser_data *p_data, int nb_word)
 	int			i;
 
 	i = 0;
-	redirection(p_data);
+	redirection(data, p_data);
 	nb_word = count_words(p_data->lexer_list);
 	tab = (char **)malloc(sizeof(char *) * (nb_word + 1));
 	if (!tab)
-		exit(1);
+		error_mallc(data);
 	current = p_data->lexer_list;
 	while (nb_word-- > 0)
 	{
@@ -54,7 +54,7 @@ t_cmd_parse	*init_cmd(t_parser_data *p_data, int nb_word)
 		}
 	}
 	tab[i] = 0;
-	new_node = cmd_parse_new(tab, p_data->num_redir, p_data->redirection);
+	new_node = cmd_parse_new(data, tab, p_data->num_redir, p_data->redirection);
 	return (new_node);
 }
 
@@ -68,7 +68,7 @@ int	go_parser(t_main *data)
 	while (data->lexer_list)
 	{
 		parser_data = init_p_data(data->lexer_list, data);
-		node = init_cmd(&parser_data, 0);
+		node = init_cmd(data, &parser_data, 0);
 		if (!node)
 			exit(1);
 		if (!data->cmd_parse)

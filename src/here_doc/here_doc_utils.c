@@ -47,7 +47,7 @@ char	*get_var_name(t_main *data, char *input)
 	name = malloc(sizeof(char) * (len + 1));
 	if (!name)
 	{
-		fprintf(stderr, "ERROR MALLOC : GET VAR NAME (here_doc manage)");
+		printf("ERROR MALLOC : GET VAR NAME (here_doc manage)");
 		free_tab(data->cmd_paths);
 		free_tab(data->env_bis);
 		free_tab(data->env_exp);

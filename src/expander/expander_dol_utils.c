@@ -46,7 +46,7 @@ int	copy_bis(char *s1, char *s2, int i, int ok)
 	return (i);
 }
 
-void	copy_past(t_cmd_parse *cmd_node, int i, int j_dol, char *str_replace)
+int	copy_past(t_cmd_parse *cmd_node, int i, int j_dol, char *str_replace)
 {
 	int		k;
 	int		len;
@@ -57,6 +57,8 @@ void	copy_past(t_cmd_parse *cmd_node, int i, int j_dol, char *str_replace)
 	s_after = check_char_after(cmd_node, i, j_dol);
 	len = ft_strlen(str_replace);
 	tmp_str = just_alloc(len, j_dol, s_after);
+	if (tmp_str == NULL)
+		return (-123);
 	while (k < j_dol)
 	{
 		tmp_str[k] = cmd_node->cmd_tab[i][k];
@@ -70,8 +72,7 @@ void	copy_past(t_cmd_parse *cmd_node, int i, int j_dol, char *str_replace)
 		copy_bis(tmp_str, s_after, k, 1);
 	free(cmd_node->cmd_tab[i]);
 	cmd_node->cmd_tab[i] = ft_strdup(tmp_str);
-	free(s_after);
-	free(tmp_str);
+	return (copy_past_return(s_after, tmp_str));
 }
 
 char	*keep_good_str(char **env, int nb_env)
@@ -111,7 +112,7 @@ char	*go_itoa_replace(t_main *data, char *s)
 	tmp_rv = ft_itoa(data->return_value);
 	ok = malloc(sizeof(char) * ft_strlen(s) + 2);
 	if (!ok)
-		exit (1);
+		error_mallc(data);
 	while (s[i] != '$')
 	{
 		ok[i] = s[i];

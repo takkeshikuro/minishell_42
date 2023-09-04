@@ -24,7 +24,10 @@ void	free_tab(char **tab)
 	while (tab[j])
 		j++;
 	if (j == i)
+	{
+		free(tab);
 		return ;
+	}
 	while (i <= j)
 		free(tab[i++]);
 	free(tab);

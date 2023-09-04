@@ -20,7 +20,7 @@ int	built_pwd(t_main *data, t_cmd_parse *cmd_parse)
 	(void)cmd_parse;
 	s = malloc(4096);
 	if (!s)
-		exit (1);
+		error_mallc(data);
 	if (getcwd(s, 4096) == NULL)
 		error(data, "getcwd() failed", 1);
 	else

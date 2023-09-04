@@ -19,7 +19,7 @@ int	check_set(char c, int quote)
 	return (0);
 }
 
-char	*ft_strim(char const *s1, int quote)
+char	*ft_strim(t_main *data, char const *s1, int quote)
 {
 	char			*str;
 	size_t			start;
@@ -34,7 +34,7 @@ char	*ft_strim(char const *s1, int quote)
 		end--;
 	str = malloc(sizeof(char) * (end - start + 1));
 	if (!str)
-		return (NULL);
+		error_mallc(data);
 	i = 0;
 	while (start < end)
 	{
@@ -44,4 +44,71 @@ char	*ft_strim(char const *s1, int quote)
 	}
 	str[i] = 0;
 	return (str);
+}
+
+char	*cpqt(t_main *data, char *s, int j, int qt)
+{
+	int		i;
+	char	*ok;
+
+	i = 0;
+	ok = malloc(sizeof(char) * ft_strlen(s) - nb_qt(s, qt) + 1);
+	if (!ok)
+		error_mallc(data);
+	while (s[i])
+	{
+		if (s[i] == qt)
+			i++;
+		else
+			ok[j++] = s[i++];
+		if (s[i] == '\0')
+		{
+			ok[j] = '\0';
+			break ;
+		}
+	}
+	return (ok);
+}
+
+char	*rm_qt_redir(t_main *data, char *s, int qt, int j)
+{
+	char	*new;
+
+	if (nb_qt(s, qt))
+	{
+		if (nb_qt(s, qt) == 2)
+			new = ft_strim(data, s, qt);
+		else
+			new = cpqt(data, s, j, qt);
+		return (new);
+	}
+	else
+		return (NULL);
+}
+
+void	check_qt_redir(t_main *data, t_lexer *node)
+{
+	t_lexer	*tmp;
+	char	*s_trim;
+
+	tmp = node;
+	while (tmp)
+	{
+		if (tmp->str)
+		{
+			if (nb_qt(tmp->str, 39))
+			{
+				s_trim = rm_qt_redir(data, tmp->str, 39, 0);
+				free(tmp->str);
+				tmp->str = s_trim;
+			}
+			else if (nb_qt(tmp->str, 34))
+			{
+				s_trim = rm_qt_redir(data, tmp->str, 34, 0);
+				free(tmp->str);
+				tmp->str = s_trim;
+			}
+		}
+		tmp = tmp->next;
+	}
 }

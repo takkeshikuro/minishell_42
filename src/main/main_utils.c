@@ -51,6 +51,7 @@ void	reset_stuff(t_main *data)
 	init_signals();
 }
 
+
 void	pr(t_lexer *lexer_list)
 {
 	t_lexer	*tmp;
@@ -96,7 +97,6 @@ void	pr_redir(t_lexer *lexer_list)
 		if (tmp->str)
 			fprintf(stderr, "file=[%s] ", tmp->str);
 		if (tmp->operateur)
-			fprintf(stderr, "redir=[%d] ", tmp->operateur);
 		tmp = tmp->next;
 		i++;
 	}

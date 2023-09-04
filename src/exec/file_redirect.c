@@ -12,13 +12,14 @@
 
 #include "../../inc/minishell.h"
 
-int	close_error(int in, int out)
+void	redir_pipe0(t_main *data, t_cmd_parse *node, int *in, int *out)
 {
-	if (in > 0)
-		close (in);
-	if (out > 1)
-		close (out);
-	return (-2);
+	if (node->redirection->operateur == RIGHT)
+		*out = open_outfile(data, node, *out);
+	if (node->redirection->operateur == LEFT)
+		*in = open_infile(data, node, *in);
+	if (node->redirection->operateur == RIGHT_RIGHT)
+		*out = open_append(data, node, *out);
 }
 
 int	redir_pipe(t_main *data, t_cmd_parse *node, int *in, int *out)
@@ -29,12 +30,7 @@ int	redir_pipe(t_main *data, t_cmd_parse *node, int *in, int *out)
 	tmp = node->redirection;
 	while (node->redirection)
 	{
-		if (node->redirection->operateur == RIGHT)
-			*out = open_outfile(data, node, *out);
-		if (node->redirection->operateur == LEFT)
-			*in = open_infile(data, node, *in);
-		if (node->redirection->operateur == RIGHT_RIGHT)
-			*out = open_append(data, node, *out);
+		redir_pipe0(data, node, in, out);
 		if (node->redirection->operateur == LEFT_LEFT)
 		{
 			node->hd_check = 1;
@@ -78,34 +74,17 @@ int	last_redir2(t_main *data, t_cmd_parse *node, int *in, int *out)
 	return (0);
 }
 
-int	last_redir(t_main *data, t_cmd_parse *node, int *in, int *out)
+void	last_redir0(t_main *data, t_cmd_parse *node, int *in, int *out)
 {
-	t_lexer	*tmp;
-
-	node->hd_check = 0;
-	tmp = node->redirection;
-	while (node->redirection)
+	if (node->redirection->operateur == RIGHT)
 	{
-		if (node->redirection->operateur == RIGHT)
+		*out = open_outfile(data, node, *out);
+		if (*out > 1)
 		{
-			*out = open_outfile(data, node, *out);
-			if (*out > 1)
-			{
-				dup2(*out, 1);
-				close(*out);
-			}
+			dup2(*out, 1);
+			close(*out);
 		}
-		if (node->redirection->operateur == LEFT)
-		{
-			*in = open_infile(data, node, *in);
-		}
-		if (last_redir2(data, node, in, out) == -2)
-		{
-			node->redirection = tmp;
-			return (-2);
-		}
-		node->redirection = node->redirection->next;
 	}
-	node->redirection = tmp;
-	return (0);
+	if (node->redirection->operateur == LEFT)
+		*in = open_infile(data, node, *in);
 }

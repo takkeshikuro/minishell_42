@@ -22,7 +22,7 @@ void	copy_good_hidetab(t_main *data, char **tab)
 	free_tab(data->hidetab);
 	data->hidetab = malloc(sizeof(char *) * i);
 	if (!data->hidetab)
-		exit(1);
+		error_mallc(data);
 	i = 0;
 	while (tab[i])
 	{
@@ -45,7 +45,7 @@ void	same_for_hidetab(t_main *data, char *s, int len)
 		if (!ft_strncmp(data->hidetab[i], s, len)
 			&& data->hidetab[i][len] == '=')
 		{
-			tmp_tab = crt_bis(data->hidetab, s, len);
+			tmp_tab = crt_bis(data, data->hidetab, s, len);
 			if (!tmp_tab)
 				break ;
 			copy_good_hidetab(data, tmp_tab);

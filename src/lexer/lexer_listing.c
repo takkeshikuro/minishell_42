@@ -12,14 +12,14 @@
 
 #include "../../inc/minishell.h"
 
-t_lexer	*ft_lexernew(char *str, int operateur)
+t_lexer	*ft_lexernew(t_main *data, char *str, int operateur)
 {
 	t_lexer		*new;
 	static int	i;
 
 	new = (t_lexer *)malloc(sizeof(t_lexer));
 	if (!new)
-		exit (1);
+		error_mallc(data);
 	new->str = str;
 	new->operateur = operateur;
 	new->i = i++;

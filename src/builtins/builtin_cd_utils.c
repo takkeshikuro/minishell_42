@@ -44,7 +44,7 @@ char	*copy_declarex(t_main *data, char *s, int i)
 	return (ok);
 }
 
-char	*add_quote(char *s)
+char	*add_quote(t_main *data, char *s)
 {
 	int		i;
 	int		j;
@@ -55,7 +55,7 @@ char	*add_quote(char *s)
 	j = 0;
 	tmp = malloc(sizeof(char) * ft_strlen(s) + 1);
 	if (!tmp)
-		exit (1);
+		error_mallc(data);
 	while (s[i])
 		tmp[j++] = s[i++];
 	tmp[j] = '\0';

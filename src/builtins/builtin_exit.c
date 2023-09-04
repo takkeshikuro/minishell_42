@@ -18,7 +18,7 @@ int	exit_arg_manage(char **cmd_tab, int i)
 	{
 		if (ft_isalpha(cmd_tab[1][i]))
 		{
-			ft_putendl_fd("exit", 2);
+			ft_putendl_fd("exit", 1);
 			ft_putstr_fd("bash: exit: ", 2);
 			ft_putstr_fd(cmd_tab[1], 2);
 			ft_putendl_fd(": numeric argument required", 2);
@@ -31,7 +31,7 @@ int	exit_arg_manage(char **cmd_tab, int i)
 		i++;
 	if (i > 2)
 	{
-		ft_putendl_fd("exit", 2);
+		ft_putendl_fd("exit", 1);
 		ft_putendl_fd("bash: exit: too many arguments", 2);
 		return (0);
 	}

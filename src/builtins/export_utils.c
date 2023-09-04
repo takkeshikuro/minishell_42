@@ -57,7 +57,7 @@ int	check_valid_identifier(char c)
 		return (0);
 }
 
-char	*cp_string_name(char *s)
+char	*cp_string_name(t_main *data, char *s)
 {
 	int		i;
 	char	*tmp;
@@ -67,7 +67,7 @@ char	*cp_string_name(char *s)
 		i++;
 	tmp = malloc(sizeof(char) * i + 1);
 	if (!tmp)
-		exit (1);
+		error_mallc(data);
 	i = 0;
 	while (s[i] != '=')
 	{

@@ -36,7 +36,7 @@ void	add_to_bis(t_main *data, char *s)
 		i++;
 	new_tab = malloc(sizeof(char *) * (i + 2));
 	if (!new_tab)
-		exit (1);
+		error_mallc(data);
 	i = 0;
 	while (data->env_bis[i])
 	{
@@ -61,7 +61,7 @@ void	add_v_to_envexp(t_main *data, char *s)
 		i++;
 	new_tab = malloc(sizeof(char *) * (i + 2));
 	if (!new_tab)
-		exit (1);
+		error_mallc(data);
 	i = 0;
 	while (data->env_exp[i])
 	{
@@ -85,7 +85,7 @@ void	rm_variable_exp(t_main *data, int supp)
 		i++;
 	new_tab = malloc(sizeof(char *) * (i + 1));
 	if (!new_tab)
-		exit (1);
+		error_mallc(data);
 	i = -1;
 	while (++i < supp)
 		new_tab[i] = ft_strdup(data->env_exp[i]);
@@ -113,7 +113,7 @@ void	rm_variable_bis(t_main *data, int supp)
 		i++;
 	new_tab = malloc(sizeof(char *) * (i + 1));
 	if (!new_tab)
-		exit (1);
+		error_mallc(data);
 	i = -1;
 	while (++i < supp)
 		new_tab[i] = ft_strdup(data->env_bis[i]);

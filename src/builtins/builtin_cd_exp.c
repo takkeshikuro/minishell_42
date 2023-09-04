@@ -41,12 +41,12 @@ void	switch_path_exp(t_main *data, char *s_old, char *s_new)
 		i++;
 	tmptab = (char **)malloc(sizeof(char *) * (i + 1));
 	if (!tmptab)
-		exit (1);
+		error_mallc(data);
 	tmptab = for_tmptab_exp(data, tmptab, s_new, s_old);
 	free_tab(data->env_exp);
 	data->env_exp = (char **)malloc(sizeof(char *) * (i + 1));
 	if (!data->env_exp)
-		exit (1);
+		error_mallc(data);
 	i = 0;
 	while (tmptab[i])
 	{
@@ -71,9 +71,9 @@ void	change_envexp(t_main *data, char *s_new)
 	}
 	s_old = malloc(sizeof(char) * ft_strlen(data->env_exp[i]) + 1);
 	if (!s_old)
-		exit (1);
+		error_mallc(data);
 	s_old = copy_declarex(data, s_old, i);
-	s_new = add_quote(s_new);
+	s_new = add_quote(data, s_new);
 	switch_path_exp(data, s_old, s_new);
 	free(s_new);
 	free(s_old);

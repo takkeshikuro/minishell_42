@@ -12,7 +12,7 @@
 
 #include "../../inc/minishell.h"
 
-char	*add_qt(char *s)
+char	*add_qt(t_main *data, char *s)
 {
 	int		i;
 	int		j;
@@ -24,7 +24,7 @@ char	*add_qt(char *s)
 		i++;
 	new = malloc(sizeof(char) * i + 2);
 	if (!new)
-		exit (1);
+		error_mallc(data);
 	i = 0;
 	while (s[i])
 		new[j++] = s[i++];
@@ -104,8 +104,9 @@ int	expand_dol_qt(t_main *data, t_cmd_parse *node, int i, int j)
 	if (node->cmd_tab[i][j] == '$')
 	{
 		str_replace = keep_good_str_qt(data->env_bis, nb_env);
-		final = add_qt(str_replace);
-		copy_past(node, i, j, final);
+		final = add_qt(data, str_replace);
+		if (copy_past(node, i, j, final) == -123)
+			error_mallc(data);
 		ok = ft_strlen(str_replace);
 		free(str_replace);
 		free(final);

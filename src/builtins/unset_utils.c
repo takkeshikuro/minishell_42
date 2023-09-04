@@ -22,7 +22,7 @@ void	copy_good_exp(t_main *data, char **tab)
 	free_tab(data->env_exp);
 	data->env_exp = malloc(sizeof(char *) * i);
 	if (!data->env_exp)
-		exit(1);
+		error_mallc(data);
 	i = 0;
 	while (tab[i])
 	{
@@ -43,7 +43,7 @@ void	copy_good_bis(t_main *data, char **tab)
 	free_tab(data->env_bis);
 	data->env_bis = malloc(sizeof(char *) * i);
 	if (!data->env_bis)
-		exit(1);
+		error_mallc(data);
 	i = 0;
 	while (tab[i])
 	{
@@ -54,7 +54,7 @@ void	copy_good_bis(t_main *data, char **tab)
 	free_tab(tab);
 }
 
-char	**crt_exp(char **old_tab, char *s, int len)
+char	**crt_exp(t_main *data, char **old_tab, char *s, int len)
 {
 	char	**tab;
 	int		i;
@@ -66,7 +66,7 @@ char	**crt_exp(char **old_tab, char *s, int len)
 		i++;
 	tab = malloc(sizeof(char *) * i);
 	if (!tab)
-		exit(0);
+		error_mallc(data);
 	i = 0;
 	while (old_tab[i])
 	{
@@ -79,7 +79,7 @@ char	**crt_exp(char **old_tab, char *s, int len)
 	return (tab);
 }
 
-char	**crt_bis(char **old_tab, char *s, int len)
+char	**crt_bis(t_main *data, char **old_tab, char *s, int len)
 {
 	char	**tab;
 	int		i;
@@ -93,7 +93,7 @@ char	**crt_bis(char **old_tab, char *s, int len)
 		return (NULL);
 	tab = malloc(sizeof(char *) * i);
 	if (!tab)
-		exit(0);
+		error_mallc(data);
 	i = 0;
 	while (old_tab[i])
 	{

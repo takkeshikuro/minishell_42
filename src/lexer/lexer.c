@@ -12,21 +12,21 @@
 
 #include "../../inc/minishell.h"
 
-int	add_to_list(char *str, t_operateurs operateur, t_lexer **lexer_list)
+int	add_to_list(t_main *data, char *str, t_operateurs operateur, t_lexer **lst)
 {
 	t_lexer	*node;
 
-	node = ft_lexernew(str, operateur);
+	node = ft_lexernew(data, str, operateur);
 	if (!node)
 		return (0);
-	if (!lexer_list)
-		*lexer_list = node;
+	if (!lst)
+		*lst = node;
 	else
-		ft_lexeradd_back(lexer_list, node);
+		ft_lexeradd_back(lst, node);
 	return (1);
 }
 
-int	add_word(char *str, int i, t_lexer **lexer_list)
+int	add_word(t_main *data, char *str, int i, t_lexer **lexer_list)
 {
 	int		j;
 	char	*tmp;
@@ -40,36 +40,36 @@ int	add_word(char *str, int i, t_lexer **lexer_list)
 	if (j == 1)
 	{
 		tmp = ft_substr(str, i, j);
-		if (!add_to_list(tmp, 0, lexer_list))
+		if (!add_to_list(data, tmp, 0, lexer_list))
 			return (free(tmp), -1);
 		return (j);
 	}
 	tmp = ft_substr(str, i, j);
-	if (!add_to_list(tmp, 0, lexer_list))
+	if (!add_to_list(data, tmp, 0, lexer_list))
 		return (free(tmp), -1);
 	return (j);
 }
 
-int	add_operateur(char *str, int i, t_lexer **lexer_list)
+int	add_operateur(t_main *data, char *str, int i, t_lexer **lexer_list)
 {
 	t_operateurs	operateur;
 
 	operateur = is_operateur(str[i]);
 	if (operateur == RIGHT && is_operateur(str[i + 1]) == RIGHT)
 	{
-		if (!add_to_list(NULL, RIGHT_RIGHT, lexer_list))
+		if (!add_to_list(data, NULL, RIGHT_RIGHT, lexer_list))
 			return (-1);
 		return (2);
 	}
 	else if (operateur == LEFT && is_operateur(str[i + 1]) == LEFT)
 	{
-		if (!add_to_list(NULL, LEFT_LEFT, lexer_list))
+		if (!add_to_list(data, NULL, LEFT_LEFT, lexer_list))
 			return (-1);
 		return (2);
 	}
 	else if (operateur)
 	{
-		if (!add_to_list(NULL, operateur, lexer_list))
+		if (!add_to_list(data, NULL, operateur, lexer_list))
 			return (-1);
 		return (1);
 	}
@@ -109,9 +109,9 @@ int	go_lexer(t_main *data)
 		if (data->input_line[i] == '\0')
 			break ;
 		if (is_operateur(data->input_line[i]))
-			j = add_operateur(data->input_line, i, &data->lexer_list);
+			j = add_operateur(data, data->input_line, i, &data->lexer_list);
 		else
-			j = add_word(data->input_line, i, &data->lexer_list);
+			j = add_word(data, data->input_line, i, &data->lexer_list);
 		if (j < 0)
 			return (0);
 		i += j;
