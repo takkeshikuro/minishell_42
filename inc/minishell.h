@@ -20,10 +20,12 @@
 # include <signal.h>
 # include <stdio.h>
 # include <stdlib.h>
+# include <sys/stat.h>
 # include <sys/types.h>
 # include <sys/uio.h>
 # include <sys/wait.h>
 # include <unistd.h>
+# include <dirent.h>
 
 typedef struct s_here_doc
 {
@@ -299,6 +301,8 @@ void					void_error(char *s);
 int						syntax_err(t_main *data, char *s);
 int						is_dir_error(t_main *data, char *s, int ok);
 int						error_main(char *s);
+int						check_argg(t_main *data, char **tab);
+int						ft_perror(char *s);
 
 //utils_random
 int						check_space(char *s);
@@ -318,6 +322,11 @@ int						expand_from_hidetab(t_main *data, t_cmd_parse *node,
 int						check_hidetab(char **tab, char *s);
 void					same_for_hidetab(t_main *data, char *s, int len);
 void					copy_good_hidetab(t_main *data, char **tab);
+//
+int						file_check(t_main *data, char *s);
+int						var_check(t_main *data, t_lexer *lst);
+int						var_found(t_main *data, char *s, int len);
+int						add_w_dig(char *str, int i, int j);
 
 // a supp
 void	pr(t_lexer *lexer_list);              // for lexer

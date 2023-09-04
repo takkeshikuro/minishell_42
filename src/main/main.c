@@ -13,7 +13,7 @@
 #include "../../inc/minishell.h"
 
 // add += 1 a SHLVL (env)
-// return value apres un crtl-C (1 aulieu de 130)
+// verifier les msg erreur exact du exit
 
 void	handle_quote_n_expand(t_main *data)
 {

@@ -12,6 +12,17 @@
 
 #include "../../inc/minishell.h"
 
+int	ff_qt(char *str, int i, int j, int qt)
+{
+	j++;
+	if (str[i + j] == qt)
+		return (add_w_dig(str, i, j++));
+	while (str[i + j] != qt && str[i + j])
+		j++;
+	j++;
+	return (j);
+}
+
 int	add_word_support(char *str, int i)
 {
 	int	j;
@@ -21,18 +32,12 @@ int	add_word_support(char *str, int i)
 	{
 		if (str[i + j] == 34)
 		{
-			j++;
-			while (str[i + j] != 34 && str[i + j])
-				j++;
-			j++;
+			j += ff_qt(str, i, j, 34);
 			break ;
 		}
 		else if (str[i + j] == 39)
 		{
-			j++;
-			while (str[i + j] != 39 && str[i + j])
-				j++;
-			j++;
+			j += ff_qt(str, i, j, 39);
 			break ;
 		}
 		else
@@ -67,7 +72,11 @@ int	count_simp_quote(char *str, int i)
 		if (str[i] == 32 && !simp)
 			return (0);
 		if (str[i] == 39)
+		{
+			if (str[i + 1] == 39)
+				return (0);
 			simp++;
+		}
 		i++;
 	}
 	return (simp);
@@ -83,7 +92,12 @@ int	count_doub_quote(char *str, int i)
 		if (str[i] == 32 && !doub)
 			return (0);
 		if (str[i] == 34)
-			doub++;
+		{
+			if (str[i + 1] == 34)
+				return (0);
+			else
+				doub++;
+		}
 		i++;
 	}
 	return (doub);

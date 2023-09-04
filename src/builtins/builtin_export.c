@@ -93,7 +93,10 @@ int	built_export(t_main *data, t_cmd_parse *cmd_parse)
 	while (cmd_parse->cmd_tab[i])
 	{
 		if (simple_check(cmd_parse->cmd_tab[i]))
+		{
+			data->return_value = 1;
 			return (1);
+		}
 		else
 			export_support(data, cmd_parse->cmd_tab[i]);
 		i++;

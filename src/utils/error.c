@@ -14,7 +14,7 @@
 
 int	error(t_main *data, char *s, int rv)
 {
-	printf("%s\n", s);
+	ft_putendl_fd(s, 2);
 	if (rv == 2)
 		data->return_value = 2;
 	else if (rv == 127)
@@ -38,17 +38,17 @@ void	void_error(char *s)
 
 int	is_dir_error(t_main *data, char *s, int ok)
 {
-	ft_putstr_fd("bash: ", 1);
-	ft_putstr_fd(s, 1);
+	ft_putstr_fd("bash: ", 2);
+	ft_putstr_fd(s, 2);
 	if (ok)
 	{
 		data->return_value = 127;
-		ft_putstr_fd(": No such file or directory\n", 1);
+		ft_putstr_fd(": No such file or directory\n", 2);
 	}
 	else
 	{
 		data->return_value = 126;
-		ft_putstr_fd(": Is a directory\n", 1);
+		ft_putstr_fd(": Is a directory\n", 2);
 	}
 	return (1);
 }

@@ -20,7 +20,7 @@ int	built_env(t_main *data, t_cmd_parse *cmd_parse)
 	(void)cmd_parse;
 	while (data->env_bis[i])
 	{
-		printf("%s\n", data->env_bis[i]);
+		ft_putendl_fd(data->env_bis[i], 1);
 		i++;
 	}
 	data->return_value = 0;

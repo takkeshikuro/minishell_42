@@ -98,6 +98,8 @@ int	small_check(t_main *data)
 	size = lexer_size(data->lexer_list);
 	if (syntax_check(data, size))
 		return (1);
+	if (var_check(data, data->lexer_list))
+		return (1);
 	while (tmp)
 	{
 		if (size == 1 && !tmp->operateur)

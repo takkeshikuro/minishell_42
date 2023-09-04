@@ -108,12 +108,14 @@ int	built_cd(t_main *data, t_cmd_parse *cmd_parse)
 		data->return_value = 0;
 		return (1);
 	}
+	if (check_argg(data, cmd_parse->cmd_tab))
+		return (1);
 	ok = chdir(cmd_parse->cmd_tab[1]);
 	if (ok == -1)
 	{
-		// print not a directory si c un fichier mais jsp faire
-		printf("bash: cd: %s: No such file or directory\n",
-			cmd_parse->cmd_tab[1]);
+		ft_putstr_fd("bash: cd: ", 2);
+		ft_putstr_fd(cmd_parse->cmd_tab[1], 2);
+		ft_putendl_fd(": No such file or directory", 2);
 		data->return_value = 1;
 		return (1);
 	}
