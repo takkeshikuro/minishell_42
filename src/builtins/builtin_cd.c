@@ -73,6 +73,8 @@ void	change_envbis(t_main *data)
 		if (!ft_strncmp(data->env_bis[i], "PWD", 3))
 			break ;
 		i++;
+		if (!data->env_bis[i])
+			return ;
 	}
 	s_old = malloc(sizeof(char) * ft_strlen(data->env_bis[i]) + 1);
 	if (!s_old)

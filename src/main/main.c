@@ -44,10 +44,8 @@ int	start_in_loop(t_main *data, char *input)
 		data->syntaxe_check = 1;
 		return (1);
 	}
-	prrr(data->cmd_parse, 1);
 	handle_quote_n_expand(data);
 	check_echo_tab(data);
-	prrr(data->cmd_parse, 0);
 	return (0);
 }
 
@@ -88,7 +86,7 @@ int	main(int ac, char **av, char **env)
 	if (!env[0])
 		return (error_main("env is missing"));
 	init_stuff(&data);
-	//print_intro();
+	print_intro();
 	get_env(&data, env);
 	get_env_export(&data);
 	mini_loop(&data);
