@@ -12,13 +12,6 @@
 
 #include "../../inc/minishell.h"
 
-int	cmpchar(char c, char ok)
-{
-	if (c == ok)
-		return (1);
-	return (0);
-}
-
 char	*just_alloc(int len, int j_dol, char *s_af)
 {
 	char	*ok;
@@ -58,6 +51,34 @@ int	built_found(char *s)
 		return (-10);
 }
 
+void	brand_new_tab(t_main *data, t_cmd_parse *node, int i, int len)
+{
+	char	*s;
+	char	**tab;
+	int		ok;
+	int		sizetab;
+
+	i = -1;
+	sizetab = sizeof(node->cmd_tab);
+	while (++i <= sizetab)
+	{
+		if (node->cmd_tab[i][0])
+		{
+			ok = i;
+			len = f_len(node, sizetab, i);
+			break ;
+		}
+	}
+	s = malloc(sizeof(char) * len + 1);
+	if (!s)
+		error_mallc(data);
+	cpyy(node, sizetab, ok, s);
+	tab = ft_split(s, ' ');
+	free(s);
+	free_tab(node->cmd_tab);
+	node->cmd_tab = tab;
+}
+
 void	check_echo_tab(t_main *data)
 {
 	t_cmd_parse	*node;
@@ -72,6 +93,8 @@ void	check_echo_tab(t_main *data)
 			i++;
 		if (i == 1 && built_found(node->cmd_tab[0]))
 			built_move(node, built_found(node->cmd_tab[0]));
+		if (node->cmd_tab[0][0] == '\0')
+			brand_new_tab(data, node, 0, 0);
 		node = node->next;
 	}
 }

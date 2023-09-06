@@ -58,3 +58,10 @@ void	same_for_hidetab(t_main *data, char *s, int len)
 	data->hidetab = NULL;
 	return ;
 }
+
+int	cmpchar(char c, char ok)
+{
+	if (c == ok)
+		return (1);
+	return (0);
+}

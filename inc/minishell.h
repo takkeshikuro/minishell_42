@@ -336,6 +336,7 @@ int						check_space(char *s);
 int						pb_quote(t_main *data, char *str, int sep1, int sep2);
 int						is_space(char c);
 int						ft_nbstr(char const *str, char sep);
+int						cmpchar(char c, char ok);
 char					*just_alloc(int len, int j_dol, char *s_af);
 void					echo_move(t_cmd_parse *node);
 void					check_echo_tab(t_main *data);
@@ -359,5 +360,7 @@ int						copy_past_return(char *s_after, char *tmp_str);
 void					pr(t_lexer *lexer_list);
 void					pr_redir(t_lexer *lexer_list);
 void					prrr(t_cmd_parse *cmd_parse, int ok);
+int						f_len(t_cmd_parse *node, int sizetab, int i);
+char					*cpyy(t_cmd_parse *node, int sizetab, int ok, char *s);
 
 #endif

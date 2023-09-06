@@ -73,3 +73,40 @@ int	check_qt(char *s)
 	}
 	return (0);
 }
+
+char	*cpyy(t_cmd_parse *node, int sizetab, int ok, char *s)
+{
+	int	j;
+	int	k;
+
+	k = 0;
+	while (ok <= sizetab)
+	{
+		j = 0;
+		while (node->cmd_tab[ok][j])
+			s[k++] = node->cmd_tab[ok][j++];
+		ok++;
+		s[k++] = ' ';
+		if (!node->cmd_tab[ok])
+		{
+			s[k] = '\0';
+			break ;
+		}
+	}
+	return (s);
+}
+
+int	f_len(t_cmd_parse *node, int sizetab, int i)
+{
+	int	len;
+
+	len = 0;
+	while (i <= sizetab)
+	{
+		len += ft_strlen(node->cmd_tab[i]) + 1;
+		i++;
+		if (!node->cmd_tab[i])
+			break ;
+	}
+	return (len);
+}
