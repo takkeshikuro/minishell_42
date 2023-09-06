@@ -58,7 +58,7 @@ int	check_ht(t_main *data, char *s, int j)
 
 	i = j + 1;
 	size = 0;
-	while (s[i] && s[i] != 32)
+	while (s[i] && s[i] != 32 && s[i] != '$')
 	{
 		i++;
 		size++;

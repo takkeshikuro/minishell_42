@@ -12,6 +12,35 @@
 
 #include "../../inc/minishell.h"
 
+int	rm_dollard(t_main *data, t_cmd_parse *cmd_node, int i, int j)
+{
+	int		size_dol;
+	char	*new_s;
+	int		diff;
+	int		tmp_j;
+
+	size_dol = 0;
+	tmp_j = j;
+	while (cmd_node->cmd_tab[i][j] && cmd_node->cmd_tab[i][j] != 32
+		&& cmd_node->cmd_tab[i][j++] != 39)
+		size_dol++;
+	diff = ft_strlen(cmd_node->cmd_tab[i]) - size_dol;
+	if (!diff)
+	{
+		free(cmd_node->cmd_tab[i]);
+		cmd_node->cmd_tab[i] = ft_strdup("");
+		return (0);
+	}
+	new_s = malloc(sizeof(char) * diff + 1);
+	if (!new_s)
+		error_mallc(data);
+	new_s = copy_without_dol(cmd_node, i, tmp_j, new_s);
+	free(cmd_node->cmd_tab[i]);
+	cmd_node->cmd_tab[i] = ft_substr(new_s, 0, diff);
+	free(new_s);
+	return (0);
+}
+
 char	*copy_without_dol(t_cmd_parse *node, int i, int j, char *s)
 {
 	int	k;
@@ -38,23 +67,6 @@ char	*copy_without_dol(t_cmd_parse *node, int i, int j, char *s)
 	}
 	s[k] = '\0';
 	return (s);
-}
-
-int	check_qt(char *s)
-{
-	int	i;
-
-	i = 0;
-	while (s[i])
-	{
-		if (s[i + 1] == '\0' || s[i + 1] == 32)
-		{
-			if (s[i] == 39)
-				return (1);
-		}
-		i++;
-	}
-	return (0);
 }
 
 int	check_env_bis(char **env, char **hide, char *str_dol)

@@ -12,35 +12,6 @@
 
 #include "../../inc/minishell.h"
 
-int	rm_dollard(t_main *data, t_cmd_parse *cmd_node, int i, int j)
-{
-	int		size_dol;
-	char	*new_s;
-	int		diff;
-	int		tmp_j;
-
-	size_dol = 0;
-	tmp_j = j;
-	while (cmd_node->cmd_tab[i][j] && cmd_node->cmd_tab[i][j] != 32
-		&& cmd_node->cmd_tab[i][j++] != 39)
-		size_dol++;
-	diff = ft_strlen(cmd_node->cmd_tab[i]) - size_dol;
-	if (!diff)
-	{
-		free(cmd_node->cmd_tab[i]);
-		cmd_node->cmd_tab[i] = ft_strdup("");
-		return (0);
-	}
-	new_s = malloc(sizeof(char) * diff + 1);
-	if (!new_s)
-		error_mallc(data);
-	new_s = copy_without_dol(cmd_node, i, tmp_j, new_s);
-	free(cmd_node->cmd_tab[i]);
-	cmd_node->cmd_tab[i] = ft_substr(new_s, 0, diff);
-	free(new_s);
-	return (0);
-}
-
 int	expand_dollard(t_main *data, t_cmd_parse *node, int i, int j)
 {
 	int		nb_env;
@@ -97,6 +68,23 @@ int	expanding_bis(t_main *data, t_cmd_parse *node, int i, int j)
 	return (0);
 }
 
+int	second_expand(t_main *data, t_cmd_parse *node, int i, int j)
+{
+	while (node->cmd_tab[i][j])
+	{
+		if (node->cmd_tab[i][j] == '$')
+		{
+			while (node->cmd_tab[i][j] == '$')
+				j++;
+			expanding(data, node, i, j - 1);
+		}
+		j++;
+	}
+	if (!node->cmd_tab[i][j])
+		return (0);
+	return (1);
+}
+
 void	expanding(t_main *data, t_cmd_parse *node, int i, int j)
 {
 	int			dol;
@@ -110,19 +98,17 @@ void	expanding(t_main *data, t_cmd_parse *node, int i, int j)
 				return ;
 			dol = j;
 			while (node->cmd_tab[i][dol] == '$')
-				dol++;
-			if (node->cmd_tab[i][dol] == '\0' || node->cmd_tab[i][dol] == 32)
-				len = (dol - j);
-			else
 			{
-				len = expanding_bis(data, node, i, j);
-				break ;
+				dol++;
+				if (node->cmd_tab[i][dol] == '\0')
+					return ;
+				else if (node->cmd_tab[i][dol] != '$')
+					len = expanding_bis(data, node, i, dol - 1);
 			}
-			j += len;
+			j = (dol - 1) + len;
+			if (!second_expand(data, node, i, j))
+				return ;
 		}
 		j++;
 	}
-	if (!node->cmd_tab[i][j])
-		return ;
-	expanding(data, node, i, 0);
 }

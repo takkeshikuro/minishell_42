@@ -56,3 +56,20 @@ void	print_intro(void)
  and Théo Takeshi Morikawa.", 1);
 	ft_putendl_fd("", 1);
 }
+
+int	check_qt(char *s)
+{
+	int	i;
+
+	i = 0;
+	while (s[i])
+	{
+		if (s[i + 1] == '\0' || s[i + 1] == 32)
+		{
+			if (s[i] == 39)
+				return (1);
+		}
+		i++;
+	}
+	return (0);
+}

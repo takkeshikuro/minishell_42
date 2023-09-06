@@ -176,6 +176,7 @@ int						quote_manage(t_main *data, t_cmd_parse *node, int i);
 int						rm_quote(t_main *data, t_cmd_parse *node, int i_tab,
 							int quote);
 int						nb_qt(char *s, int quote);
+int						check_qt(char *s);
 char					*ft_strim(t_main *data, char const *s1, int quote);
 int						check_set(char c, int quote);
 // expander
