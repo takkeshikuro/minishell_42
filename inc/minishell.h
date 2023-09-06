@@ -182,6 +182,10 @@ int						check_set(char c, int quote);
 // expander
 void					expanding(t_main *data, t_cmd_parse *node, int i,
 							int j);
+int						while_dol(t_main *data, t_cmd_parse *node, int i,
+							int dol);
+int						expanding_bis(t_main *data, t_cmd_parse *node,
+							int i, int j);
 int						expand_dollard(t_main *data, t_cmd_parse *cmd_node,
 							int nb_env, int j);
 char					*go_find(char **env, char *s);

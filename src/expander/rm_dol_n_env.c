@@ -22,7 +22,7 @@ int	rm_dollard(t_main *data, t_cmd_parse *cmd_node, int i, int j)
 	size_dol = 0;
 	tmp_j = j;
 	while (cmd_node->cmd_tab[i][j] && cmd_node->cmd_tab[i][j] != 32
-		&& cmd_node->cmd_tab[i][j++] != 39)
+		&& cmd_node->cmd_tab[i][j] != 39 && cmd_node->cmd_tab[i][++j] != '$')
 		size_dol++;
 	diff = ft_strlen(cmd_node->cmd_tab[i]) - size_dol;
 	if (!diff)
@@ -52,12 +52,13 @@ char	*copy_without_dol(t_cmd_parse *node, int i, int j, char *s)
 		k++;
 	}
 	while (node->cmd_tab[i][j] && node->cmd_tab[i][j] != 32
-		&& node->cmd_tab[i][j] != 39)
-		j++;
-	if (!node->cmd_tab[i][j])
+		&& node->cmd_tab[i][j] != 39 && node->cmd_tab[i][++j] != '$')
 	{
-		s[k] = '\0';
-		return (s);
+		if (!node->cmd_tab[i][j])
+		{
+			s[k] = '\0';
+			return (s);
+		}
 	}
 	while (node->cmd_tab[i][j])
 	{
@@ -67,6 +68,29 @@ char	*copy_without_dol(t_cmd_parse *node, int i, int j, char *s)
 	}
 	s[k] = '\0';
 	return (s);
+}
+
+int	while_dol(t_main *data, t_cmd_parse *node, int i, int dol)
+{
+	int	len;
+	int	j;
+
+	len = 0;
+	while (node->cmd_tab[i][dol] == '$')
+	{
+		dol++;
+		if (node->cmd_tab[i][dol] == '\0')
+			return (0);
+		else if (node->cmd_tab[i][dol] != '$')
+		{
+			len = expanding_bis(data, node, i, dol - 1);
+			break ;
+		}
+	}
+	if (len == 0)
+		return (0);
+	j = (dol - 1) + len;
+	return (j);
 }
 
 int	check_env_bis(char **env, char **hide, char *str_dol)
