@@ -30,12 +30,23 @@ int	return_hd_count(int hd_count)
 	return (hdc);
 }
 
+t_main	*return_free_data(t_main *data)
+{
+	static t_main	*dr;
+
+	if (data)
+		dr = data;
+	return (dr);
+}
+
 void	sig_hd(int signal)
 {
 	t_here_doc	*hd;
 	int			i;
 	int			hdc;
+	t_main		*data;
 
+	data = return_free_data(NULL);
 	if (signal == SIGINT)
 	{
 		i = 0;
@@ -49,6 +60,11 @@ void	sig_hd(int signal)
 			close(hd[i].fd[1]);
 			i++;
 		}
+		free(data->here_doc);
+		free_tab(data->cmd_paths);
+		free_tab(data->env_bis);
+		free_tab(data->env_exp);
+		reset_stuff(data);
 		exit (42);
 	}
 }

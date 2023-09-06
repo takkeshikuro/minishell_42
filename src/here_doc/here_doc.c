@@ -114,6 +114,7 @@ int	first_hds(t_main *data, t_cmd_parse *node, t_cmd_parse *nodeorg)
 
 void	hdinit(t_main *data)
 {
+	return_free_data(data);
 	return_hd(data->here_doc);
 	return_hd_count(data->hd_count);
 	signal(SIGINT, SIG_IGN);

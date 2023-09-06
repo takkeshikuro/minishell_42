@@ -275,6 +275,7 @@ void					hdinit(t_main *data);
 int						first_hds(t_main *data, t_cmd_parse *node,
 							t_cmd_parse *nodeorg);
 void					exit_access(t_main *data, char *cmd);
+t_main 					*return_free_data(t_main *data);
 
 /*********************** BUILTINS *********************************************/
 int						built_env(t_main *data, t_cmd_parse *cmd_parse);
