@@ -6,7 +6,7 @@
 /*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 05:36:36 by keshikuro         #+#    #+#             */
-/*   Updated: 2023/09/07 02:20:32 by tmorikaw         ###   ########.fr       */
+/*   Updated: 2023/09/07 06:23:09 by tmorikaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int	var_check(t_main *data, t_lexer *lst)
 
 int	add_w_dig(char *str, int i, int j)
 {
-	while (str[i + j] && !is_space(str[i + j]) && !is_operateur(str[i + j]))
+	while (str[i + j] && !is_operateur(str[i + j]))
 	{
 		if (str[i + j] == 34)
 		{

@@ -34,11 +34,10 @@ int	open_infile(t_main *data, t_cmd_parse *node, int old_fd)
 {
 	int	in;
 
-	if (old_fd > 1)
-		close(old_fd);
 	in = open(node->redirection->str, O_RDWR);
 	if (in == -1)
 	{
+		close(old_fd);
 		perror(node->redirection->str);
 		free_tab(data->cmd_paths);
 		free_tab(data->env_bis);

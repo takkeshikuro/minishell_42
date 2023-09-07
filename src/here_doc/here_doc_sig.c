@@ -62,8 +62,7 @@ void	sig_hd(int signal)
 		}
 		free(data->here_doc);
 		free_tab(data->cmd_paths);
-		free_tab(data->env_bis);
-		free_tab(data->env_exp);
+		free_kill(data);
 		reset_stuff(data);
 		exit (42);
 	}

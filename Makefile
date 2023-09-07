@@ -1,3 +1,5 @@
+
+
 NAME    = minishell
 CC 		= gcc -Wall -Wextra -Werror -g3
 CFLAGS 	= -I /inc/minishell.h

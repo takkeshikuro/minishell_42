@@ -68,7 +68,6 @@ void	brand_new_tab(t_main *data, t_cmd_parse *node, int i, int len)
 	int		ok;
 	int		sizetab;
 
-	i = -1;
 	sizetab = sizeof(node->cmd_tab);
 	while (++i <= sizetab)
 	{
@@ -103,10 +102,15 @@ void	check_echo_tab(t_main *data)
 			return ;
 		while (node->cmd_tab[i])
 			i++;
+		if (node->d_qt == 2 || node->s_qt == 2)
+		{
+			if (check_qt_tab(node, 0, 0))
+				return ;
+		}
 		if (i == 1 && built_found(node->cmd_tab[0]))
 			built_move(node, built_found(node->cmd_tab[0]));
-		else if (node->cmd_tab[0][0] == '\0')
-			brand_new_tab(data, node, 0, 0);
+		else if (empty_case(node->cmd_tab))
+			brand_new_tab(data, node, -1, 0);
 		node = node->next;
 	}
 }

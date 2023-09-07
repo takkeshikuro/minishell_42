@@ -36,6 +36,7 @@ void	close_free_hd(t_main *data, t_cmd_parse *node, char *input, int check)
 	free_tab(data->cmd_paths);
 	free_tab(data->env_bis);
 	free_tab(data->env_exp);
+	free_tab(data->hidetab);
 	reset_stuff(data);
 	exit (1);
 }

@@ -86,5 +86,12 @@ void	last_redir0(t_main *data, t_cmd_parse *node, int *in, int *out)
 		}
 	}
 	if (node->redirection->operateur == LEFT)
+	{
 		*in = open_infile(data, node, *in);
+		if (*in > -1)
+		{
+			dup2(*in, 0);
+			close(*in);
+		}
+	}
 }

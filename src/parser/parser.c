@@ -22,6 +22,8 @@ t_cmd_parse	*cmd_parse_new(t_main *data, char **tab, int num_redir, t_lexer *r)
 	new->cmd_tab = tab;
 	new->next = NULL;
 	new->prev = NULL;
+	new->d_qt = 0;
+	new->s_qt = 0;
 	new->builtin = NULL;
 	new->redirection = r;
 	new->num_redirection = num_redir;

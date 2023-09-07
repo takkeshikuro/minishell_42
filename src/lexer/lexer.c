@@ -31,12 +31,10 @@ int	add_word(t_main *data, char *str, int i, t_lexer **lexer_list)
 	int		j;
 	char	*tmp;
 
-	if (count_doub_quote(str, i) > 2)
-		j = different_add_w(str, i, count_doub_quote(str, i), 34);
-	else if (count_simp_quote(str, i) > 2)
-		j = different_add_w(str, i, count_simp_quote(str, i), 39);
-	else
+	if (count_doub_quote(str, i) > 2 || count_simp_quote(str, i) > 2)
 		j = add_word_support(str, i);
+	else
+		j = different_add_w(str, i, 0);
 	if (j == 1)
 	{
 		tmp = ft_substr(str, i, j);

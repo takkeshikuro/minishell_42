@@ -63,6 +63,7 @@ void	built_in_free(t_main *data)
 	free_tab(data->cmd_paths);
 	free_tab(data->env_bis);
 	free_tab(data->env_exp);
+	free_tab(data->hidetab);
 	if (data->here_doc)
 		free(data->here_doc);
 	reset_stuff(data);
@@ -70,7 +71,7 @@ void	built_in_free(t_main *data)
 
 int	close_error(int in, int out)
 {
-	if (in > 0)
+	if (in > 1)
 		close (in);
 	if (out > 1)
 		close (out);

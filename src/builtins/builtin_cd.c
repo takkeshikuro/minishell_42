@@ -67,7 +67,10 @@ void	change_envbis(t_main *data)
 
 	i = 0;
 	if (getcwd(s_new, sizeof(s_new)) == NULL)
+	{
 		error(data, "getcwd() failed", 1);
+		return ;
+	}
 	while (data->env_bis[i])
 	{
 		if (!ft_strncmp(data->env_bis[i], "PWD", 3))

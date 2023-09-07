@@ -84,6 +84,8 @@ typedef struct s_cmd_parse
 	t_lexer				*redirection;
 	int					hd_check;
 	int					hdc;
+	int					d_qt;
+	int					s_qt;
 	struct s_cmd_parse	*next;
 	struct s_cmd_parse	*prev;
 }						t_cmd_parse;
@@ -129,8 +131,7 @@ int						add_to_list(t_main *data, char *str,
 void					rm_space(t_lexer *lst);
 int						count_doub_quote(char *str, int i);
 int						count_simp_quote(char *str, int i);
-int						different_add_w(char *s, int i, int nb_quote,
-							int quote);
+int						different_add_w(char *s, int i, int j);
 int						add_word_support(char *str, int i);
 //listing
 t_lexer					*ft_lexernew(t_main *data, char *str, int operateur);
@@ -275,7 +276,7 @@ void					hdinit(t_main *data);
 int						first_hds(t_main *data, t_cmd_parse *node,
 							t_cmd_parse *nodeorg);
 void					exit_access(t_main *data, char *cmd);
-t_main 					*return_free_data(t_main *data);
+t_main					*return_free_data(t_main *data);
 
 /*********************** BUILTINS *********************************************/
 int						built_env(t_main *data, t_cmd_parse *cmd_parse);
@@ -342,7 +343,7 @@ char					*just_alloc(int len, int j_dol, char *s_af);
 void					echo_move(t_cmd_parse *node);
 void					check_echo_tab(t_main *data);
 void					print_intro(void);
-void					print_no_command(t_main *data, char *s);
+void					print_no_command(t_main *data, char *s, int i);
 // hidetab
 void					add_v_to_hidetab(t_main *data, char *s);
 int						check_ht(t_main *data, char *s, int j);
@@ -363,5 +364,7 @@ void					pr_redir(t_lexer *lexer_list);
 void					prrr(t_cmd_parse *cmd_parse, int ok);
 int						f_len(t_cmd_parse *node, int sizetab, int i);
 char					*cpyy(t_cmd_parse *node, int sizetab, int ok, char *s);
+int						check_qt_tab(t_cmd_parse *node, int i, int j);
+int						empty_case(char **tab);
 
 #endif

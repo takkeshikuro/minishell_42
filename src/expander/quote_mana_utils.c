@@ -42,7 +42,7 @@ char	*ft_strim(t_main *data, char const *s1, int quote)
 		i++;
 		start++;
 	}
-	str[i] = 0;
+	str[i] = '\0';
 	return (str);
 }
 

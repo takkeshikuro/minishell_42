@@ -90,7 +90,8 @@ void	close_pipe(t_main *data, int count)
 	i = 0;
 	while (i < count)
 	{
-		close(data->pipe_fd[i]);
+		if (data->pipe_fd[i] > -1)
+			close(data->pipe_fd[i]);
 		i++;
 	}
 }

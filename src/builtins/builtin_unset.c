@@ -60,7 +60,10 @@ int	built_unset(t_main *data, t_cmd_parse *cmd_parse)
 		{
 			if (!ft_strncmp(data->env_bis[j], cmd_parse->cmd_tab[i], len)
 				&& data->env_bis[j][len] == '=')
-				return (unset_dig(data, cmd_parse->cmd_tab[i], len));
+			{
+				unset_dig(data, cmd_parse->cmd_tab[i], len);
+				break ;
+			}
 			j++;
 		}
 		same_for_env_exp(data, cmd_parse->cmd_tab[i], len);

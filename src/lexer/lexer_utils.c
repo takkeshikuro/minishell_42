@@ -20,6 +20,8 @@ int	ff_qt(char *str, int i, int j, int qt)
 		j++;
 		if (str[i + j] == qt && str[i + j + 1] == qt)
 			j = (add_w_dig(str, i, j++));
+		else if (str[i + j] == qt)
+			return (j + 1);
 	}
 	j++;
 	return (j);
@@ -30,7 +32,7 @@ int	add_word_support(char *str, int i)
 	int	j;
 
 	j = 0;
-	while (str[i + j] && !is_space(str[i + j]) && !is_operateur(str[i + j]))
+	while (str[i + j] && !is_operateur(str[i + j] && str[i + j] != 32))
 	{
 		if (str[i + j] == 34)
 		{
@@ -48,17 +50,29 @@ int	add_word_support(char *str, int i)
 	return (j);
 }
 
-int	different_add_w(char *s, int i, int nb_quote, int quote)
+int	different_add_w(char *s, int i, int j)
 {
-	int	j;
-	int	ok;
-
-	j = 0;
-	ok = 1;
-	while (s[i + j] && ok <= nb_quote)
+	if (!s[i])
+		return (0);
+	while (((i + j) < (int)ft_strlen(s)) && !is_operateur(s[i + j])
+		&& s[i + j] != 32)
 	{
-		if (s[i + j] == quote)
-			ok++;
+		if (s[i + j] == 34 && s[i + j + 1] != 34)
+		{
+			j++;
+			while (s[i + j] && s[i + j] != 34)
+				j++;
+			if (s[i + j] == 34)
+				return (j + 1);
+		}				
+		else if (s[i + j] == 39 && s[i + j + 1] != 39)
+		{
+			j++;
+			while (s[i + j] && s[i + j] != 39)
+				j++;
+			if (s[i + j] == 39)
+				return (j + 1);
+		}										
 		j++;
 	}
 	return (j);

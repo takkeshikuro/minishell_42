@@ -12,14 +12,17 @@
 
 #include "../../inc/minishell.h"
 
-void	print_no_command(t_main *data, char *s)
+void	print_no_command(t_main *data, char *s, int i)
 {
-	int		i;
 	int		ok;
 	char	*tmp;
 
-	i = 0;
 	ok = 0;
+	if (s == NULL)
+	{
+		ft_putendl_fd(": command not found", 2);
+		return ;
+	}
 	while (data->env_bis[i])
 	{
 		if (!ft_strncmp(data->env_bis[i++], "PATH=", 5))

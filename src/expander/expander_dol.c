@@ -70,7 +70,7 @@ int	expanding_bis(t_main *data, t_cmd_parse *node, int i, int j)
 
 int	second_expand(t_main *data, t_cmd_parse *node, int i, int j)
 {
-	if (node->cmd_tab[i][j])
+	if ((j < (int)ft_strlen(node->cmd_tab[i])) && node->cmd_tab[i][j])
 	{
 		while (node->cmd_tab[i][j])
 		{
@@ -87,6 +87,8 @@ int	second_expand(t_main *data, t_cmd_parse *node, int i, int j)
 				return (0);
 		}
 	}
+	if (j > (int)ft_strlen(node->cmd_tab[i]))
+		return (0);
 	if (!node->cmd_tab[i][j])
 		return (0);
 	return (1);
@@ -96,7 +98,7 @@ void	expanding(t_main *data, t_cmd_parse *node, int i, int j)
 {
 	int			dol;
 
-	while (node->cmd_tab[i][j])
+	while ((j < (int)ft_strlen(node->cmd_tab[i])) && node->cmd_tab[i][j])
 	{
 		if (node->cmd_tab[i][j] == '$')
 		{
@@ -104,6 +106,8 @@ void	expanding(t_main *data, t_cmd_parse *node, int i, int j)
 				return ;
 			dol = j;
 			j = while_dol(data, node, i, dol);
+			if (!j)
+				return ;
 			if (!second_expand(data, node, i, j))
 				return ;
 		}

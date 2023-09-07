@@ -23,6 +23,8 @@ void	handle_quote_n_expand(t_main *data)
 		i = 0;
 		while (node->cmd_tab[i])
 		{
+			node->d_qt = nb_qt(node->cmd_tab[i], 34);
+			node->s_qt = nb_qt(node->cmd_tab[i], 39);
 			if (!quote_manage(data, node, i))
 				expanding(data, node, i, 0);
 			i++;
@@ -45,9 +47,7 @@ int	start_in_loop(t_main *data, char *input)
 		return (1);
 	}
 	handle_quote_n_expand(data);
-	//prrr(data->cmd_parse, 1);
 	check_echo_tab(data);
-	//prrr(data->cmd_parse, 0);
 	return (0);
 }
 

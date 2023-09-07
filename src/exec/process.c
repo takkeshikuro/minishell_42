@@ -48,9 +48,11 @@ void	last_process(t_main *data, t_cmd_parse *node, char *cmd, int fd[2])
 		exit_error_redir(data, fd);
 	if (fd[0] && node->hd_check == 0)
 	{
-		close(fd[1]);
+		if (fd[1] > 1)
+			close(fd[1]);
 		dup2(fd[0], 0);
-		close(fd[0]);
+		if (fd[0] > 1)
+			close(fd[0]);
 	}
 	builtin_exec(data, node);
 	cmd = get_command(data, data->cmd_paths, node->cmd_tab[0]);
@@ -60,6 +62,7 @@ void	last_process(t_main *data, t_cmd_parse *node, char *cmd, int fd[2])
 	execve(cmd, node->cmd_tab, data->env_bis);
 	free_tab(data->cmd_paths);
 	free_tab(data->env_bis);
+	free_tab(data->hidetab);
 	free_tab(data->env_exp);
 	reset_stuff(data);
 	exit (1);
