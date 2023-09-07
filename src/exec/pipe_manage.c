@@ -86,11 +86,8 @@ void	exec(t_main *data, t_cmd_parse *node, char *cmd)
 		pipe_work(data, fd, node, old_fd);
 		if (old_fd[0] != -1)
 			close(old_fd[0]);
-		if (node->redirection)
-		{
-			if (node->redirection->operateur == LEFT_LEFT)
-				data->hd_pos++;
-		}
+		if (node->hdc)
+			data->hd_pos++;
 		old_fd[0] = fd[0];
 		old_fd[1] = fd[1];
 		close(fd[1]);
