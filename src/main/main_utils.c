@@ -50,7 +50,6 @@ void	reset_stuff(t_main *data)
 	data->cmd_parse = NULL;
 	init_signals();
 }
-
 /*
 void	pr(t_lexer *lexer_list)
 {
@@ -126,4 +125,5 @@ void	prrr(t_cmd_parse *cmd_parse, int ok)
 		tmp = tmp->next;
 	}
 	fprintf(stderr, "\n");
-}*/
+}
+*/

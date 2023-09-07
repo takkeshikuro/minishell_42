@@ -43,8 +43,11 @@ int	nb_qt(char *s, int quote)
 char	*check_4_strim(t_main *data, t_cmd_parse *node, int i_tab, int qt)
 {
 	char	*new;
+	int		len;
 
-	if (node->cmd_tab[i_tab][0] == qt && nb_qt(node->cmd_tab[i_tab], qt) == 2)
+	len = ft_strlen(node->cmd_tab[i_tab]);
+	if (node->cmd_tab[i_tab][0] == qt && nb_qt(node->cmd_tab[i_tab], qt) == 2
+		&& node->cmd_tab[i_tab][len - 1] == qt)
 	{
 		new = ft_strim(data, node->cmd_tab[i_tab], qt);
 		free(node->cmd_tab[i_tab]);

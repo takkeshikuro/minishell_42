@@ -2,9 +2,12 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
+/*                                                    +:+ +:+        
+	+:+     */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+      
+	+#+        */
+/*                                                +#+#+#+#+#+  
+	+#+           */
 /*   Created: 2023/07/06 18:51:26 by marvin            #+#    #+#             */
 /*   Updated: 2023/07/06 18:51:26 by marvin           ###   ########.fr       */
 /*                                                                            */
@@ -30,7 +33,7 @@ int	init_loop(t_cmd_parse *node, char *input, int fd[2])
 	}
 	size = ft_strlen(node->redirection->str);
 	if (!ft_strncmp(input, node->redirection->str, size)
-		&& size == ft_strlen (input))
+		&& size == ft_strlen(input))
 	{
 		close(fd[1]);
 		node->redirection = tmpr;
@@ -99,14 +102,16 @@ int	first_hds(t_main *data, t_cmd_parse *node, t_cmd_parse *nodeorg)
 	i = 1;
 	while (i < node->hdc)
 	{
-		str = skip_tmpr(tmpr);
+		while (tmpr->operateur != LEFT_LEFT)
+			tmpr = tmpr->next;
+		str = tmpr->str;
+		tmpr = tmpr->next;
 		pid = fork();
 		if (pid == 0)
 			first_hd_manage(data, nodeorg, str);
 		waitpid(pid, &status, 0);
 		if (WEXITSTATUS(status) == 42)
 			return (42);
-		tmpr = tmpr->next;
 		i++;
 	}
 	return (0);

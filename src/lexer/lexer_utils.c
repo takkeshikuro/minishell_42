@@ -32,17 +32,19 @@ int	add_word_support(char *str, int i)
 	int	j;
 
 	j = 0;
-	while (str[i + j] && !is_operateur(str[i + j] && str[i + j] != 32))
+	while (str[i + j] && !is_operateur(str[i + j]) && str[i + j] != 32)
 	{
 		if (str[i + j] == 34)
 		{
 			j += ff_qt(str, i, j, 34);
-			break ;
+			if (str[i + j] == 32)
+				break ;
 		}
 		else if (str[i + j] == 39)
 		{
 			j += ff_qt(str, i, j, 39);
-			break ;
+			if (str[i + j] == 32)
+				break ;
 		}
 		else
 			j++;
@@ -62,7 +64,7 @@ int	different_add_w(char *s, int i, int j)
 			j++;
 			while (s[i + j] && s[i + j] != 34)
 				j++;
-			if (s[i + j] == 34)
+			if (s[i + j] == 34 && s[i + j + 1] == 32)
 				return (j + 1);
 		}				
 		else if (s[i + j] == 39 && s[i + j + 1] != 39)
@@ -70,7 +72,7 @@ int	different_add_w(char *s, int i, int j)
 			j++;
 			while (s[i + j] && s[i + j] != 39)
 				j++;
-			if (s[i + j] == 39)
+			if (s[i + j] == 39 && s[i + j + 1] == 32)
 				return (j + 1);
 		}										
 		j++;

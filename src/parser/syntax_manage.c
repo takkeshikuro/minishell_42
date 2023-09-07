@@ -24,7 +24,7 @@ int	syntax_slash(t_main *data, char *s)
 			i++;
 		if (s[i] == '\0')
 			return (is_dir_error(data, s, 0));
-		if (!ft_strncmp(s + i, "bin", 3))
+		if (!access(s, F_OK))
 			return (0);
 		else
 			return (is_dir_error(data, s, 1));

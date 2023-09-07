@@ -38,7 +38,7 @@ int	rm_dollard(t_main *data, t_cmd_parse *cmd_node, int i, int j)
 	free(cmd_node->cmd_tab[i]);
 	cmd_node->cmd_tab[i] = ft_substr(new_s, 0, diff);
 	free(new_s);
-	return (0);
+	return (-1);
 }
 
 char	*copy_without_dol(t_cmd_parse *node, int i, int j, char *s)

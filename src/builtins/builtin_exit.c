@@ -16,7 +16,7 @@ int	exit_arg_manage(char **cmd_tab, int i)
 {
 	while (cmd_tab[1][i])
 	{
-		if (ft_isalpha(cmd_tab[1][i]))
+		if (ft_isalpha(cmd_tab[1][i]) || cmd_tab[1][i] == '+')
 		{
 			ft_putendl_fd("exit", 1);
 			ft_putstr_fd("bash: exit: ", 2);
