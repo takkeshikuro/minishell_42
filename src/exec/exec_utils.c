@@ -46,7 +46,7 @@ char	*get_command(t_main *data, char **paths, char *cmd)
 	char	*command;
 	char	*tmp;
 
-	if (!paths || !cmd)
+	if (!paths || !cmd || !cmd[0])
 		return (NULL);
 	if (contains_char(cmd, '/'))
 	{

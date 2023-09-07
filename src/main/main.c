@@ -45,7 +45,9 @@ int	start_in_loop(t_main *data, char *input)
 		return (1);
 	}
 	handle_quote_n_expand(data);
+	//prrr(data->cmd_parse, 1);
 	check_echo_tab(data);
+	//prrr(data->cmd_parse, 0);
 	return (0);
 }
 

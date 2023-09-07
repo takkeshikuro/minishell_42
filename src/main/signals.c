@@ -14,7 +14,7 @@
 
 void	eot_handler(t_main *data)
 {
-	printf("Quit minishell by crtl-D\n");
+	printf("Quit minishell by ctrl-D\n");
 	free_kill(data);
 	clear_history();
 	exit(0);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   random3.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keshikuro <keshikuro@student.42.fr>        +#+  +:+       +#+        */
+/*   By: tmorikaw <tmorikaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 05:36:36 by keshikuro         #+#    #+#             */
-/*   Updated: 2023/09/05 11:50:26 by keshikuro        ###   ########.fr       */
+/*   Updated: 2023/09/07 02:20:32 by tmorikaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ int	var_found(t_main *data, char *s, int len)
 	i = 0;
 	while (data->env_bis[i])
 	{
-		if (!ft_strncmp(s + 1, data->env_bis[i], len)
-			&& data->env_bis[i][len] == '=')
+		if (!ft_strncmp(s + 1, data->env_bis[i], len - 1)
+			&& data->env_bis[i][len - 1] == '=')
 			return (1);
 		i++;
 	}

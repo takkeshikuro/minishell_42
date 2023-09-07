@@ -21,7 +21,8 @@ char	*check_char_after(t_cmd_parse *node, int i, int j_dol)
 	{
 		if (node->cmd_tab[i][j_dol + 1] == '\0')
 			return (NULL);
-		else if (node->cmd_tab[i][j_dol + 1] == '$')
+		else if (node->cmd_tab[i][j_dol + 1] == '$'
+			|| node->cmd_tab[i][j_dol + 1] == '-')
 		{
 			j_dol += 1;
 			break ;

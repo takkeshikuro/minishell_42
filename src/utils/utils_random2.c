@@ -28,9 +28,19 @@ char	*just_alloc(int len, int j_dol, char *s_af)
 void	built_move(t_cmd_parse *node, size_t ok)
 {
 	char	**tab;
+	int		i;
 
+	i = 0;
 	if (ft_strlen(node->cmd_tab[0]) == ok)
 		return ;
+	if (!node->cmd_tab[0][0])
+		return ;
+	while (node->cmd_tab[0][i] == ' ')
+	{
+		i++;
+		if (!node->cmd_tab[0][i])
+			return ;
+	}
 	tab = ft_split(node->cmd_tab[0], ' ');
 	free_tab(node->cmd_tab);
 	node->cmd_tab = tab;
@@ -89,11 +99,13 @@ void	check_echo_tab(t_main *data)
 	while (node)
 	{
 		i = 0;
+		if (!node->cmd_tab[0])
+			return ;
 		while (node->cmd_tab[i])
 			i++;
 		if (i == 1 && built_found(node->cmd_tab[0]))
 			built_move(node, built_found(node->cmd_tab[0]));
-		if (node->cmd_tab[0][0] == '\0')
+		else if (node->cmd_tab[0][0] == '\0')
 			brand_new_tab(data, node, 0, 0);
 		node = node->next;
 	}

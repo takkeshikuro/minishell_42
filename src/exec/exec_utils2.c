@@ -17,11 +17,11 @@ void	no_command(t_main *data, t_cmd_parse *node)
 	int	i;
 
 	i = 0;
-	if (node->cmd_tab[0])
-		print_no_command(data, node->cmd_tab[0]);
+	print_no_command(data, node->cmd_tab[0]);
 	free_tab(data->cmd_paths);
 	free_tab(data->env_bis);
 	free_tab(data->env_exp);
+	free_tab(data->hidetab);
 	reset_stuff(data);
 	while (i < data->hd_count)
 	{

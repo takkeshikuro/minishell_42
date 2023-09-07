@@ -82,7 +82,7 @@ int	check_env_variable_qt(t_main *data, char *s, int j)
 
 	size = 0;
 	i = j + 1;
-	while (s[i] && s[i] != 32)
+	while (s[i] && s[i] != 32 && s[i] != '-' && s[i] != '$')
 	{
 		i++;
 		size++;
