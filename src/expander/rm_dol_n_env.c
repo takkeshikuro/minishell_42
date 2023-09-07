@@ -134,7 +134,8 @@ int	check_env_variable(t_main *data, char *s, int j)
 	if (s[j + 1] == '?')
 		return (-3);
 	i = j + 1;
-	while (s[i] && s[i] != 32 && s[i] != '$' && s[i] != '-')
+	while (s[i] && s[i] != 32 && s[i] != '$' && s[i] != '-'
+		&& s[i] != ':' && s[i] != '.')
 	{
 		i++;
 		size++;
