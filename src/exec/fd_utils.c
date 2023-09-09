@@ -25,6 +25,16 @@ void	close_hds(t_main *data, t_cmd_parse *node)
 				close(data->here_doc[i].fd[0]);
 			i++;
 		}
+		return ;
+	}
+	while (i < data->hd_count)
+	{
+		if (i != data->hd_pos)
+		{
+			if (data->here_doc[i].fd[0] > -1)
+				close(data->here_doc[i].fd[0]);
+		}
+		i++;
 	}
 }
 
@@ -50,6 +60,7 @@ int	open_infile(t_main *data, t_cmd_parse *node, int old_fd)
 {
 	int	in;
 
+	node->hd_check = 0;
 	in = open(node->redirection->str, O_RDWR);
 	if (in == -1)
 	{
@@ -88,5 +99,5 @@ void	exit_access(t_main *data, char *cmd)
 	free_process(data);
 	reset_stuff(data);
 	free_kill(data);
-	exit (127);
+	exit (126);
 }
