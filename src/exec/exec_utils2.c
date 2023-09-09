@@ -26,8 +26,10 @@ void	no_command(t_main *data, t_cmd_parse *node)
 	reset_stuff(data);
 	while (i < data->hd_count)
 	{
-		close(data->here_doc[i].fd[0]);
-		close(data->here_doc[i].fd[1]);
+		if (data->here_doc[i].fd[0] > -1)
+			close(data->here_doc[i].fd[0]);
+		if (data->here_doc[i].fd[0] > -1)
+			close(data->here_doc[i].fd[1]);
 		i++;
 	}
 	if (data->here_doc)

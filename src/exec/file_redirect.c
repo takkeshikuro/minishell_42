@@ -36,6 +36,8 @@ int	redir_pipe(t_main *data, t_cmd_parse *node, int *in, int *out)
 			node->hd_check = 1;
 			dup2(data->here_doc[data->hd_pos].fd[0], 0);
 			close(data->here_doc[data->hd_pos].fd[0]);
+			if (*in > -1)
+				close(*in);
 		}
 		if (*out == -2 || *in == -2)
 		{
@@ -51,7 +53,8 @@ int	redir_pipe(t_main *data, t_cmd_parse *node, int *in, int *out)
 void	last_redir_hd(t_main *data, t_cmd_parse *node, int fd)
 {
 	node->hd_check = 1;
-	close(fd);
+	if (fd > -1)
+		close(fd);
 	dup2(data->here_doc[data->hd_pos].fd[0], 0);
 	close(data->here_doc[data->hd_pos].fd[0]);
 }

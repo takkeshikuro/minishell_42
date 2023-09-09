@@ -44,6 +44,7 @@ int	last_redir(t_main *data, t_cmd_parse *node, int *in, int *out)
 
 void	last_process(t_main *data, t_cmd_parse *node, char *cmd, int fd[2])
 {
+	close_hds(data, node);
 	if (last_redir(data, node, &fd[0], &fd[1]) == -2)
 		exit_error_redir(data, fd);
 	if (fd[0] && node->hd_check == 0)

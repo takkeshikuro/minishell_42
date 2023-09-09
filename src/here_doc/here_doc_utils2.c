@@ -97,7 +97,7 @@ int	here_doc_init(t_main *data, t_cmd_parse *node, int i)
 	hdinit(data);
 	while (i < data->hd_count)
 	{
-		if (nodebis->hdc == 0)
+		while (nodebis->hdc == 0)
 			nodebis = nodebis->next;
 		if (nodebis->hdc > 1)
 		{

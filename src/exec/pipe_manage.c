@@ -18,7 +18,8 @@ void	ft_dup2close(int fd[2], int check)
 	{
 		if (fd[1] != 1)
 		{
-			close(fd[0]);
+			if (fd[0] > -1)
+				close(fd[0]);
 			dup2(fd[1], 1);
 			close(fd[1]);
 		}
@@ -82,6 +83,7 @@ void	exec(t_main *data, t_cmd_parse *node, char *cmd)
 	init_ex(data, fd, old_fd, &i);
 	while (i < data->pipe_count)
 	{
+		close_hds(data, node);
 		pipe(fd);
 		pipe_work(data, fd, node, old_fd);
 		if (old_fd[0] != -1)

@@ -12,6 +12,22 @@
 
 #include "../../inc/minishell.h"
 
+void	close_hds(t_main *data, t_cmd_parse *node)
+{
+	int	i;
+
+	i = 0;
+	if (node->hdc == 0)
+	{
+		while (i < data->hd_count)
+		{
+			if (data->here_doc[i].fd[0] > -1)
+				close(data->here_doc[i].fd[0]);
+			i++;
+		}
+	}
+}
+
 int	open_outfile(t_main *data, t_cmd_parse *node, int old_fd)
 {
 	int	out;
@@ -37,7 +53,8 @@ int	open_infile(t_main *data, t_cmd_parse *node, int old_fd)
 	in = open(node->redirection->str, O_RDWR);
 	if (in == -1)
 	{
-		close(old_fd);
+		if (old_fd > -1)
+			close(old_fd);
 		perror(node->redirection->str);
 		free_tab(data->cmd_paths);
 		free_tab(data->env_bis);

@@ -21,7 +21,8 @@ void	free_process(t_main *data)
 	{
 		while (i < data->hd_count)
 		{
-			close(data->here_doc[i].fd[0]);
+			if (data->here_doc[i].fd[0] > -1)
+				close(data->here_doc[i].fd[0]);
 			i++;
 		}
 		free(data->here_doc);
