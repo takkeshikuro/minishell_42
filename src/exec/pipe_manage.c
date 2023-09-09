@@ -39,10 +39,10 @@ void	pipe_work(t_main *data, int fd[2], t_cmd_parse *node, int old_fd[2])
 	char	*cmd;
 
 	pid = fork();
-	node->hd_check = 0;
 	cmd = NULL;
 	if (pid == 0)
 	{
+		close_hds(data, node);
 		if (redir_pipe(data, node, &old_fd[0], &fd[1]) == -2)
 			exit_error_redir(data, fd);
 		if (old_fd[0] != -1 && node->hd_check == 0)
@@ -83,8 +83,8 @@ void	exec(t_main *data, t_cmd_parse *node, char *cmd)
 	init_ex(data, fd, old_fd, &i);
 	while (i < data->pipe_count)
 	{
-		close_hds(data, node);
 		pipe(fd);
+		node->hd_check = 0;
 		pipe_work(data, fd, node, old_fd);
 		if (old_fd[0] != -1)
 			close(old_fd[0]);

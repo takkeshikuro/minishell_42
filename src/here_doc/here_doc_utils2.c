@@ -107,7 +107,10 @@ int	here_doc_init(t_main *data, t_cmd_parse *node, int i)
 		pipe(data->here_doc[i].fd);
 		data->here_doc[i].pos = 1;
 		if (hdc_process(data, nodebis, i) == 42)
+		{
+			close(data->here_doc[i].fd[1]);
 			return (42);
+		}
 		i++;
 		nodebis = nodebis->next;
 	}
