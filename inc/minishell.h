@@ -116,6 +116,11 @@ int						copy_nFame(t_main *data, char *tmp, int i);
 void					eot_handler(t_main *data);
 void					sig_handler(int sig);
 void					init_signals(void);
+//shlvl
+void					get_shlvl(t_main *data, char **env);
+char					*search_var(char **env, char *name);
+void					change_sh_value(t_main *data,
+							char *new_shlvl, char *old);
 
 /************************** LEXER *******************************/
 int						go_lexer(t_main *data);

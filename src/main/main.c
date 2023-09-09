@@ -91,6 +91,7 @@ int	main(int ac, char **av, char **env)
 	print_intro();
 	get_env(&data, env);
 	get_env_export(&data);
+	get_shlvl(&data, data.env_bis);
 	mini_loop(&data);
 	return (0);
 }
